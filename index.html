@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+<HEAD>
+
+
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=utf-8">
+<meta name="keywords" content="autonomy, Vaughan, Richard, robot, control, AI, dataset, sfu-mountain">
+
+<link rel="stylesheet" type="text/css" href="autolab.css">
+
+<TITLE>SFU Mountain Dataset</TITLE>
+
+</HEAD>
+
+<body >
+
+<div class="title"> 
+
+<table>
+<tr>
+<td>
+
+<table>
+<tr>
+<td style="font-size:36pt;">
+<a href="index.html">Autonomy Lab</a> / SFU Mountain Dataset
+<td style="text-align:right;"><img src="img/sfu.png" alt="sfu logo" height=50>
+</tr>
+</table>
+
+</table>
+
+</div>
+
+<br/>
+
+<hr/>
+
+<br/>
+
+<div class="dataset-content">
+
+    <center>
+        <img src="http://autolab.cmpt.sfu.ca/files/datasets/tct-cropped-hdr.jpg" alt="Trans-Canada Trail" style="width: 20%" />
+        <img src="http://autolab.cmpt.sfu.ca/files/datasets/powerline.jpg" alt="Powerline Trail" style="width: 20%" />
+        <img src="http://autolab.cmpt.sfu.ca/files/datasets/jungle.jpg" alt="Jim's Jungle Trail" style="width: 20%" />
+        <p>A dataset of woodland trail navigation on a ground-based robot in changing environmental conditions.</p>
+    </center>
+
+    <br/>
+
+    <p>We apologize, but we are still evaluating solutions for hosting the
+    SFU Mountain Dataset in its unabridged form. The full dataset consists of
+    several hundred GB of sensor data including full
+    video from 6 cameras, and range data from 2 laser scanners, plus
+    calibration parameters for each sensor.</p>
+
+    <p>In the mean time, please feel free to download our ground-truth
+    place matches: frames from each camera at locations separated
+    by approximately 10 meters, hand-matched between <em>dry</em>,
+    <em>wet</em>, <em>dusk</em>, and <em>night</em> traversals. Here are
+    example place matches for each camera across all four sessions:</p>
+
+    <br/>
+
+    <table style="width: 100%">
+        <tr>
+            <td><a target="_blank"
+            href="http://autolab.cmpt.sfu.ca/files/datasets/place_119_a.jpg">
+            <img
+            src="http://autolab.cmpt.sfu.ca/files/datasets/place_119_a.jpg"
+            alt="Place 119 a" style="width: 90%"/> </a> </td>
+
+            <td><a target="_blank"
+            href="http://autolab.cmpt.sfu.ca/files/datasets/place_050_b.jpg">
+            <img
+            src="http://autolab.cmpt.sfu.ca/files/datasets/place_050_b.jpg"
+            alt="Place 050 b" style="width: 90%"/></a></td>
+
+            <td><a target="_blank"
+            href="http://autolab.cmpt.sfu.ca/files/datasets/place_119_b.jpg">
+            <img
+            src="http://autolab.cmpt.sfu.ca/files/datasets/place_119_b.jpg"
+            alt="Place 119 b" style="width: 90%"/></a></td>
+        </tr>
+    </table>
+    
+    <br/>
+
+    <h3>Place Matches</h3>
+
+    <p>For each trail section <em>a</em> and <em>b</em>, we
+    provide the matches in bundles of frames from 1) all cameras, 2) just the
+    stereo cameras, and 3) just each individual camera:</p>
+
+    <table style="width: 75%">
+        <tr>
+            <td>All:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-places-a.tar">all-a (458 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-places-b.tar">all-b (227 MB)</a></td>
+            <td>--</td>
+        </tr>
+
+        <tr><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+
+        <tr>
+            <td>Stereo:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-stereo-a.tar">stereo-a (168 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-stereo-b.tar">stereo-b (72 MB)</a></td>
+            <td>--</td>
+        </tr>
+
+        <tr><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+        
+        <tr>
+            <td>Stereo Left:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-stereo_left-a.tar">stereo-left-a (83 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-stereo_left-b.tar">stereo-left-b (36 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/stereo_left-calibration.yaml">stereo-left-calibration.yaml</a></td>
+        </tr>
+    
+        <tr>
+            <td>Stereo Right:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-stereo_right-a.tar">stereo-right-a (85 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-stereo_right-b.tar">stereo-right-b (36 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/stereo_right-calibration.yaml">stereo-right-calibration.yaml</a></td>
+        </tr>
+    
+        <tr>
+            <td>Port:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-port-a.tar">port-a (74 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-port-b.tar">port-b (46 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/port-calibration.yaml">port-calibration.yaml</a></td>
+        </tr>
+    
+        <tr>
+            <td>Starboard:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-starboard-a.tar">starboard-a (84 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-starboard-b.tar">starboard-b (44 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/starboard-calibration.yaml">starboard-calibration.yaml</a></td>
+        </tr>
+    
+        <tr>
+            <td>Rear:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-rear-a.tar">rear-a (70 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-rear-b.tar">rear-b (33 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/rear-calibration.yaml">rear-calibration.yaml</a></td>
+        </tr>
+    
+        <tr>
+            <td>Upward:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-upward-a.tar">upward-a (64 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/places-upward-b.tar">upward-b (34 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/upward-calibration.yaml">upward-calibration.yaml</a></td>
+        </tr>
+    
+    </table>
+
+    <!--
+
+    <h3>Laser Data</h3>
+
+    <p>Below we have included a teaser image of the laser data: a pointcloud
+    of the trail surface, colored by projecting the laser points into the 
+    stereo cameras.</p>
+
+    <center>
+        <img
+        width=600
+        src="http://autolab.cmpt.sfu.ca/files/datasets/colored_pointcloud_cropped.png"
+        alt="Laser pointcloud of trail surface"/>
+    </center>
+
+    -->
+
+</div>
+
+
+<div class="timestamp">
+
+<table >
+<tr>
+<td style="text-align:left;vertical-align:middle;">
+
+<!-- render the modification time of the source file -->
+<?php echo "Last updated " . date ("d F Y H:i:s", filemtime($sourcefile)); ?>
+
+<td style="text-align:right;">
+
+
+<!-- We support Web standards: -->
+<a href="http://validator.w3.org/check/referer">
+     <img style="vertical-align:middle;border:0;"
+          src="http://www.w3.org/Icons/valid-html401"
+          alt="Valid HTML 4.01!"></a>
+
+ <a href="http://jigsaw.w3.org/css-validator/">
+  <img style="vertical-align:middle;border:0;width:88px;height:31px"
+       src="http://jigsaw.w3.org/css-validator/images/vcss" 
+       alt="Valid CSS!">
+ </a>
+
+ <a href="http://playerstage.sourceforge.net">
+  <img style="vertical-align:middle;border:0;width:88px;height:31px"
+       src="img/player_button.png" 
+       alt="Player driven">
+</a>
+
+</tr>
+
+</table>
+</div>
+</div>
+
+
+
+
+
+</BODY>
+</HTML>
