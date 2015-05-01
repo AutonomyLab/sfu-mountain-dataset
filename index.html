@@ -12,9 +12,19 @@
 
 <TITLE>SFU Mountain Dataset</TITLE>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script type="text/javascript">
+    set_date = function() {
+        txt = $("#current_date").text();
+        $("#current_date").text(txt.replace("DATE_ACCESSED", moment().format('YYYY-MM-DD')));
+    };
+    $(document).ready(set_date);
+</script>
+
 </HEAD>
 
-<body >
+<body>
 
 <div class="title"> 
 
@@ -51,11 +61,12 @@
 
     <br/>
 
-    <p>We apologize, but we are still evaluating solutions for hosting the
-    SFU Mountain Dataset in its unabridged form. The full dataset consists of
-    several hundred GB of sensor data including full
-    video from 6 cameras, and range data from 2 laser scanners, plus
-    calibration parameters for each sensor.</p>
+    <p>We apologize, but we are still evaluating solutions for hosting the SFU
+    Mountain Dataset in its unabridged form. The full dataset consists of
+    several hundred GB of sensor data including full video from 6 cameras, and
+    range data from 2 laser scanners, plus calibration parameters for each
+    sensor. We are working to provide the data in the form of ROS bag files,
+    compressed image files, and CSV text files.</p>
 
     <p>In the mean time, please feel free to download our ground-truth
     place matches: frames from each camera at locations separated
@@ -87,7 +98,7 @@
     
     <br/>
 
-    <h3>Place Matches</h3>
+    <h3 style="text-decoration: underline">Place Matches</h3>
 
     <p>For each trail section <em>a</em> and <em>b</em>, we
     provide the matches in bundles of frames from 1) all cameras, 2) just the
@@ -155,6 +166,38 @@
         </tr>
     
     </table>
+
+    <h3 style="text-decoration: underline">License</h3>
+
+    <p>The SFU Mountain Dataset is copyright by the authors (Jake Bruce, Jens
+    Wawerla and Richard Vaughan) and published under the <a
+    href="http://creativecommons.org/licenses/by-nc-sa/4.0">Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0</a> License. This means that you are
+free to obtain and distribute derivatives of this work for non-commercial use
+as long as you give appropriate credit, indicate if changes were made, and
+distribute under the same license as the original.</p>
+
+    <h3 style="text-decoration: underline">Citation</h3>
+
+    <p>
+    If you use this dataset in your research, please use this citation:
+    </p>
+
+    <ul style="list-style-type: none">
+        <li><em>The SFU Mountain Dataset</em>. Jake Bruce, Jens Wawerla, Richard Vaughan. Online
+        <a href="http://autonomylab.org/sfu-mountain-dataset">http://autonomylab.org/sfu-mountain-dataset</a> 2015. </li>
+
+    <br/>
+
+    <code>
+            <li>@online{sfumountain,<ul style="list-style-type: none">
+            <li>author = Jake Bruce and Jens Wawerla and Richard Vaughan,</li>
+            <li>title = {The {SFU} Mountain Dataset},</li>
+            <li>year = 2015,</li>
+            <li>url = {http://autonomylab.org/sfu-mountain-dataset},</li>
+            <li id="current_date">urldate = {DATE_ACCESSED}}</li>
+    </code>
+    </ul>
 
     <!--
 
