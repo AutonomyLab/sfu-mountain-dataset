@@ -19,6 +19,8 @@
         txt = $("#current_date").text();
         $("#current_date").text(txt.replace("DATE_ACCESSED", moment().format('YYYY-MM-DD')));
 
+        $("#placematches").hide()
+
         $("#alldata").hide()
         $("#drydata").hide()
         $("#wetdata").hide()
@@ -110,6 +112,9 @@
     provide the matches in bundles of frames from 1) all cameras, 2) just the
     stereo cameras, and 3) just each individual camera:</p>
 
+    <h4 id="placematches-header" onlick="$('#placematches').toggle('fast'); if ($('#placematches-header').text()=='Expand') {$('#placematches-header').text('Collapse');} else $('#placematches-header').text('Expand'); ">Expand</h4>
+    <div id="placematches">
+
     <table style="width: 100%">
         <tr>
             <td>All:</td>
@@ -173,13 +178,14 @@
     
     </table>
 
+    </div>
+
     <hr/>
     <h3 style="text-decoration: underline">Raw Sensor Data</h3>
 
     <p>In addition to the ROS bag files, we provide non-camera sensor data in
     CSV text files in gzipped .tgz format. Calibration parameters for each
-    sensor are included in <code>calibration.yaml</code> if applicable.
-    Click to expand a session heading.</p>
+    sensor are included in <code>calibration.yaml</code> if applicable.</p>
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#alldata').slideToggle('fast')">All Sessions</h4>
     <div id="alldata">
