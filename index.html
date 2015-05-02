@@ -106,14 +106,14 @@
     <br/>
 
     <hr/>
-    <h3 style="text-decoration: underline">Place Matches</h3>
+
+    <h3 onclick="$('#placematches').slideToggle('fast');" style="text-decoration: underline; cursor: pointer; ">Place Matches</h3>
+
+    <div id="placematches">
 
     <p>For each trail section <em>a</em> and <em>b</em>, we
     provide the matches in bundles of frames from 1) all cameras, 2) just the
     stereo cameras, and 3) just each individual camera:</p>
-
-    <h4 id="placematches-header" onlick="$('#placematches').toggle('fast'); if ($('#placematches-header').text()=='Expand') {$('#placematches-header').text('Collapse');} else $('#placematches-header').text('Expand'); ">Expand</h4>
-    <div id="placematches">
 
     <table style="width: 100%">
         <tr>
