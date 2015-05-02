@@ -1071,14 +1071,14 @@
     </table>
     </div>
 
-    <p>The timestamps in the preceding bag files, CSV files
-    and JPEG images have all been shifted by an offset calculated to account for
-    the latencies of the different sensors. The offsets are provided here in
-    case they are needed:
+    <p>The timestamps in the preceding bag files, CSV files and JPEG images
+    have all been shifted by subtracting an offset calculated to account for
+    the relative latencies of the different sensors. The offsets are provided
+    here in case they are needed:</p>
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#timestampoffsets').slideToggle('fast')">Timestamp Offsets</h4>
 
-    <div id="timestampoffsets">
+    <div id="timestampoffsets" style="width: 50%">
         <table>
             <tr>
                 <td>Stereo Left Camera:</td>
@@ -1119,14 +1119,6 @@
             <tr>
                 <td>Wheel Odometry:</td>
                 <td>0 ms (reference sensor)</td>
-            </tr>
-            <tr>
-                <td>GPS:</td>
-                <td>0 ms (not temporally precise)</td>
-            </tr>
-            <tr>
-                <td>Barometric Pressure:</td>
-                <td>0 ms (not temporally precise)</td>
             </tr>
         </table>
     </div>
