@@ -80,11 +80,11 @@
     sensor. We are working to provide the data in the form of ROS bag files,
     compressed image files, and CSV text files.</p>
 
-    <p>In the mean time, please feel free to download our ground-truth
-    place matches: frames from each camera at locations separated
-    by approximately 10 meters, hand-matched between <em>dry</em>,
-    <em>wet</em>, <em>dusk</em>, and <em>night</em> traversals. Here are
-    example place matches for each camera across all four sessions:</p>
+    <p>In the mean time, please feel free to download our ground-truth place
+    matches: frames from each camera at locations separated by approximately 10
+    meters, hand-matched between <em>dry</em>, <em>wet</em>, <em>dusk</em>, and
+    <em>night</em> traversals. Here are some example place matches for each
+    camera across all four sessions:</p>
 
     <br/>
 
@@ -225,6 +225,9 @@
     <p>In addition to the ROS bag files, we provide non-camera sensor data in
     CSV text files in gzipped .tgz format. Calibration parameters for each
     sensor are included in <code>calibration.yaml</code> if applicable.</p>
+    
+    <p>JPEG images from the cameras are provided at full 30 Hz, and also at
+    subsampled rates of 3 Hz and 0.3 Hz for convenience.</p>
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#alldata').slideToggle('fast')">All Sessions</h4>
     <div id="alldata">
