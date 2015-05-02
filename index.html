@@ -181,7 +181,9 @@
     </div>
 
     <hr/>
-    <h3 style="text-decoration: underline">Raw Sensor Data</h3>
+    <h3 onclick="$('#rawdata').slideToggle('fast');" style="cursor: pointer; text-decoration: underline">Raw Sensor Data</h3>
+
+    <div id="rawdata">
 
     <p>In addition to the ROS bag files, we provide non-camera sensor data in
     CSV text files in gzipped .tgz format. Calibration parameters for each
@@ -1032,8 +1034,12 @@
     </table>
     </div>
 
+    </div> <!-- end rawdata div -->
+
     <hr/>
-    <h3 style="text-decoration: underline">Citation</h3>
+    <h3 onclick="$('#citation').slideToggle('fast');" style="cursor: pointer; text-decoration: underline">Citation</h3>
+
+    <div id="citation">
 
     <p>
     If you use this dataset in your research, please cite this work:
@@ -1055,10 +1061,14 @@
     </code>
     </ul>
 
+    </div>
+
     <hr/>
 
 
-<h3 style="text-decoration: underline">License</h3>
+<h3 style="text-decoration: underline; cursor: pointer" onclick="$('#license').slideToggle('fast');">License</h3>
+
+<div id="license">
 
 <p>
 This work is licensed under the <a rel="license"
@@ -1073,22 +1083,7 @@ were made, and distribute under the same license as the original.</p>
 alt="Creative Commons License" style="border-width:0"
 src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></div>
 
-    <!--
-
-    <h3>Laser Data</h3>
-
-    <p>Below we have included a teaser image of the laser data: a pointcloud
-    of the trail surface, colored by projecting the laser points into the 
-    stereo cameras.</p>
-
-    <center>
-        <img
-        width=600
-        src="http://autolab.cmpt.sfu.ca/files/datasets/colored_pointcloud_cropped.png"
-        alt="Laser pointcloud of trail surface"/>
-    </center>
-
-    -->
+</div>
 
 </div>
 
