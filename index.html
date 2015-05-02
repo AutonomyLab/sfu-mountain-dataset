@@ -22,7 +22,7 @@
         $("#placematches").hide()
         $("#rawdata").hide()
 
-        $("timestampoffsets").hide()
+        $("#timestampoffsets").hide()
 
         $("#rosbags").hide()
 
@@ -193,7 +193,7 @@
 
     <p>The dataset in its purest form is available as ROS bag files recorded
     directly from the robot. These are the original recordings from which all
-    other formats were exported, we modified them only to synchronize sensor
+    other formats were exported; we modified them only to synchronize sensor
     timestamps.</p>
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#rosbags').slideToggle('fast')">ROS Bag Files</h4>
@@ -1089,36 +1089,44 @@
                 <td>48.4 ms</td>
             </tr>
             <tr>
-                <td>Port Camera</td>
+                <td>Port Camera:</td>
                 <td>46.85 ms</td>
             </tr>
             <tr>
-                <td>Starboard Camera</td>
+                <td>Starboard Camera:</td>
                 <td>45.5 ms</td>
             </tr>
             <tr>
-                <td>Upward Camera</td>
+                <td>Upward Camera:</td>
                 <td>65.3 ms</td>
             </tr>
             <tr>
-                <td>Rear Camera</td>
+                <td>Rear Camera:</td>
                 <td>58.5 ms</td>
             </tr>
             <tr>
-                <td>Front Laser</td>
+                <td>Front Laser:</td>
                 <td>67.9 ms</td>
             </tr>
             <tr>
-                <td>Top Laser</td>
+                <td>Top Laser:</td>
                 <td>379.6 ms</td>
             </tr>
             <tr>
-                <td>IMU</td>
+                <td>IMU:</td>
                 <td>29.2 ms</td>
             </tr>
             <tr>
-                <td>Wheel Odometry</td>
+                <td>Wheel Odometry:</td>
                 <td>0 ms (reference sensor)</td>
+            </tr>
+            <tr>
+                <td>GPS:</td>
+                <td>0 ms (not temporally precise)</td>
+            </tr>
+            <tr>
+                <td>Barometric Pressure:</td>
+                <td>0 ms (not temporally precise)</td>
             </tr>
         </table>
     </div>
