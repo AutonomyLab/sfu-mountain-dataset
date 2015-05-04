@@ -13,12 +13,8 @@
 <TITLE>SFU Mountain Dataset</TITLE>
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script type="text/javascript">
     $(function() {
-        txt = $("#current_date").text();
-        $("#current_date").text(txt.replace("DATE_ACCESSED", moment().format('YYYY-MM-DD')));
-
         $("#placematches").hide()
         $("#rawdata").hide()
 
@@ -1140,18 +1136,19 @@
     </p>
 
     <ul style="list-style-type: none">
-        <li><em>The SFU Mountain Dataset</em>. Jake Bruce, Jens Wawerla, Richard Vaughan. Online
-        <a href="http://autonomylab.org/sfu-mountain-dataset/">http://autonomylab.org/sfu-mountain-dataset</a> 2015. </li>
+        <li>Jake Bruce, Jens Wawerla, and Richard Vaughan. 
+        "The SFU Mountain Dataset: Semi-Structured Woodland Trails Under Changing Environmental Conditions."
+        <em>IEEE Int. Conf. on Robotics and Automation 2015, Workshop on Visual Place Recognition in Changing Environments.</em></li>
 
     <br/>
 
     <code>
-            <li>@online{sfumountain,<ul style="list-style-type: none">
-            <li>author = Jake Bruce and Jens Wawerla and Richard Vaughan,</li>
-            <li>title = {The {SFU} Mountain Dataset},</li>
-            <li>year = 2015,</li>
-            <li>url = {http://autonomylab.org/sfu-mountain-dataset},</li>
-            <li id="current_date">urldate = {DATE_ACCESSED}}</li></ul>
+            <li>@inproceedings{sfumountain,<ul style="list-style-type: none">
+                <li>author = {Bruce, Jake and Wawerla, Jens and Vaughan, Richard},</li>
+            <li>title = {The {SFU} Mountain Dataset: Semi-Structured Woodland Trails Under Changing Environmental Conditions},</li>
+            <li>booktitle = {IEEE Int. Conf. on Robotics and Automation 2015, Workshop on Visual Place Recognition in Changing Environments},</li>
+        <li>year = {2015}</li></ul>
+        <li>}</li>
     </code>
     </ul>
 
@@ -1168,7 +1165,7 @@
 This work is licensed under the <a rel="license"
 href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
 Attribution-4.0 International License</a>.  This means
-that you are free to distribute transformations of this work for
+that you are free to distribute transformations of this work
 as long as you give appropriate credit and indicate if changes
 were made.</p>
 
