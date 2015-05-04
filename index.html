@@ -116,9 +116,10 @@
 
     <div id="placematches">
 
-    <p>For each trail section <em>a</em> and <em>b</em>, we
-    provide the matches in bundles of frames from 1) all cameras, 2) just the
-    stereo cameras, and 3) just each individual camera:</p>
+    <p>For each trail section <em>a</em> and <em>b</em>, we provide
+    hand-aligned place matches in bundles of timestamped frames from 1) all
+    cameras, 2) just the stereo cameras, and 3) just each individual
+    camera:</p>
 
     <table style="width: 100%">
         <tr>
@@ -196,6 +197,14 @@
     other formats were exported; we modified them only to synchronize sensor
     timestamps.</p>
 
+
+    <p>In addition to the ROS bag files, we provide non-camera sensor data in
+    CSV text files in gzipped .tgz format. Calibration parameters for each
+    sensor are included in <code>calibration.yaml</code> if applicable.</p>
+    
+    <p>JPEG images from the cameras are provided at full 30 Hz, and also at
+    subsampled rates of 3 Hz and 0.3 Hz for convenience.</p>
+
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#rosbags').slideToggle('fast')">ROS Bag Files</h4>
     <div id="rosbags">
         <table>
@@ -222,14 +231,7 @@
         </table>
     </div>
 
-    <p>In addition to the ROS bag files, we provide non-camera sensor data in
-    CSV text files in gzipped .tgz format. Calibration parameters for each
-    sensor are included in <code>calibration.yaml</code> if applicable.</p>
-    
-    <p>JPEG images from the cameras are provided at full 30 Hz, and also at
-    subsampled rates of 3 Hz and 0.3 Hz for convenience.</p>
-
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#alldata').slideToggle('fast')">All Sessions</h4>
+    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#alldata').slideToggle('fast')">CSV/JPEG: All</h4>
     <div id="alldata">
     <table>
         <tr>
@@ -567,7 +569,7 @@
     </table>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#wetdata').slideToggle('fast')">Wet Only</h4>
+    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#wetdata').slideToggle('fast')">CSV/JPEG: Wet</h4>
     <div id="wetdata">
     <table>
         <tr>
@@ -736,7 +738,7 @@
     </table>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#duskdata').slideToggle('fast')">Dusk Only</h4>
+    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#duskdata').slideToggle('fast')">CSV/JPEG: Dusk</h4>
     <div id="duskdata">
     <table>
         <tr>
@@ -905,7 +907,7 @@
     </table>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#nightdata').slideToggle('fast')">Night Only</h4>
+    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#nightdata').slideToggle('fast')">CSV/JPEG: Night</h4>
     <div id="nightdata">
     <table>
         <tr>
