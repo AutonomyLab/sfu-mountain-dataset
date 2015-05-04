@@ -9,6 +9,14 @@
 <meta name="keywords" content="autonomy, Vaughan, Richard, robot, control, AI, dataset, sfu-mountain">
 
 <link rel="stylesheet" type="text/css" href="http://autonomylab.org/autolab.css">
+<style>
+    .bordered-table {
+        border-collapse: collapse;
+    }
+    .bordered-table td, th{
+        border: 1px solid black;
+    }
+</style>
 
 <TITLE>SFU Mountain Dataset</TITLE>
 
@@ -203,7 +211,7 @@
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#rosbags').slideToggle('fast')">ROS Bag Files</h4>
     <div id="rosbags">
-        <table>
+        <table class="bordered-table">
             <tr>
                 <td><em>dry</em></td>
                 <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/bags/dry-a.bag">dry-a.bag (26 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/bags/dry-a.bag.md5sum">checksum</a>]</td>
@@ -229,7 +237,7 @@
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#alldata').slideToggle('fast')">All Sessions</h4>
     <div id="alldata">
-    <table>
+    <table class="bordered-table">
         <tr>
             <td>All Cameras:</td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-all-a.tar">cameras-all-a 30 Hz (~150 GB)</a></td>
@@ -398,7 +406,7 @@
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#drydata').slideToggle('fast')">Dry</h4>
     <div id="drydata">
-    <table>
+    <table class="bordered-table">
         <tr>
             <td>All Cameras:</td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-dry-a.tar">cameras-dry-a 30 Hz (~40 GB)</a></td>
@@ -567,7 +575,7 @@
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#wetdata').slideToggle('fast')">Wet</h4>
     <div id="wetdata">
-    <table>
+    <table class="bordered-table">
         <tr>
             <td>All Cameras:</td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-wet-a.tar">cameras-wet-a 30 Hz (~40 GB)</a></td>
@@ -736,7 +744,7 @@
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#duskdata').slideToggle('fast')">Dusk</h4>
     <div id="duskdata">
-    <table>
+    <table class="bordered-table">
         <tr>
             <td>All Cameras:</td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-dusk-a.tar">cameras-dusk-a 30 Hz (~40 GB)</a></td>
@@ -905,7 +913,7 @@
 
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#nightdata').slideToggle('fast')">Night</h4>
     <div id="nightdata">
-    <table>
+    <table class="bordered-table">
         <tr>
             <td>All Cameras:</td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-night-a.tar">cameras-night-a 30 Hz (~40 GB)</a></td>
@@ -1080,46 +1088,47 @@
     <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#timestampoffsets').slideToggle('fast')">Timestamp Offsets</h4>
 
     <div id="timestampoffsets" style="width: 50%">
-        <table>
+        <table class="bordered-table">
+            <tr><th>Sensor</th><th>Offset (ms)</th></tr>
             <tr>
                 <td>Stereo Left Camera:</td>
-                <td>48.4 ms</td>
+                <td>48.4</td>
             </tr>
             <tr>
                 <td>Stereo Right Camera:</td>
-                <td>48.4 ms</td>
+                <td>48.4</td>
             </tr>
             <tr>
                 <td>Port Camera:</td>
-                <td>46.85 ms</td>
+                <td>46.85</td>
             </tr>
             <tr>
                 <td>Starboard Camera:</td>
-                <td>45.5 ms</td>
+                <td>45.5</td>
             </tr>
             <tr>
                 <td>Upward Camera:</td>
-                <td>65.3 ms</td>
+                <td>65.3</td>
             </tr>
             <tr>
                 <td>Rear Camera:</td>
-                <td>58.5 ms</td>
+                <td>58.5</td>
             </tr>
             <tr>
                 <td>Front Laser:</td>
-                <td>67.9 ms</td>
+                <td>67.9</td>
             </tr>
             <tr>
                 <td>Top Laser:</td>
-                <td>379.6 ms</td>
+                <td>379.6</td>
             </tr>
             <tr>
                 <td>IMU:</td>
-                <td>29.2 ms</td>
+                <td>29.2</td>
             </tr>
             <tr>
                 <td>Wheel Odometry:</td>
-                <td>0 ms (reference sensor)</td>
+                <td>0 (reference sensor)</td>
             </tr>
         </table>
     </div>
