@@ -13,8 +13,13 @@
     .bordered-table {
         border-collapse: collapse;
     }
-    .bordered-table td, th{
+    .bordered-table td, th {
         border: 1px solid black;
+    }
+    h3, h4 {
+        display: inline;
+        cursor: pointer;
+        text-decoration: underline;
     }
 </style>
 
@@ -116,7 +121,7 @@
 
     <hr/>
 
-    <h3 onclick="$('#placematches').slideToggle('fast');" style="text-decoration: underline; cursor: pointer; ">Place Matches</h3>
+    <h3 onclick="$('#placematches').slideToggle('fast');">Place Matches</h3>
 
     <div id="placematches">
 
@@ -125,7 +130,7 @@
     cameras, 2) just the stereo cameras, and 3) just each individual
     camera:</p>
 
-    <table style="width: 100%">
+    <table class="bordered-table">
         <tr>
             <td>All:</td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/all-cameras-places-a.tar">all-a (458 MB)</a></td>
@@ -187,11 +192,12 @@
         </tr>
     
     </table>
+    <br/>
 
     </div>
 
     <hr/>
-    <h3 onclick="$('#rawdata').slideToggle('fast');" style="cursor: pointer; text-decoration: underline">Raw Sensor Data</h3>
+    <h3 onclick="$('#rawdata').slideToggle('fast');">Raw Sensor Data</h3>
 
     <div id="rawdata">
 
@@ -201,15 +207,8 @@
     other formats were exported; we modified them only to synchronize sensor
     timestamps.</p>
 
-
-    <p>In addition to the ROS bag files, we provide non-camera sensor data in
-    CSV text files in gzipped .tgz format. Calibration parameters for each
-    sensor are included in <code>calibration.yaml</code> if applicable.</p>
-    
-    <p>JPEG images from the cameras are provided at full 30 Hz, and also at
-    subsampled rates of 3 Hz and 0.3 Hz for convenience.</p>
-
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#rosbags').slideToggle('fast')">ROS Bag Files</h4>
+    <h4 onclick="$('#rosbags').slideToggle('fast')">ROS Bag Files</h4>
+    <br/>
     <div id="rosbags">
         <table class="bordered-table">
             <tr>
@@ -233,9 +232,19 @@
                 <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/bags/night-b.bag">night-b.bag (7 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/bags/night-b.bag.md5sum">checksum</a>]</td>
             </tr>
         </table>
+        <br/>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#alldata').slideToggle('fast')">All Sessions</h4>
+
+    <p>In addition to the ROS bag files, we provide non-camera sensor data in
+    CSV text files in gzipped .tgz format. Calibration parameters for each
+    sensor are included in <code>calibration.yaml</code> if applicable.</p>
+    
+    <p>JPEG images from the cameras are provided at full 30 Hz, and also at
+    subsampled rates of 3 Hz and 0.3 Hz for convenience.</p>
+
+    <h4 onclick="$('#alldata').slideToggle('fast')">All Sessions</h4>
+    <br/><br/>
     <div id="alldata">
     <table class="bordered-table">
         <tr>
@@ -402,9 +411,11 @@
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/barometric_pressure-all-b.tar">pressure-all-b (~4 MB)</a></td>
         </tr>
     </table>
+    <br/>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#drydata').slideToggle('fast')">Dry</h4>
+    <h4 onclick="$('#drydata').slideToggle('fast')">Dry</h4>
+    <br/><br/>
     <div id="drydata">
     <table class="bordered-table">
         <tr>
@@ -571,9 +582,11 @@
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/barometric_pressure-dry-b.tgz">pressure-dry-b (~300 KB)</a></td>
         </tr>
     </table>
+    <br/>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#wetdata').slideToggle('fast')">Wet</h4>
+    <h4 onclick="$('#wetdata').slideToggle('fast')">Wet</h4>
+    <br/><br/>
     <div id="wetdata">
     <table class="bordered-table">
         <tr>
@@ -740,9 +753,11 @@
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/barometric_pressure-wet-b.tgz">pressure-wet-b (~300 KB)</a></td>
         </tr>
     </table>
+    <br/>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#duskdata').slideToggle('fast')">Dusk</h4>
+    <h4 onclick="$('#duskdata').slideToggle('fast')">Dusk</h4>
+    <br/><br/>
     <div id="duskdata">
     <table class="bordered-table">
         <tr>
@@ -909,10 +924,13 @@
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/barometric_pressure-dusk-b.tgz">pressure-dusk-b (~300 KB)</a></td>
         </tr>
     </table>
+    <br/>
     </div>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#nightdata').slideToggle('fast')">Night</h4>
+    <h4 onclick="$('#nightdata').slideToggle('fast')">Night</h4>
+    <br/>
     <div id="nightdata">
+    <br/>
     <table class="bordered-table">
         <tr>
             <td>All Cameras:</td>
@@ -1078,6 +1096,7 @@
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/barometric_pressure-night-b.tgz">pressure-night-b (~300 KB)</a></td>
         </tr>
     </table>
+    <br/>
     </div>
 
     <p>The timestamps in the preceding bag files, CSV files and JPEG images
@@ -1085,7 +1104,8 @@
     the relative latencies of the different sensors. The offsets are provided
     here in case they are needed:</p>
 
-    <h4 style="cursor: pointer; text-decoration: underline" onclick="$('#timestampoffsets').slideToggle('fast')">Timestamp Offsets</h4>
+    <h4 onclick="$('#timestampoffsets').slideToggle('fast')">Timestamp Offsets</h4>
+    <br/><br/>
 
     <div id="timestampoffsets" style="width: 50%">
         <table class="bordered-table">
@@ -1131,12 +1151,13 @@
                 <td>0 (reference sensor)</td>
             </tr>
         </table>
+    <br/>
     </div>
 
     </div> <!-- end rawdata div -->
 
     <hr/>
-    <h3 onclick="$('#citation').slideToggle('fast');" style="cursor: pointer; text-decoration: underline">Citation</h3>
+    <h3 onclick="$('#citation').slideToggle('fast');">Citation</h3>
 
     <div id="citation">
 
@@ -1166,7 +1187,7 @@
     <hr/>
 
 
-<h3 style="text-decoration: underline; cursor: pointer" onclick="$('#license').slideToggle('fast');">License</h3>
+<h3 onclick="$('#license').slideToggle('fast');">License</h3>
 
 <div id="license">
 
