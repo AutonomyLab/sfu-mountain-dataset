@@ -1,0 +1,115 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import tf
+import glob
+import math
+
+import numpy as np
+from scipy.ndimage import filters
+
+import cv2
+from cv_bridge import CvBridge
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
+from tf2_msgs.msg import *
+
+def mkdir_p(d):
+    if not os.path.exists(d):
+        os.makedirs(d)
+
+file_dict = dict()
+
+def append_line(filename, line):
+    if filename not in file_dict:
+        with open(filename, "w") as f:
+            f.write("")
+        file_dict[filename] = True
+        print "file %s created" % filename
+
+    with open(filename, "a") as f:
+        f.write("%s\n" % line)
+
+def compressed_img_to_cv2(img, encoding):
+    #### direct conversion to CV2 ####
+    np_arr = np.fromstring(img.data, np.uint8)
+    if encoding == "color":
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
+    else:
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+
+def extract_images_and_odometry(inbag):
+    topics = ["/encoder",
+            "/imu/data",
+            "/camera/stereo/right/image_color/compressed",
+            "/camera/starboard/image_raw/compressed"]
+
+    bag_tag = inbag.split("/")[-1].replace(".bag","")
+
+    mkdir_p("images_and_odometry/%s" % bag_tag)
+    mkdir_p("images_and_odometry/%s/forward_frames" % bag_tag)
+    mkdir_p("images_and_odometry/%s/starboard_frames" % bag_tag)
+
+    t_origin = None
+    count = 0
+
+    color_idx = 0
+    gray_idx = 0
+
+    print "opening %s..." % inbag
+    for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=topics):
+        # timestamp in nanoseconds to seconds
+        timestamp = timestamp.secs + float(timestamp.nsecs) / 1e9
+        if t_origin == None:
+            t_origin = timestamp
+            append_line("images_and_odometry/%s/timestamp_origin" % bag_tag, "%s" % timestamp)
+        timestamp -= t_origin
+
+        if count % 10000 == 0:
+            print "... %s sec ... " % timestamp
+        count += 1
+
+        cleaned_topic = topic[1:].replace("/","_")
+        msg_t = msg.__class__.__name__.split("__")[1]
+
+        if msg_t == "CompressedImage":
+            if "color" in topic:
+                cv2_img = compressed_img_to_cv2(msg, "color")
+                cv2.imwrite("images_and_odometry/%s/forward_frames/%05d-%s.jpg" % (bag_tag, color_idx, timestamp), cv2_img)
+                color_idx += 1
+            else:
+                cv2_img = compressed_img_to_cv2(msg, "grayscale")
+                cv2.imwrite("images_and_odometry/%s/starboard_frames/%05d-%s.jpg" % (bag_tag, gray_idx, timestamp), cv2_img)
+                gray_idx += 1
+
+        elif msg_t == "Odometry":
+            append_line("images_and_odometry/%s/wheel_encoders.csv" % bag_tag, "%s,%s,%s,%s" % (timestamp,
+                msg.pose.pose.position.x,
+                msg.pose.pose.position.y,
+                msg.pose.pose.position.z))
+
+        elif msg_t == "Imu":
+            roll, pitch, yaw = tf.transformations.euler_from_quaternion((
+                msg.orientation.x,
+                msg.orientation.y,
+                msg.orientation.z,
+                msg.orientation.w))
+            append_line("images_and_odometry/%s/imu_data.csv" % bag_tag, "%s,%s,%s,%s" % (timestamp, roll, pitch, yaw))
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='extracts images and odom from a bagfile')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    args = parser.parse_args()
+
+    try:
+        extract_images_and_odometry(args.i)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

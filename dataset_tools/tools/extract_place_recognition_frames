@@ -1,0 +1,241 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import tf
+import glob
+import math
+
+import numpy as np
+from scipy.ndimage import filters
+
+import cv2
+from cv_bridge import CvBridge
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
+from tf2_msgs.msg import *
+
+def mkdir_p(d):
+    if not os.path.exists(d):
+        os.makedirs(d)
+
+def asRadians(degrees):
+    return degrees * math.pi / 180
+
+def getXYpos(relativeNullPoint, p):
+    """ Calculates X and Y distances in meters.
+    """
+    deltaLatitude = p.latitude - relativeNullPoint.latitude
+    deltaLongitude = p.longitude - relativeNullPoint.longitude
+    latitudeCircumference = 40075160 * math.cos(asRadians(relativeNullPoint.latitude))
+    resultX = deltaLongitude * latitudeCircumference / 360
+    resultY = deltaLatitude * 40008000 / 360
+    return resultX, resultY
+
+def make_key(xy_pair):
+    return "%.2f,%.2f" % xy_pair
+
+def dist2d(p1, p2):
+    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
+
+def extract_place_recognition_frames(inbags, separation, window):
+    null_point = None
+
+    # list of ((x,y), [[bag0_img_msgs], [bag1_img_msgs], ...])
+    place_list = []
+
+    locations = []
+
+    topics = ["/navsat/fix",
+            "/camera/stereo/left/image_color/compressed",
+            "/camera/stereo/right/image_color/compressed",
+            "/camera/upward/image_raw/compressed",
+            "/camera/rear/image_raw/compressed",
+            "/camera/port/image_raw/compressed",
+            "/camera/starboard/image_raw/compressed"]
+
+    #---- first pass, find all the GPS locations ----
+    for bag_id,inbag in enumerate(inbags):
+        t_origin = None
+        count = 0
+
+        bag_tag = inbag.split("/")[-1].replace(".bag","")
+
+        gps_buffer = []
+        avg_x = None
+        avg_y = None
+
+        last_x = None
+        last_y = None
+        
+        locations.append([])
+
+        six_cameras = dict()
+
+        trigger_topic = None
+
+        print "opening %s..." % inbag
+        for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=topics):
+            # timestamp in nanoseconds to seconds
+            timestamp = timestamp.secs + float(timestamp.nsecs) / 1e9
+            if t_origin == None:
+                t_origin = timestamp
+            timestamp -= t_origin
+
+            if count % 10000 == 0:
+                print "... %s sec ... " % timestamp
+            count += 1
+
+            cleaned_topic = topic[1:].replace("/","_")
+            msg_t = msg.__class__.__name__.split("__")[1]
+
+            if bag_id == 0 and msg_t == "CompressedImage":
+                six_cameras[topic] = msg
+
+            elif msg_t == "NavSatFix":
+                if null_point == None:
+                    null_point = msg
+                x,y = getXYpos(null_point, msg)
+                gps_buffer.append((x,y))
+                gps_buffer = gps_buffer[-min(len(gps_buffer), window):]
+
+                avg_x = sum([a[0] for a in gps_buffer])/len(gps_buffer)
+                avg_y = sum([a[1] for a in gps_buffer])/len(gps_buffer)
+
+                locations[bag_id].append((avg_x, avg_y))
+
+                if bag_id == 0:
+                    # save the images to memory if it's a new location
+                    # if we're greater than 'separation' from
+                    # our last point, add this image to the list
+                    if (last_x == None or last_y == None or dist2d((last_x, last_y), (avg_x, avg_y)) > separation) and len(six_cameras) >= 6:
+                        img_msgs = [six_cameras[k] for k in sorted(six_cameras.keys())]
+                        last_x = avg_x
+                        last_y = avg_y
+                        place_list.append(((avg_x, avg_y), [img_msgs]))
+                        print "storing image for location %.1f,%.1f" % (avg_x, avg_y)
+
+    print "picked %s keyframes" % len(place_list)
+    print "now finding which of %s locations is closest for each of %s bags to each keyframe from bag %s" % (len(locations[1]), len(inbags)-1, inbags[0])
+
+    #---- find closest GPS point for each point in bag0 ---
+    match_tags = []
+    location_matches = []
+    for bag_id,inbag in enumerate(inbags):
+        location_matches.append([])
+        match_tags.append(dict())
+        if bag_id != 0:
+            print "finding closest point to each keyframe for bag %s" % inbag
+            location_matches[bag_id] = [min(locations[bag_id], key=lambda x:dist2d(x,keyframe[0])) for keyframe in place_list]
+        for place_id,match in enumerate(location_matches[bag_id]):
+            print make_key(match)
+            match_tags[bag_id][make_key(match)] = place_id
+
+    print "second pass, finding images that match bag0's keyframes"
+    #---- second pass, find the matching images ----
+    for bag_id,inbag in enumerate(inbags[1:]):
+        bag_id = bag_id + 1 # because we're iterating over inbags[1:]
+        t_origin = None
+        count = 0
+
+        bag_tag = inbag.split("/")[-1].replace(".bag","")
+
+        gps_buffer = []
+        avg_x = None
+        avg_y = None
+
+        last_x = None
+        last_y = None
+
+        six_cameras = dict()
+
+        trigger_topic = None
+
+        print "opening %s..." % inbag
+        for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=topics):
+            # timestamp in nanoseconds to seconds
+            timestamp = timestamp.secs + float(timestamp.nsecs) / 1e9
+            if t_origin == None:
+                t_origin = timestamp
+            timestamp -= t_origin
+
+            if count % 10000 == 0:
+                print "... %s sec ... " % timestamp
+            count += 1
+
+            cleaned_topic = topic[1:].replace("/","_")
+            msg_t = msg.__class__.__name__.split("__")[1]
+
+            if bag_id != 0 and msg_t == "CompressedImage":
+                six_cameras[topic] = msg
+
+            elif msg_t == "NavSatFix":
+                if null_point == None:
+                    null_point = msg
+                x,y = getXYpos(null_point, msg)
+                gps_buffer.append((x,y))
+                gps_buffer = gps_buffer[-min(len(gps_buffer), window):]
+
+                avg_x = sum([a[0] for a in gps_buffer])/len(gps_buffer)
+                avg_y = sum([a[1] for a in gps_buffer])/len(gps_buffer)
+
+                if make_key((avg_x,avg_y)) in match_tags[bag_id]:
+                    print "matched frame at gps(%s,%s)" % (avg_x, avg_y)
+                    img_msgs = [six_cameras[k] for k in sorted(six_cameras.keys())]
+                    idx = match_tags[bag_id][make_key((avg_x, avg_y))]
+                    place_list[idx][1].append(img_msgs)
+                    del match_tags[bag_id][make_key((avg_x, avg_y))]
+
+    #---- write place recognition frames to file ----
+    print "Writing %s place recognition keyframes per camera per bag to file" % len(place_list)
+    cvb = CvBridge()
+    d = "place_recognition_frames"
+    mkdir_p(d)
+    for place_id,place in enumerate(place_list):
+        # write each frame of the place to a file
+        print "writing %s bags' images of place %s" % (len(place[1]), place_id)
+        for bag_id,bag_imgs in enumerate(place[1]):
+            print "writing %s cameras' images of place %s for bag %s" % (len(bag_imgs), place_id, bag_id)
+            bag_tag = inbags[bag_id].split("/")[-1].replace(".bag","")
+            bag_tag.replace("trail_", "")
+            if "_a" in bag_tag:
+                bag_tag = bag_tag.replace("_a", "")
+                bag_tag = "a_%s" % bag_tag
+            elif "_b" in bag_tag:
+                bag_tag = bag_tag.replace("_b", "")
+                bag_tag = "b_%s" % bag_tag
+            for camera_id,img in enumerate(bag_imgs):
+                filename = "%s/camera%d_place%05d_%s.jpg" % (d, camera_id, place_id, bag_tag)
+                print "writing %s" % filename
+                
+                #### direct conversion to CV2 ####
+                np_arr = np.fromstring(img.data, np.uint8)
+                if "color" in sorted(topics[1:])[camera_id]:
+                    cv2_img = cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)     
+                else:
+                    cv2_img = cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+
+                cv2.imwrite(filename, cv2_img)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='extracts place recognition frames from a set of bagfiles, X meters apart by gps fixes')
+    parser.add_argument('-i', metavar='INPUT_BAGFILES', required=True, help='input bagfiles (surround wildcard-path or comma-separated paths in quotes)')
+    parser.add_argument("-x", metavar="SEPARATION_DISTANCE", required=False, help="distance between keyframes for place recognition", default=10, type=float)
+    parser.add_argument("-w", metavar="MOVING_AVG_WINDOW", required=False, help="size of moving average window buffer for smoothing gps", default=10, type=int)
+    args = parser.parse_args()
+    if "," in args.i:
+        args.i = [a.strip() for a in args.i.split(",")]
+    elif "*" in args.i:
+        args.i = glob.glob(args.i)
+
+    try:
+        extract_place_recognition_frames(args.i, args.x, args.w)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

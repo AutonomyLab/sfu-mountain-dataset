@@ -1,0 +1,60 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import time
+
+# in milliseconds
+offsets = { "/camera/stereo/left/image_color/compressed" : 0,#48.4,
+        "/camera/stereo/right/image_color/compressed" : 0,#48.4,
+        "/camera/port/image_raw/compressed" : 0,#46.85,
+        "/camera/rear/image_raw/compressed" : 0,#58.5,
+        "/camera/upward/image_raw/compressed" : 0,#65.3,
+        "/camera/starboard/image_raw/compressed" : 0,#45.5,
+        "/imu/data" : 0,#29.2,
+        "/imu/mag" : 29.2,
+        "/imu/rpy" : 29.2,
+        #"/imu/temperature" : 29.2, # temperature has no header.. no stamp to change
+        "/lidar/top/scan" : 0,#379.6,
+        "/lidar/front/scan" : 0,#67.9,
+        "/encoder" : 0} # encoder messages are the baseline
+
+def offset(topic):
+    return rospy.Duration(offsets[topic]/1000.0)
+
+def synchronize_timesteps_by_offset(inbag,outbag):
+    print('   Processing input bagfile: %s' % inbag)
+    print('  Writing to output bagfile: %s' % outbag)
+
+    ts = time.time()
+    t_origin = None
+
+    outbag = rosbag.Bag(outbag,'w')
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if t_origin == None:
+            t_origin = t.to_sec()
+
+        if time.time() - ts > 5:
+            print (t.to_sec() - t_origin)
+            ts = time.time()
+
+        if topic in offsets:
+            msg.header.stamp -= offset(topic)
+        outbag.write(topic, msg, t)
+    print('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='synchronizes the timestamps of each message by subtracting a specific offset')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    args = parser.parse_args()
+
+    try:
+        synchronize_timesteps_by_offset(args.i,args.o)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

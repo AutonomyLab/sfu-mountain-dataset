@@ -1,0 +1,65 @@
+#!/usr/bin/python
+
+PKG = 'bag_tools' # this package name
+
+import roslib; roslib.load_manifest(PKG)
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+
+def modify_tf(inbag, outbag, frame_id, x, y, z, q1, q2, q3, q4):
+    rospy.loginfo('   Processing input bagfile: %s', inbag)
+    rospy.loginfo('  Writing to output bagfile: %s', outbag)
+
+    outbag = rosbag.Bag(outbag,'w')
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if topic == "/tf":
+            new_transforms = []
+            for transform in msg.transforms:
+                if transform.child_frame_id == frame_id:
+                    transform.transform.rotation.x = q1
+                    transform.transform.rotation.y = q2
+                    transform.transform.rotation.z = q3
+                    transform.transform.rotation.w = q4
+                    transform.transform.translation.x = x
+                    transform.transform.translation.y = y
+                    transform.transform.translation.z = z
+                    new_transforms.append(transform)
+                else:
+                    new_transforms.append(transform)
+                
+            msg.transforms = new_transforms
+        outbag.write(topic, msg, t)
+    rospy.loginfo('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='modifies a static transform in a bag file, allowing you to change the translation and rotation of the frame')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    parser.add_argument('-f', metavar='FRAME_ID', required=True, help='frame id of static transform to modify')
+    parser.add_argument('-x', metavar='TRANSLATION_X', required=True, help='x translation', type=float)
+    parser.add_argument('-y', metavar='TRANSLATION_Y', required=True, help='y translation', type=float)
+    parser.add_argument('-z', metavar='TRANSLATION_Z', required=True, help='z translation', type=float)
+    parser.add_argument('-q1', metavar='QUATERNION_X', required=True, help='quaternion x component', type=float)
+    parser.add_argument('-q2', metavar='QUATERNION_Y', required=True, help='quaternion y component', type=float)
+    parser.add_argument('-q3', metavar='QUATERNION_Z', required=True, help='quaternion z component', type=float)
+    parser.add_argument('-q4', metavar='QUATERNION_W', required=True, help='quaternion w component', type=float)
+    args = parser.parse_args()
+
+    try:
+        modify_tf(args.i, 
+                args.o, 
+                args.f,
+                args.x, 
+                args.y,
+                args.z,
+                args.q1,
+                args.q2,
+                args.q3,
+                args.q4)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

@@ -1,0 +1,19 @@
+#! /bin/bash
+
+rostopic echo -b $1 /encoder > encoder.topic
+
+extract_encoder_position_x.py < encoder.topic > enc_x.dat
+extract_encoder_position_y.py < encoder.topic > enc_y.dat
+extract_encoder_position_z.py < encoder.topic > enc_z.dat
+
+extract_encoder_vel_x.py < encoder.topic > enc_vel_x.dat
+extract_encoder_vel_y.py < encoder.topic > enc_vel_y.dat
+extract_encoder_vel_z.py < encoder.topic > enc_vel_z.dat
+
+extract_encoder_orientation_x.py < encoder.topic > enc_theta_x.dat
+extract_encoder_orientation_y.py < encoder.topic > enc_theta_y.dat
+extract_encoder_orientation_z.py < encoder.topic > enc_theta_z.dat
+
+extract_encoder_omega_x.py < encoder.topic > enc_omega_x.dat
+extract_encoder_omega_y.py < encoder.topic > enc_omega_y.dat
+extract_encoder_omega_z.py < encoder.topic > enc_omega_z.dat

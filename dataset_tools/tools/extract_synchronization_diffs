@@ -1,0 +1,228 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import tf
+import cv2, numpy as np
+import math
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
+from tf2_msgs.msg import *
+
+#---------------------------------------------
+
+buffer_time = 2.0
+after_time = 1.0
+encoder_trigger = 0.25
+
+#---------------------------------------------
+
+file_dict = dict()
+
+#---------------------------------------------
+
+def append_line(filename, line):
+    if filename not in file_dict:
+        with open(filename, "w") as f:
+            f.write("")
+        file_dict[filename] = True
+        print "file %s created" % filename
+
+    with open(filename, "a") as f:
+        f.write("%s\n" % line)
+
+#---------------------------------------------
+
+def compressed_img_to_cv2(img, encoding):
+    #### direct conversion to CV2 ####
+    np_arr = np.fromstring(img.data, np.uint8)
+    if encoding == "color":
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
+    else:
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+
+#---------------------------------------------
+
+topics = ["/camera/stereo/left/image_color/compressed",
+        "/camera/stereo/right/image_color/compressed",
+        "/camera/rear/image_raw/compressed",
+        "/camera/port/image_raw/compressed",
+        "/camera/upward/image_raw/compressed",
+        "/camera/starboard/image_raw/compressed",
+        "/encoder",
+        "/imu/data",
+        "/lidar/top/scan",
+        "/lidar/front/scan"]
+
+labels = ["stereo_left",
+        "stereo_right",
+        "rear",
+        "port",
+        "upward",
+        "starboard",
+        "encoder",
+        "imu",
+        "lidar_top",
+        "lidar_front"]
+
+trigger_topic = "/encoder"
+
+last_msg = dict()
+for t in topics:
+    last_msg[t] = None
+
+buffers = dict()
+for t in topics:
+    buffers[t] = []
+
+diffs = dict()
+for t in topics:
+    diffs[t] = []
+
+#----------------------------------
+
+def process_buffers():
+    global diffs
+    for t in topics:
+        for last,msg in zip(buffers[t], buffers[t][1:]):
+            current_ts = msg.header.stamp.secs + float(msg.header.stamp.nsecs) / 1e9
+            diffs[t].append((current_ts-t_origin, msg_diff(last,msg,t)))
+
+#----------------------------------
+
+def write_diffs():
+    for t in topics:
+        label = labels[topics.index(t)]
+        mx = max(diffs[t], key=lambda x: x[1])[1]
+        mn = min(diffs[t], key=lambda x: x[1])[1]
+
+        if mx == mn:
+            print "WARNING: min = max (%s = %s)" % (mn, mx)
+
+        for diff in diffs[t]:
+            n_d = (diff[1] - mn) / max(abs(float(mx - mn)), 0.00001)
+            append_line(outfile_prefix + label + "-diffs.dat",
+                "%s %s" % (diff[0], n_d))
+
+#----------------------------------
+
+def msg_diff(last, msg, topic):
+    msg_t = msg.__class__.__name__.split("__")[1]
+    if msg_t == "Odometry":
+        return odom_diff(last, msg)
+    elif msg_t == "Imu":
+        return imu_diff(last, msg)
+    elif msg_t == "CompressedImage":
+        return image_diff(last, msg, topic)
+    elif msg_t == "LaserScan":
+        return laser_diff(last, msg)
+
+#----------------------------------
+
+def odom_diff(last, msg):
+    # magnitude of the (x,y,z) velocity
+    #return math.sqrt((msg.pose.pose.position.x - last.pose.pose.position.x)**2 + (msg.pose.pose.position.y - last.pose.pose.position.y)**2 + (msg.pose.pose.position.z - last.pose.pose.position.z)**2)
+    return math.sqrt(msg.twist.twist.linear.x**2 + msg.twist.twist.angular.z**2)
+
+#----------------------------------
+
+def imu_diff(last, msg):
+    # magnitude of the angular velocity
+    return math.sqrt(msg.angular_velocity.x**2 + msg.angular_velocity.y**2 + msg.angular_velocity.z**2)
+
+#----------------------------------
+
+def image_diff(last, msg, topic):
+    # magnitude of the pixel difference
+    encoding = "grayscale"
+    if "color" in topic:
+        encoding = "color"
+
+    last_img = compressed_img_to_cv2(last, encoding)
+    next_img = compressed_img_to_cv2(msg, encoding)
+    
+    return cv2.absdiff(last_img, next_img).sum()
+
+#----------------------------------
+
+def laser_diff(last, msg):
+    # magnitude of the range difference
+    diffsum = 0
+    for i in range(0, len(last.ranges)-1):
+        if not math.isnan(last.ranges[i]) and not math.isnan(msg.ranges[i]) and not math.isinf(last.ranges[i]) and not math.isinf(msg.ranges[i]):
+            diffsum += abs(msg.ranges[i] - last.ranges[i])
+
+    return diffsum
+
+#----------------------------------
+
+outfile_prefix = None
+t_origin = None
+
+def extract_synchronization_diffs(inbag, prefix):
+    global outfile_prefix, t_origin, buffers, diffs
+    outfile_prefix = prefix
+
+    count = 0
+
+    start_time = None
+    print "opening %s..." % inbag
+    for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=topics):
+        # timestamp in nanoseconds to seconds
+        timestamp = timestamp.secs + float(timestamp.nsecs) / 1e9
+
+        # subtract the origin from all timestamps and write to a file
+        if t_origin == None:
+            t_origin = timestamp
+        timestamp -= t_origin
+
+        if count % 20000 == 0:
+            print "... %s sec ... %s" % (timestamp, topic)
+        count += 1
+
+        cleaned_topic = topic[1:].replace("/","_")
+
+        msg_t = msg.__class__.__name__.split("__")[1]
+
+        label = labels[topics.index(topic)]
+
+        current_ts = msg.header.stamp.secs + float(msg.header.stamp.nsecs) / 1e9
+
+        if start_time != None:
+            if msg.header.stamp - start_time > rospy.Duration(after_time):
+                print "done going %s seconds past start... bailing" % after_time
+                write_diffs()
+                break
+            else:
+                diffs[topic].append((current_ts-t_origin, msg_diff(last_msg[topic],msg, topic)))
+
+        else:
+            buffers[topic].append(msg)
+            buffers[topic] = filter(lambda x: msg.header.stamp - x.header.stamp < rospy.Duration(buffer_time), buffers[topic])
+
+            if topic == trigger_topic and msg.twist.twist.linear.x > encoder_trigger:
+                print "starting synch measurements at t = %s" % (timestamp)
+                start_time = msg.header.stamp
+                process_buffers()
+
+        # no matter what topic type, store it in last_msg[topic]
+        last_msg[topic] = msg
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='extracts diffs around the start of the first encoder movement to calibrate the time offsets of each sensor')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTFILE_PREFIX', required=True, help='how to name the data files of sensor diffs that we produce')
+    args = parser.parse_args()
+
+    try:
+        extract_synchronization_diffs(args.i, args.o)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

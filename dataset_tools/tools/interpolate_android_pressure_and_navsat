@@ -1,0 +1,166 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+from sensor_msgs.msg import *
+from std_msgs.msg import *
+from geometry_msgs.msg import *
+from nav_msgs.msg import *
+
+
+topics = ["/barometric_pressure", "/navsat/fix", "/navsat/enu"]
+
+def interpolate_time(stamp1, stamp2, r):
+    return stamp1 + rospy.Duration(r*(stamp2.to_sec()-stamp1.to_sec()))
+
+def interpolate_android_pressure_and_navsat(inbag,outbag):
+    rospy.loginfo('   Processing input bagfile: %s', inbag)
+    rospy.loginfo('  Writing to output bagfile: %s', outbag)
+
+    outbag = rosbag.Bag(outbag,'w')
+
+    # number to interpolate between messages
+    pressure_n = 4
+    navsat_n = 4
+    enu_n = 4
+
+    pressure_count = 0
+    navsat_count = 0
+    enu_count = 0
+
+    pressure_seq = None
+    navsat_seq = None
+    enu_seq = None
+
+    last_pressure = None
+    last_navsat = None
+    last_enu = None
+
+    print "opening bag: %s..." % inbag
+    
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if topic == "/barometric_pressure":
+            if pressure_seq == None:
+                pressure_seq = msg.header.seq
+            if last_pressure == None:
+                last_pressure = msg
+                continue
+
+            msg.header.seq = pressure_seq
+                
+            pressure_seq += 1
+            pressure_count += 1
+
+            pressure_int = (msg.fluid_pressure - last_pressure.fluid_pressure) / float(pressure_n+1)
+
+            for i in xrange(1,pressure_n+1):
+                new_msg = FluidPressure()
+                new_msg.header.frame_id = "/imu"
+                new_msg.header.seq = pressure_seq
+                pressure_seq += 1
+                new_msg.header.stamp = interpolate_time(last_pressure.header.stamp, msg.header.stamp, i/float(pressure_n+1))
+
+                new_msg.fluid_pressure = last_pressure.fluid_pressure + pressure_int * i
+                new_msg.variance = last_pressure.variance
+
+                if pressure_count %500 == 0:
+                    print "Interpolating pressure between (%s : %s) and (%s : %s) => (%s : %s)" % (last_pressure.header.stamp.to_sec(), last_pressure.fluid_pressure, msg.header.stamp.to_sec(), msg.fluid_pressure, new_msg.header.stamp.to_sec(), new_msg.fluid_pressure)
+
+                outbag.write(topic, new_msg, new_msg.header.stamp)
+
+            last_pressure = msg
+            
+        if topic == "/navsat/fix":
+            if navsat_seq == None:
+                navsat_seq = msg.header.seq
+            if last_navsat == None:
+                last_navsat = msg
+                continue
+
+            msg.header.seq = navsat_seq
+                
+            navsat_seq += 1
+            navsat_count += 1
+
+            latitude_int = (msg.latitude - last_navsat.latitude) / float(navsat_n+1)
+            longitude_int = (msg.longitude - last_navsat.longitude) / float(navsat_n+1)
+            altitude_int = (msg.altitude - last_navsat.altitude) / float(navsat_n+1)
+
+            for i in xrange(1,navsat_n+1):
+                new_msg = NavSatFix()
+                new_msg.header.frame_id = "/navsat"
+                new_msg.header.seq = navsat_seq
+                navsat_seq += 1
+                new_msg.header.stamp = interpolate_time(last_navsat.header.stamp, msg.header.stamp, i / float(navsat_n+1))
+
+                new_msg.latitude = last_navsat.latitude + latitude_int * i
+                new_msg.longitude = last_navsat.longitude + longitude_int * i
+                #new_msg.altitude = last_navsat.altitude + altitude_int * i
+                new_msg.altitude = last_navsat.altitude # preserve altitude granularity
+                new_msg.status = last_navsat.status
+                new_msg.position_covariance = last_navsat.position_covariance
+                new_msg.position_covariance_type = last_navsat.position_covariance_type
+
+                if navsat_count %100 == 0:
+                    print "Interpolating navsat between (%s : %s,%s,%s) and (%s : %s,%s,%s) => (%s : %s,%s,%s)" % (last_navsat.header.stamp.to_sec(), last_navsat.latitude, last_navsat.longitude, last_navsat.altitude, msg.header.stamp.to_sec(), msg.latitude, msg.longitude, msg.altitude, new_msg.header.stamp.to_sec(), new_msg.latitude, new_msg.longitude, new_msg.altitude)
+
+                outbag.write(topic, new_msg, new_msg.header.stamp)
+
+            last_navsat = msg
+            
+        if topic == "/navsat/enu":
+            if enu_seq == None:
+                enu_seq = msg.header.seq
+            if last_enu == None:
+                last_enu = msg
+                continue
+
+            msg.header.seq = enu_seq
+                
+            enu_seq += 1
+            enu_count += 1
+
+            x_int = (msg.pose.pose.position.x - last_enu.pose.pose.position.x) / float(enu_n+1)
+            y_int = (msg.pose.pose.position.y - last_enu.pose.pose.position.y) / float(enu_n+1)
+            z_int = (msg.pose.pose.position.z - last_enu.pose.pose.position.z) / float(enu_n+1)
+
+            for i in xrange(1,enu_n+1):
+                new_msg = Odometry()
+                new_msg.header.frame_id = "/enu"
+                new_msg.header.seq = enu_seq
+                enu_seq += 1
+                new_msg.header.stamp = interpolate_time(last_enu.header.stamp, msg.header.stamp, i/float(enu_n+1))
+
+                new_msg.pose.pose.position.x = last_enu.pose.pose.position.x + x_int * i
+                new_msg.pose.pose.position.y = last_enu.pose.pose.position.y + y_int * i
+                new_msg.pose.pose.position.z = last_enu.pose.pose.position.z
+                new_msg.pose.pose.orientation = last_enu.pose.pose.orientation
+                new_msg.pose.covariance = last_enu.pose.covariance
+
+                new_msg.twist = last_enu.twist
+
+                if enu_count %100 == 0:
+                    print "Interpolating enu between (%s : %s,%s,%s) and (%s : %s,%s,%s) => (%s : %s,%s,%s)" % (last_enu.header.stamp.to_sec(), last_enu.pose.pose.position.x, last_enu.pose.pose.position.y, last_enu.pose.pose.position.z, msg.header.stamp.to_sec(), msg.pose.pose.position.x, msg.pose.pose.position.y, msg.pose.pose.position.z, new_msg.header.stamp.to_sec(), new_msg.pose.pose.position.x, new_msg.pose.pose.position.y, new_msg.pose.pose.position.z)
+
+                outbag.write(topic, new_msg, new_msg.header.stamp)
+
+            last_enu = msg
+            
+        outbag.write(topic, msg, t)
+    rospy.loginfo('Closing output bagfile and exit...')
+    outbag.close()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='linearly interpolate between the existing pressure, navsat, and enu messages to bring a topic up to desired frequency')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    args = parser.parse_args()
+
+    try:
+        interpolate_android_pressure_and_navsat(args.i,args.o)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

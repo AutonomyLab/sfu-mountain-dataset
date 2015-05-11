@@ -1,0 +1,366 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import tf
+import time
+
+import cv2
+
+from numpy import *
+from numpy.linalg import norm
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
+from tf2_msgs.msg import *
+
+#----------------------------------------------------------------------
+
+if not os.path.exists("csv"):
+    os.makedirs("csv")
+
+file_dict = dict()
+
+#----------------------------------------------------------------------
+
+def append_lines(filename, lines):
+    if filename not in file_dict:
+        with open(filename, "w") as f:
+            f.write("x,y,z,r,g,b\n")
+            for line in lines:
+                f.write("%s\n" % line)
+        file_dict[filename] = True
+        print "file %s created" % filename
+
+    else:
+        with open(filename, "a") as f:
+            for line in lines:
+                f.write("%s\n" % line)
+
+#----------------------------------------------------------------------
+
+def append_line(filename, line):
+    if filename not in file_dict:
+        with open(filename, "w") as f:
+            f.write("%s\n" % line)
+        file_dict[filename] = True
+        print "file %s created" % filename
+
+    else:
+        with open(filename, "a") as f:
+            f.write("%s\n" % line)
+
+#----------------------------------------------------------------------
+
+def compressed_img_to_cv2(img, encoding):
+    #### direct conversion to CV2 ####
+    np_arr = fromstring(img.data, uint8)
+    if encoding == "color":
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
+    else:
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+
+#----------------------------------------------------------------------
+
+def found_camera_and_laser():
+    for camera in camera_topics:
+        if camera not in buffers or len(buffers[camera]) == 0:
+            return False
+    for laser in laser_topics:
+        if laser not in buffers or len(buffers[laser]) == 0:
+            return False
+
+    return True
+
+#----------------------------------------------------------------------
+
+def slerp(p0, p1, t):
+    p0 = array([p0[0], p0[1], p0[2], p0[3]])
+    p1 = array([p1[0], p1[1], p1[2], p1[3]])
+    omega = arccos(dot(p0/norm(p0), p1/norm(p1)))
+    so = sin(omega)
+    return sin((1.0-t)*omega) / so * p0 + sin(t*omega)/so * p1
+
+#----------------------------------------------------------------------
+
+def interpolate_odometry(first_odom, second_odom, timestamp):
+    # interpolate linearly between the first and second
+    # odometry readings, according to the timestep in between
+
+    first_ts = first_odom.header.stamp.secs + first_odom.header.stamp.nsecs/float(1e9)
+    second_ts = second_odom.header.stamp.secs + second_odom.header.stamp.nsecs/float(1e9)
+    target_ts = timestamp.secs + timestamp.nsecs/float(1e9)
+
+    if target_ts < first_ts or target_ts > second_ts or second_ts <= first_ts:
+        print "interpolate_odometry(): WAIT, WTF: first_ts < target_ts < second_ts not true: (%s, %s, %s)" % (first_ts, target_ts, second_ts)
+        return None
+
+    r = (target_ts - first_ts) / (second_ts - first_ts)
+
+    x = (1-r)*first_odom.pose.pose.position.x + r*second_odom.pose.pose.position.x
+    y = (1-r)*first_odom.pose.pose.position.y + r*second_odom.pose.pose.position.y
+    z = (1-r)*first_odom.pose.pose.position.z + r*second_odom.pose.pose.position.z
+
+    q = tf.transformations.quaternion_slerp((first_odom.pose.pose.orientation.x,
+        first_odom.pose.pose.orientation.y,
+        first_odom.pose.pose.orientation.z,
+        first_odom.pose.pose.orientation.w),
+        (second_odom.pose.pose.orientation.x,
+        second_odom.pose.pose.orientation.y,
+        second_odom.pose.pose.orientation.z,
+        second_odom.pose.pose.orientation.w),
+        r)
+
+    return (x, y, z, q[0], q[1], q[2], q[3])
+
+#----------------------------------------------------------------------
+
+def get_closest_camera_msgs(timestamp):
+    return [min(buffers[t], key=lambda msg : abs(msg.header.stamp.to_sec() - timestamp.to_sec())) for t in camera_topics]
+
+#----------------------------------------------------------------------
+
+buffers = dict()
+
+camera_topics = ["/camera/stereo/left/image_color/compressed",
+            "/camera/stereo/right/image_color/compressed",
+            "/camera/starboard/image_raw/compressed",
+            "/camera/port/image_raw/compressed",
+            "/camera/upward/image_raw/compressed"]
+
+camera_labels = [a.replace("camera","").replace("compressed","").replace("image_color","").replace("image_raw","").replace("stereo","").replace("/","") for a in camera_topics]
+
+camera_encodings = ["color" if ("color" in t) else "grayscale" for t in camera_topics]
+
+# camera calibration values from
+# /local_home/share/trail-mapping/launch/visualize_laser_and_odom.launch
+camera_calibration = [
+    ([-0.266126, 0.053003, -0.001336, 0.000365, 0.0],
+    [370.013128, 0.0, 376.019643, 0.0, 370.591069, 243.559521, 0.0, 0.0, 1.0]),
+    ([-0.25908, 0.051685, -0.001471, 0.000623, 0.0],
+    [363.517915, 0.0, 369.428623, 0.0, 363.845162, 246.840514, 0.0, 0.0, 1.0]),
+    ([-0.288511, 0.067405, -8.3e-05, 0.002205, 0.0],
+    [367.003109, 0.0, 308.429203, 0.0, 367.630866, 219.665808, 0.0, 0.0, 1.0]),
+    ([-0.297823, 0.073415, 0.000241, 0.001744, 0.0],
+    [391.945521, 0.0, 312.385231, 0.0, 392.323973, 237.055134, 0.0, 0.0, 1.0]),
+    ([-0.294832, 0.075288, -0.001018, 0.001253, 0.0],
+    [369.157112, 0.0, 320.534017, 0.0, 369.312316, 236.714441, 0.0, 0.0, 1.0])]
+
+laser_topics = ["/lidar/front/scan",
+            "/lidar/top/scan"]
+
+topics = ["/tf", "/encoder"]
+topics.extend(camera_topics)
+topics.extend(laser_topics)
+
+transformer = tf.Transformer(True, rospy.Duration(100.0))
+
+#----------------------------------------------------------------------
+
+def odom_to_transform(msg):
+    
+    q = msg.pose.pose.orientation
+    p = msg.pose.pose.position
+
+    r = tf.transformations.quaternion_inverse((q.x, q.y, q.z, q.w))
+    
+    tfs = TransformStamped()
+    tfs.header = msg.header
+    tfs.child_frame_id = "base_footprint"
+
+    t = Transform()
+    t.translation = Vector3(-p.x, -p.y, -p.z)
+    t.rotation = Quaternion(*r)
+    
+    tfs.transform = t
+
+    return tfs
+
+#----------------------------------------------------------------------
+
+def asMatrix(target_frame, hdr):
+    try:
+        translation,rotation = transformer.lookupTransform(target_frame, hdr.frame_id, hdr.stamp)
+        return fromTranslationRotation(translation, rotation)
+    except tf.ExtrapolationException as e:
+        #print "warning: %s" % e
+        pass
+    except tf.ConnectivityException as e:
+        #print "warning: %s" % e
+        pass
+
+#----------------------------------------------------------------------
+
+def fromTranslationRotation(translation, rotation):
+    return dot(tf.transformations.translation_matrix(translation), tf.transformations.quaternion_matrix(rotation))
+
+#----------------------------------------------------------------------
+
+def transform_pointcloud(point_cloud, target_frame):
+    r = PointCloud()
+    r.header.stamp = point_cloud.header.stamp
+    r.header.frame_id = target_frame
+    r.channels = point_cloud.channels
+
+    mat44 = asMatrix(target_frame, point_cloud.header)
+
+    if mat44 == None:
+        return None
+
+    def xf(p):
+        xyz = tuple(dot(mat44, array([p.x, p.y, p.z, 1.0])))[:3]
+        return Point(*xyz)
+    r.points = [xf(p) for p in point_cloud.points]
+    return r
+
+#----------------------------------------------------------------------
+
+def color_pointcloud(pc, camera_msg, camera_idx, filename):
+    img = compressed_img_to_cv2(camera_msg, camera_encodings[camera_idx])
+
+    cam_dist = array(camera_calibration[camera_idx][0])
+    cam_matrix = reshape(array(camera_calibration[camera_idx][1]), (3,3))
+
+    rot = array([0.0, 0.0, 0.0])
+    trans = array([0.0, 0.0, 0.0])
+    pc_camera = transform_pointcloud(pc, camera_msg.header.frame_id)
+    pc_world = transform_pointcloud(pc, "odom")
+
+    if pc_camera == None or pc_world == None:
+        return
+
+    points = array([[-p.y, -p.z, p.x] for p in pc_camera.points])
+
+    if len(points) > 0:
+        try:
+            points_pix, jacobian = cv2.projectPoints(points, rot, trans, cam_matrix, cam_dist)
+
+            points_to_write = []
+
+            for i,p in enumerate(points_pix.astype(int32)):
+                # if the point is in front of the camera and in the plane
+                if (points[i,2] > 0 and p[0,0] > 0 and p[0,1] > 0 and
+                        p[0,0] < img.shape[1] and p[0,1] < img.shape[0]):
+                    pt = (p[0,0], p[0,1])
+                    # X Y Z R G B
+                    if camera_encodings[camera_idx] == "color":
+                        points_to_write.append((pc_world.points[i].x,
+                                pc_world.points[i].y,
+                                pc_world.points[i].z,
+                                img[pt[1],pt[0],2],
+                                img[pt[1],pt[0],1],
+                                img[pt[1],pt[0],0]))
+                    else:
+                        points_to_write.append((pc_world.points[i].x,
+                                pc_world.points[i].y,
+                                pc_world.points[i].z,
+                                img[pt[1],pt[0]],
+                                img[pt[1],pt[0]],
+                                img[pt[1],pt[0]]))
+
+            append_lines(filename + "_" + camera_labels[camera_idx] + ".csv", ["%s,%s,%s,%s,%s,%s" % p for p in points_to_write])
+        except Exception as e:
+            print "exception... " + e
+
+#----------------------------------------------------------------------
+
+def pointcloud_from_scan(scan_msg):
+    ranges = scan_msg.ranges
+    intensities = scan_msg.intensities
+
+    pc = PointCloud()
+    pc.header = scan_msg.header
+    pc.points = []
+
+    for i,v in enumerate(ranges):
+        if v >= scan_msg.range_max or v <= scan_msg.range_min or isnan(v) or isinf(v):
+            continue
+
+        else:
+            theta = scan_msg.angle_min + i*scan_msg.angle_increment
+            p = Point32()
+            p.x = v * math.cos(theta)
+            p.y = v * math.sin(theta)
+            p.z = 0
+            pc.points.append(p)
+
+    return pc
+
+#----------------------------------------------------------------------
+
+def extract_colored_pointcloud_by_encoders(inbag, filename):
+    bag_tag = inbag.split("/")[-1].replace(".bag","")
+
+    t_origin = None
+    last_time = time.time()
+    print "--------------------------------------------------------"
+    print "opening %s... reading topics: %s" % (inbag, topics)
+    for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=topics):
+        # timestamp in nanoseconds to seconds
+        timestamp = timestamp.secs + float(timestamp.nsecs) / 1e9
+
+        # subtract the origin from all timestamps
+        if t_origin == None:
+            t_origin = timestamp
+        timestamp -= t_origin
+
+        if time.time() - last_time > 5:
+            print "... %.04f sec ... %s" % (timestamp, bag_tag)
+            last_time = time.time()
+
+        cleaned_topic = topic[1:].replace("/","_")
+        msg_t = msg.__class__.__name__.split("__")[1]
+
+        if msg_t == "Odometry":
+            odom_tf = odom_to_transform(msg)
+            transformer.setTransform(odom_tf)
+
+            if found_camera_and_laser():
+                for laser in laser_topics:
+                    for laser_msg in buffers[laser]:
+                        laser_pointcloud = pointcloud_from_scan(laser_msg)
+                        camera_msgs = get_closest_camera_msgs(laser_msg.header.stamp)
+
+                        for idx, cam_msg in enumerate(camera_msgs):
+                            color_pointcloud(laser_pointcloud, cam_msg, idx, filename)
+
+                    # then blank this laser buffer
+                    buffers[laser] = []
+
+                for camera in camera_topics:
+                    buffers[camera] = []
+
+        elif msg_t == "CompressedImage":
+            if topic not in buffers:
+                buffers[topic] = [msg]
+            else:
+                buffers[topic].append(msg)
+
+        elif msg_t == "LaserScan":
+            if topic not in buffers:
+                buffers[topic] = [msg]
+            else:
+                buffers[topic].append(msg)
+
+        elif msg_t == "TFMessage":
+            for m in msg.transforms:
+                transformer.setTransform(m)
+
+#----------------------------------------------------------------------
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='extracts a colored pointcloud using the laser, cameras, and wheel encoders')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-f', metavar='OUTPUT_FILENAME', required=True, help='output filename (csv)')
+    args = parser.parse_args()
+
+    try:
+        extract_colored_pointcloud_by_encoders(args.i, args.f)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

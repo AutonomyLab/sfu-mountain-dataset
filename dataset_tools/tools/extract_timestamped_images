@@ -1,0 +1,85 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import tf
+import time
+
+import cv2
+
+from numpy import *
+from numpy.linalg import norm
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
+from tf2_msgs.msg import *
+
+#----------------------------------------------------------------------
+
+def compressed_img_to_cv2(img, encoding):
+    #### direct conversion to CV2 ####
+    np_arr = fromstring(img.data, uint8)
+    if encoding == "color":
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
+    else:
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+
+#----------------------------------------------------------------------
+
+def save_img(directory, filename, img):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        print "creating directory %s to write file %s" % (directory, filename)
+    cv2.imwrite("%s/%s" % (directory, filename), img)
+
+#----------------------------------------------------------------------
+
+camera_topics = ["/camera/stereo/left/image_color/compressed",
+            "/camera/stereo/right/image_color/compressed",
+            "/camera/starboard/image_raw/compressed",
+            "/camera/port/image_raw/compressed",
+            "/camera/upward/image_raw/compressed",
+            "/camera/rear/image_raw/compressed"]
+
+camera_labels = [a.replace("camera","").replace("compressed","").replace("image_color","").replace("image_raw","").replace("stereo/","stereo_").replace("/","") for a in camera_topics]
+
+camera_encodings = ["color" if ("color" in t) else "grayscale" for t in camera_topics]
+
+#----------------------------------------------------------------------
+
+def extract_timestamped_images(inbag):
+    bag_tag = inbag.split("/")[-1].replace(".bag","")
+
+    last_time = time.time()
+    print "opening %s..." % inbag
+    for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=camera_topics):
+        if time.time() - last_time > 5:
+            print "... %.04f sec ... %s" % (timestamp.to_sec(), bag_tag)
+            last_time = time.time()
+
+        msg_t = msg.__class__.__name__.split("__")[1]
+
+        if msg_t == "CompressedImage":
+            camera_idx = camera_topics.index(topic)
+            cv2_img = compressed_img_to_cv2(msg, camera_encodings[camera_idx])
+            save_img("camera_" + camera_labels[camera_idx] + "/frames", "%s.jpg" % msg.header.stamp, cv2_img)
+        else:
+            print "WARNING, GOT WEIRD MESSAGE TYPE: %s" % msg_t
+
+#----------------------------------------------------------------------
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='extracts the frames from a bagfile and saves them as <timestamp>.jpg')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    args = parser.parse_args()
+
+    try:
+        extract_timestamped_images(args.i)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

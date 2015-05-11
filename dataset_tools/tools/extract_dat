@@ -1,0 +1,209 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import tf
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
+from tf2_msgs.msg import *
+
+if not os.path.exists("csv"):
+    os.makedirs("csv")
+
+file_dict = dict()
+
+def append_line(filename, line):
+    if filename not in file_dict:
+        with open(filename, "w") as f:
+            f.write("")
+        file_dict[filename] = True
+        print "file %s created" % filename
+
+    with open(filename, "a") as f:
+        f.write("%s\n" % line)
+
+def extract_dat(inbag):
+    t_origin = None
+    count = 0
+    print "opening %s..." % inbag
+    for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages():
+        # timestamp in nanoseconds to seconds
+        timestamp = timestamp.secs + float(timestamp.nsecs) / 1e9
+
+        # subtract the origin from all timestamps and write to a file
+        if t_origin == None:
+            t_origin = timestamp
+            with open("csv/timestamp_origin", "w") as f:
+                f.write("%s\n" % t_origin)
+        timestamp -= t_origin
+
+        if count % 20000 == 0:
+            print "... %s sec ... %s" % (timestamp, topic)
+        count += 1
+
+        cleaned_topic = topic[1:].replace("/","_")
+
+        msg_t = msg.__class__.__name__.split("__")[1]
+
+        if msg_t == "FluidPressure":
+            append_line("csv/1d-seq-stamp-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.header.seq, timestamp))
+            append_line("csv/1d-pressure-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.fluid_pressure))
+            append_line("csv/1d-variance-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.variance))
+
+        elif msg_t == "Twist":
+            append_line("csv/1d-vx-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.linear.x))
+            append_line("csv/1d-vy-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.linear.y))
+            append_line("csv/1d-vz-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.linear.z))
+
+            append_line("csv/1d-vroll-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.angular.x))
+            append_line("csv/1d-vpitch-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.angular.y))
+            append_line("csv/1d-vyaw-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.angular.z))
+
+        elif msg_t == "Odometry":
+            append_line("csv/1d-seq-stamp-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.header.seq, timestamp))
+
+            x = msg.pose.pose.position.x
+            y = msg.pose.pose.position.y
+            z = msg.pose.pose.position.z
+            
+            append_line("csv/1d-x-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, x))
+            append_line("csv/1d-y-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, y))
+            append_line("csv/1d-z-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, z))
+
+            append_line("csv/1d-vx-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.twist.twist.linear.x))
+            append_line("csv/1d-vy-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.twist.twist.linear.y))
+            append_line("csv/1d-vz-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.twist.twist.linear.z))
+
+            r,p,yaw = tf.transformations.euler_from_quaternion((
+                msg.pose.pose.orientation.x,
+                msg.pose.pose.orientation.y,
+                msg.pose.pose.orientation.z,
+                msg.pose.pose.orientation.w))
+
+            append_line("csv/1d-roll-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, r))
+            append_line("csv/1d-pitch-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, p))
+            append_line("csv/1d-yaw-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, yaw))
+
+            append_line("csv/2d-x-y-%s.csv" % cleaned_topic,
+                    "%s,%s" % (x, y))
+
+            append_line("csv/3d-x-y-z-%s.csv" % cleaned_topic,
+                "%s,%s,%s" % (x, y, z))
+
+            append_line("csv/3d-r-p-y-%s.csv" % cleaned_topic,
+                "%s,%s,%s" % (r, p, yaw))
+
+            append_line("csv/1d-vroll-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.twist.twist.angular.x))
+            append_line("csv/1d-vpitch-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.twist.twist.angular.y))
+            append_line("csv/1d-vyaw-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.twist.twist.angular.z))
+
+        elif msg_t == "Imu":
+            append_line("csv/1d-seq-stamp-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.header.seq, timestamp))
+
+            r,p,yaw = tf.transformations.euler_from_quaternion((
+                msg.orientation.x,
+                msg.orientation.y,
+                msg.orientation.z,
+                msg.orientation.w))
+
+            append_line("csv/1d-roll-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, r))
+            append_line("csv/1d-pitch-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, p))
+            append_line("csv/1d-yaw-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, yaw))
+
+            append_line("csv/1d-vroll-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.angular_velocity.x))
+            append_line("csv/1d-vpitch-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.angular_velocity.y))
+            append_line("csv/1d-vyaw-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.angular_velocity.z))
+
+            append_line("csv/1d-ax-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.linear_acceleration.x))
+            append_line("csv/1d-ay-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.linear_acceleration.y))
+            append_line("csv/1d-az-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.linear_acceleration.z))
+
+            append_line("csv/3d-r-p-y-%s.csv" % cleaned_topic,
+                "%s,%s,%s" % (r, p, yaw))
+
+        elif msg_t == "CompressedImage":
+            append_line("csv/1d-seq-stamp-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.header.seq, timestamp))
+
+        elif msg_t == "LaserScan":
+            append_line("csv/1d-seq-stamp-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.header.seq, timestamp))
+            
+            ranges = [str(a) for a in msg.ranges]
+            append_line("csv/laser-ranges-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, ",".join(ranges)))
+            intensities = [str(a) for a in msg.intensities]
+            append_line("csv/laser-intensities-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, ",".join(intensities)))
+        
+        elif msg_t == "NavSatFix":
+            append_line("csv/1d-seq-stamp-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.header.seq, timestamp))
+
+            append_line("csv/1d-lat-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.latitude))
+            append_line("csv/1d-long-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.longitude))
+            append_line("csv/1d-alt-%s.csv" % cleaned_topic,
+                    "%s,%s" % (timestamp, msg.altitude))
+
+            append_line("csv/2d-lat-long-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.latitude, msg.longitude))
+            append_line("csv/3d-lat-long-alt-%s.csv" % cleaned_topic,
+                "%s,%s,%s" % (msg.latitude, msg.longitude, msg.altitude))
+
+        elif msg_t == "TimeReference":
+            append_line("csv/1d-seq-stamp-%s.csv" % cleaned_topic,
+                "%s,%s" % (msg.header.seq, timestamp))
+            
+            append_line("csv/1d-time-ref-%s.csv" % cleaned_topic,
+                "%s,%s" % (timestamp, msg.time_ref))
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='extracts plot-friendly data files of some message types in the bagfile')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    args = parser.parse_args()
+
+    try:
+        extract_dat(args.i)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()
