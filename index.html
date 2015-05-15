@@ -32,6 +32,7 @@
 <script type="text/javascript">
     $(function() {
         $("#placematches").hide()
+        $("#sensors").hide()
         $("#rawdata").hide()
 
         $("#timestampoffsets").hide()
@@ -160,6 +161,62 @@
 
     <hr/>
 
+    <h3 onclick="$('#sensors').slideToggle('fast');">Sensors</h3>
+
+    <div id="sensors">
+        <p>Our trail navigation robot is equipped with the following payload configuration:</p>
+        <ul>
+                <li> 2 x <strong>PointGray Firefly color cameras</strong> facing forward
+in stereo configuration with approximately 90-degree field of view
+(FMVU-03M2C-CS), 752x480 pixels, 1/3'' Aptina MT9V022 CMOS, global
+shutter, 30 Hz</li>
+
+    <br/>
+    <li> 4 x <strong>PointGray Firefly monochrome cameras</strong> facing port,
+starboard, rear, and upward with approximately 90-degree field of view
+(FMVU-03M2M-CS), 640x480 pixels, 1/3" Aptina MT9V022 CMOS, global
+shutter, 30 Hz</li>
+
+    <br/>
+    <li> 1 x <strong>SICK LMS111 scanning laser rangefinder</strong> with
+270-degree increments, mounted with
+180-degree roll and angled toward the ground in "push-broom" style
+approximately 20-degree to the horizontal, 18 metre range,
+50 Hz</li>
+
+    <br/>
+    <li> 1 x <strong>SICK LMS200 scanning laser rangefinder</strong> with
+180-degree increments, sweeping a
+vertical plane normal to the x-axis of the robot, 8 metre range,
+10 Hz</li>
+
+    <br/>
+    <li> 1 x <strong>Garmin 18x GPS receiver</strong> with 15 metre accuracy at
+95% confidence, 5 Hz</li>
+
+    <br/>
+    <li> 1 x <strong>UM6 inertial measurement unit</strong> providing orientation with
+2-degree yaw accuracy,
+angular velocity and linear acceleration, 50 Hz</li>
+
+    <br/>
+    <li> 1 x <strong>Wheel encoders</strong> providing linear and angular velocity at
+10 Hz</li>
+
+    <br/>
+    <li> 1 x <strong>Barometric pressure sensor</strong> from LG Nexus mobile phone in Pa
+at 30 Hz</li>
+
+    <br/>
+    <li> 4 x <strong>Titan 54 W off-road LED lights</strong> (ORBT9-54WD-FL)
+with brightness of 3780 lumen, 5000 K color temperature and
+60-degree beam angle, night sessions only</li>
+
+        </ul>
+    </div>
+
+    <hr/>
+
     <h3 onclick="$('#placematches').slideToggle('fast');">Place Matches</h3>
 
     <div id="placematches">
@@ -234,6 +291,7 @@
     <br/>
 
     </div>
+
 
     <hr/>
     <h3 onclick="$('#rawdata').slideToggle('fast');">Raw Sensor Data</h3>
