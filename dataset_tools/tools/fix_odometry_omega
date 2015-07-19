@@ -20,7 +20,7 @@ def fix_odometry_omega(inbag,outbag):
             first_t = t
         if t - last_t > rospy.Duration(60):
             last_t = t
-            print "%s --- %s seconds in..." % (inbag, (t-first_t).to_sec)
+            print "%s --- %s seconds in..." % (inbag, (t-first_t).to_sec())
 
         if topic == "/encoder":
             msg.twist.twist.angular.z *= 2
