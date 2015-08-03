@@ -1,0 +1,20 @@
+image_width: 752
+image_height: 480
+camera_name: FILL_ME_IN
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [370.013128, 0.0, 376.019643, 0.0, 370.591069, 243.559521, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.266126, 0.053003, -0.001336, 0.000365, 0.0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [254.827194, 0.0, 376.132035, 0.0, 0.0, 321.208099, 243.212551, 0.0, 0.0, 0.0, 1.0, 0.0]

@@ -1,0 +1,24 @@
+image_width: 640
+image_height: 480
+camera_name: upward
+camera_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [369.157112, 0.0, 320.534017, 0.0, 369.312316, 236.714441, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients: !!opencv-matrix
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.294832, 0.075288, -0.001018, 0.001253, 0.0]
+rectification_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix: !!opencv-matrix
+  rows: 3
+  cols: 4
+  dt: d
+  data: [271.53299, 0.0, 323.084006, 0.0, 0.0, 314.952911, 234.051642, 0.0, 0.0, 0.0, 1.0, 0.0]

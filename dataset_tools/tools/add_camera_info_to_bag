@@ -1,0 +1,72 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import yaml
+from sensor_msgs.msg import CameraInfo
+
+def add_camera_info_to_bag(inbag,outbag, camera_topics, camera_info_topics, camera_infos):
+    print '   Processing input bagfile: %s'% inbag
+    print '  Writing to output bagfile: %s'% outbag
+
+    outbag = rosbag.Bag(outbag,'w')
+    t_origin = None
+    t_last = None
+
+    print "adding camera infos: ", camera_info_topics, " for cameras ", camera_topics
+
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        outbag.write(topic, msg, t)
+
+        if t_origin == None: t_origin = t
+        if int(t.to_sec()) %10 == 0 and t_last != int(t.to_sec()):
+            print inbag, " : ", (t-t_origin).to_sec()
+            t_last = int(t.to_sec())
+
+        if topic in camera_topics:
+            idx = camera_topics.index(topic)
+            camera_infos[idx].header = msg.header
+            outbag.write(camera_info_topics[idx], camera_infos[idx], t)   
+
+    outbag.close();
+
+def read_camera_info(filename):
+    with open(filename, "r") as f:
+        cameras = yaml.load_all(f)
+        camera_topics = []
+        camera_info_topics = []
+        camera_infos = []
+        for camera in cameras:
+            camera_info = CameraInfo()
+            camera_info.distortion_model = camera["distortion_model"]
+            camera_info.height = camera["image_height"]
+            camera_info.width = camera["image_width"]
+            camera_info.D = camera["distortion_coefficients"]["data"]
+            camera_info.K = camera["camera_matrix"]["data"]
+            camera_info.R = camera["rectification_matrix"]["data"]
+            camera_info.P = camera["projection_matrix"]["data"]
+            camera_infos.append(camera_info)
+            
+            camera_topics.append(camera["camera_topic"])
+            camera_info_topics.append(camera["camera_info_topic"])
+
+        return camera_topics, camera_info_topics, camera_infos
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+            description='adds a CameraInfo calibration for a camera in a bagfile')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    parser.add_argument('-f', metavar='CONFIG_FILE', required=True, help='config file in yaml format')
+    args = parser.parse_args()
+
+    camera_topics, camera_info_topics, camera_infos = read_camera_info(args.f)
+
+    try:
+        add_camera_info_to_bag(args.i,args.o, camera_topics, camera_info_topics, camera_infos)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

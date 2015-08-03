@@ -1,0 +1,24 @@
+image_width: 752
+image_height: 480
+camera_name: stereo_left
+camera_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [370.013128, 0.0, 376.019643, 0.0, 370.591069, 243.559521, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients: !!opencv-matrix
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.266126, 0.053003, -0.001336, 0.000365, 0.0]
+rectification_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [0.999999155, 0.00127084160, -0.000273096594, -0.00127243817, 0.999981621, -0.00592777542, 0.000265558311, 0.00592811791, 0.999982393]
+projection_matrix: !!opencv-matrix
+  rows: 3
+  cols: 4
+  dt: d
+  data: [222.16208507,    0.0,          366.27563953,  -87.71566366,      0.0,          222.16208507,  244.81510353,    0.0        ,          0.0,            0.0,            1.0,            0.0   ]

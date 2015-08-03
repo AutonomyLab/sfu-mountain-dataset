@@ -1,0 +1,24 @@
+image_width: 640
+image_height: 480
+camera_name: firefly_pelican
+camera_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [945.485094, 0.0, 300.985512, 0.0, 947.411092, 232.924453, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients: !!opencv-matrix
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.375485, 0.135707, -0.000715, -0.002663, 0.0]
+rectification_matrix: !!opencv-matrix
+  rows: 3
+  cols: 3
+  dt: d
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix: !!opencv-matrix
+  rows: 3
+  cols: 4
+  dt: d
+  data: [900.484985, 0.0, 297.607932, 0.0, 0.0, 921.702515, 231.927709, 0.0, 0.0, 0.0, 1.0, 0.0]
