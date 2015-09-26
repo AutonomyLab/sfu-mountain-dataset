@@ -1,0 +1,43 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+
+def remove_topics(inbag,outbag,topics):
+  rospy.loginfo('   Processing input bagfile: %s', inbag)
+  rospy.loginfo('  Writing to output bagfile: %s', outbag)
+  rospy.loginfo('         Removing topics: %s', ' '.join(topics))
+
+  outbag = rosbag.Bag(outbag,'w')
+  orig_t = None
+  last_t = None
+  for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+      if orig_t == None: 
+          orig_t = t
+          last_t = t
+      if int(t.to_sec()) % 10 == 0 and int(t.to_sec()) != last_t:
+          last_t = int(t.to_sec())
+          print inbag, " : ", (t - orig_t).to_sec()
+
+      if topic in topics:
+          outbag.write(topic, msg, t)
+  rospy.loginfo('Closing output bagfile and exit...')
+  outbag.close();
+
+if __name__ == "__main__":
+
+  parser = argparse.ArgumentParser(
+      description='removes all topics not given, separated by commas')
+  parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+  parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+  parser.add_argument('-t', metavar='TOPICS', required=True, help='topic names to remove, separated by commas')
+  args = parser.parse_args()
+
+  try:
+    remove_topics(args.i,args.o,[topic.strip() for topic in args.t.split(",")])
+  except Exception, e:
+    import traceback
+    traceback.print_exc()

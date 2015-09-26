@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+PKG = 'bag_tools' # this package name
+
+import roslib; roslib.load_manifest(PKG)
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+
+def fix_upward_tf(inbag,outbag):
+    rospy.loginfo('   Processing input bagfile: %s', inbag)
+    rospy.loginfo('  Writing to output bagfile: %s', outbag)
+
+    outbag = rosbag.Bag(outbag,'w')
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if topic == "/tf":
+            new_transforms = []
+            for transform in msg.transforms:
+                if transform.child_frame_id == "camera_upward":
+                    transform.transform.rotation.x = 0
+                    transform.transform.rotation.y = -0.70710678
+                    transform.transform.rotation.z = 0
+                    transform.transform.rotation.w = 0.70710678
+                    new_transforms.append(transform)
+                else:
+                    new_transforms.append(transform)
+                
+            msg.transforms = new_transforms
+        outbag.write(topic, msg, t)
+    rospy.loginfo('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='fixes the upward_camera transform: it was rotated backward')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    args = parser.parse_args()
+
+    try:
+        fix_upward_tf(args.i,args.o)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

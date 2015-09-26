@@ -1,0 +1,115 @@
+#! /usr/bin/env python
+
+import rospy
+import sys, os, numpy as np
+import time
+
+from geometry_msgs.msg import *
+from sensor_msgs.msg import *
+from nav_msgs.msg import *
+from std_msgs.msg import *
+
+#---------------------------------------------------------
+
+laser_topics = [("/lidar/front/scan", 50),
+        ("/lidar/top/scan", 10)]
+
+camera_topics = [("/camera/port/image_raw/compressed", 30),
+        ("/camera/rear/image_raw/compressed", 30),
+        ("/camera/starboard/image_raw/compressed", 30),
+        ("/camera/upward/image_raw/compressed", 30),
+        ("/camera/stereo/left/image_color/compressed", 30),
+        ("/camera/stereo/right/image_color/compressed", 30)]
+
+pressure_topics = [("/barometric_pressure", 30)]
+
+imu_topics = [("/imu/data", 50)]
+
+encoder_topics = [("/encoder", 10)]
+
+gps_topics = [("/navsat/fix", 5)]
+
+topics = laser_topics + camera_topics + pressure_topics + imu_topics + encoder_topics + gps_topics
+
+#---------------------------------------------------------
+
+msg_times = dict()
+
+#---------------------------------------------------------
+
+def handle_msg(ros_msg, (topic, hz)):
+    if topic not in msg_times:
+        msg_times[topic] = []
+
+    msg_times[topic].append(rospy.Time.now())
+
+#---------------------------------------------------------
+
+def beep():
+    print('\a')
+
+#---------------------------------------------------------
+
+def heartbeat_beep():
+    beep()
+
+#---------------------------------------------------------
+
+last_beep = None
+def occasional_beep(interval):
+    global last_beep
+    if last_beep == None or rospy.Time.now() - last_beep > rospy.Duration(interval):
+        last_beep = rospy.Time.now()
+        heartbeat_beep()
+
+#---------------------------------------------------------
+
+def setup_node():
+    rospy.init_node("sensor_monitor")
+
+    for topic, hz in camera_topics:
+        rospy.Subscriber(topic, CompressedImage, handle_msg, callback_args=(topic,hz))
+    for topic, hz in laser_topics:
+        rospy.Subscriber(topic, LaserScan, handle_msg, callback_args=(topic,hz))
+    for topic, hz in pressure_topics:
+        rospy.Subscriber(topic, FluidPressure, handle_msg, callback_args=(topic,hz))
+    for topic, hz in imu_topics:
+        rospy.Subscriber(topic, Imu, handle_msg, callback_args=(topic,hz))
+    for topic, hz in encoder_topics:
+        rospy.Subscriber(topic, Odometry, handle_msg, callback_args=(topic,hz))
+    for topic, hz in gps_topics:
+        rospy.Subscriber(topic, NavSatFix, handle_msg, callback_args=(topic,hz))
+
+#---------------------------------------------------------
+
+if __name__ == "__main__":
+    setup_node()
+    interval = 5.0
+    heartbeat = 120.0
+    tolerance = 0.2
+
+    while not rospy.is_shutdown():
+        occasional_beep(heartbeat)
+
+        now = rospy.Time.now()
+        sensors_fine = True
+
+        for topic, hz in topics:
+            if topic not in msg_times:
+                beep()
+                sensors_fine = False
+                rospy.logwarn("%s not received yet!" % topic)
+                continue
+
+            msg_times[topic] = filter(lambda t: (now-t) < rospy.Duration(interval*2), msg_times[topic])
+            
+            if (len(msg_times[topic]) / (2*interval) > hz*(1.0+tolerance) or 
+                    len(msg_times[topic]) / (2*interval) < hz*(1.0-tolerance)):
+                beep()
+                sensors_fine = False
+                rospy.logwarn("%s invalid hz [%.02f, %.02f]" % (topic, len(msg_times[topic]) / interval, hz))
+
+        if sensors_fine:
+            rospy.loginfo("All sensors publishing normally")
+
+        rospy.sleep(interval)

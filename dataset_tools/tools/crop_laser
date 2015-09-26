@@ -1,0 +1,56 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+
+def crop_laser(inbag,outbag,topic,min_theta,max_theta):
+  rospy.loginfo('   Processing input bagfile: %s', inbag)
+  rospy.loginfo('  Writing to output bagfile: %s', outbag)
+  rospy.loginfo('         cropping laser (%s) to range: [%s, %s]', topic, min_theta, max_theta)
+
+  outbag = rosbag.Bag(outbag,'w')
+  orig_t = None
+  last_t = None
+  for top, msg, t in rosbag.Bag(inbag,'r').read_messages():
+      if orig_t == None: 
+          orig_t = t
+          last_t = t
+      if int(t.to_sec()) % 10 == 0 and int(t.to_sec()) != last_t:
+          last_t = int(t.to_sec())
+          print inbag, " : ", (t - orig_t).to_sec()
+
+      if top == topic:
+          min_idx = int((min_theta-msg.angle_min) / msg.angle_increment)
+          max_idx = int((max_theta-msg.angle_min) / msg.angle_increment)
+
+          msg.ranges = msg.ranges[min_idx:max_idx]
+          msg.intensities = msg.intensities[min_idx:max_idx]
+
+          msg.angle_min = min_theta
+          msg.angle_max = max_theta
+          msg.angle_increment = (msg.angle_max-msg.angle_min)/len(msg.ranges)
+          msg.time_increment = msg.scan_time / len(msg.ranges)
+
+      outbag.write(top, msg, t);
+  rospy.loginfo('Closing output bagfile and exit...')
+  outbag.close();
+
+if __name__ == "__main__":
+
+  parser = argparse.ArgumentParser(
+      description='removes all topics given, separated by commas')
+  parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+  parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+  parser.add_argument('-n', metavar='MIN_THETA', required=True, help='min beam angle to keep')
+  parser.add_argument('-x', metavar='MAX_THETA', required=True, help='max beam angle to keep')
+  parser.add_argument('-t', metavar='TOPIC', required=True, help='topic for laser to crop')
+  args = parser.parse_args()
+
+  try:
+    crop_laser(args.i,args.o,args.t,float(args.n),float(args.x));
+  except Exception, e:
+    import traceback
+    traceback.print_exc()

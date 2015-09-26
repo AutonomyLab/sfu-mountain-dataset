@@ -1,0 +1,31 @@
+#! /usr/bin/env python
+
+import math
+import os, sys
+
+target_field = sys.argv[2]
+target_idx = -1
+offset = int(sys.argv[3])
+
+with open(sys.argv[1], "r") as f:
+    for line in f.readlines():
+        line = line.strip()
+        if line[0] == '%':
+            fields = line[1:].split(",")
+            try:
+                target_idx = fields.index(target_field)
+            except Exception as e:
+                print "ERROR: %s field not found in %s" % (target_field, fields)
+                sys.exit(1)
+            print line
+
+        else:
+            fields = line.split(",")
+            newval = int(fields[target_idx]) - offset
+            newfields = []
+            for i,v in enumerate(fields):
+                if i == target_idx:
+                    newfields.append("%s" % newval)
+                else:
+                    newfields.append(v)
+            print ",".join(newfields)

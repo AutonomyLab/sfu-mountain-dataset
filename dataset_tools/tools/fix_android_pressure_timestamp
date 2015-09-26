@@ -1,0 +1,35 @@
+#!/usr/bin/python
+
+PKG = 'bag_tools' # this package name
+
+import roslib; roslib.load_manifest(PKG)
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+
+def fix_android_pressure_timestamp(inbag,outbag):
+    rospy.loginfo('   Processing input bagfile: %s', inbag)
+    rospy.loginfo('  Writing to output bagfile: %s', outbag)
+
+    outbag = rosbag.Bag(outbag,'w')
+    latest_stamp = None
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if topic == "/barometric_pressure":
+            msg.header.stamp = t
+        outbag.write(topic, msg, t)
+    rospy.loginfo('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='fixes the timestamp output by the lab\'s android phone... it seems to be twice what it should be')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    args = parser.parse_args()
+
+    try:
+        fix_android_pressure_timestamp(args.i,args.o)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

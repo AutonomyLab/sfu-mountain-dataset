@@ -1,0 +1,201 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import tf
+import glob
+import math
+
+import numpy as np
+from scipy.ndimage import filters
+
+import cv2
+from cv_bridge import CvBridge
+
+from geometry_msgs.msg import *
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
+from tf2_msgs.msg import *
+
+def mkdir_p(d):
+    if not os.path.exists(d):
+        os.makedirs(d)
+
+header_map = {
+        "encoder" : "field.header.stamp,field.twist.twist.linear.x,field.twist.twist.angular.z",
+        "barometric_pressure" : "field.header.stamp,field.fluid_pressure",
+        "husky_cmd_vel" : "field.header.stamp,field.linear.x,field.angular.z",
+        "imu_data" : "field.header.stamp,field.orientation.x,field.orientation.y,field.orientation.z,field.orientation.w,field.orientation_covariance0,field.orientation_covariance1,field.orientation_covariance2,field.orientation_covariance3,field.orientation_covariance4,field.orientation_covariance5,field.orientation_covariance6,field.orientation_covariance7,field.orientation_covariance8,field.angular_velocity.x,field.angular_velocity.y,field.angular_velocity.z,field.angular_velocity_covariance0,field.angular_velocity_covariance1,field.angular_velocity_covariance2,field.angular_velocity_covariance3,field.angular_velocity_covariance4,field.angular_velocity_covariance5,field.angular_velocity_covariance6,field.angular_velocity_covariance7,field.angular_velocity_covariance8,field.linear_acceleration.x,field.linear_acceleration.y,field.linear_acceleration.z,field.linear_acceleration_covariance0,field.linear_acceleration_covariance1,field.linear_acceleration_covariance2,field.linear_acceleration_covariance3,field.linear_acceleration_covariance4,field.linear_acceleration_covariance5,field.linear_acceleration_covariance6,field.linear_acceleration_covariance7,field.linear_acceleration_covariance8",
+        "imu_mag" : "field.header.stamp,field.vector.x,field.vector.y,field.vector.z",
+        "imu_temperature" : "field.header.stamp,field.data",
+        "lidar_front_scan" : "field.header.stamp," + ",".join(["field.ranges"+str(i) for i in xrange(0,541)]) 
+            + ",".join(["field.intensities"+str(i) for i in xrange(0,541)]),
+            "lidar_top_scan" : "field.header.stamp," + ",".join(["field.ranges"+str(i) for i in xrange(0,181)]),
+            "navsat_enu" : "field.header.stamp,field.pose.pose.position.x,field.pose.pose.position.y,field.pose.pose.position.z",
+            "navsat_fix" : "field.header.stamp,field.status.status,field.status.service,field.latitude,field.longitude,field.altitude,field.position_covariance0,field.position_covariance1,field.position_covariance2,field.position_covariance3,field.position_covariance4,field.position_covariance5,field.position_covariance6,field.position_covariance7,field.position_covariance8,field.position_covariance_type"
+        }
+
+file_dict = dict()
+
+def append_line(filename, line):
+    if filename not in file_dict:
+        header = "%" + "%s\n" % header_map[filename.replace("/data.csv", "")]
+        with open(filename, "w") as f:
+            f.write(header)
+        file_dict[filename] = True
+        print "file %s created" % filename
+
+    with open(filename, "a") as f:
+        f.write("%s\n" % line)
+
+def compressed_img_to_cv2(img, encoding):
+    #### direct conversion to CV2 ####
+    np_arr = np.fromstring(img.data, np.uint8)
+    if encoding == "color":
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_COLOR)
+    else:
+        return cv2.imdecode(np_arr, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+
+def process_bag(inbag):
+    topics = ["/husky/odom",
+            "/husky/cmd_vel",
+            "/lidar/front/scan",
+            "/lidar/top/scan",
+            "/navsat/enu",
+            "/navsat/fix",
+            "/imu/data",
+            "/imu/mag",
+            "/imu/temperature",
+            "/barometric_pressure",
+            "/camera/port/image_raw/compressed",
+            "/camera/rear/image_raw/compressed",
+            "/camera/upward/image_raw/compressed",
+            "/camera/stereo/right/image_color/compressed",
+            "/camera/stereo/left/image_color/compressed",
+            "/camera/starboard/image_raw/compressed"]
+
+    camera_map = {
+            "/camera/port/image_raw/compressed" : "camera_port",
+            "/camera/rear/image_raw/compressed" : "camera_rear",
+            "/camera/upward/image_raw/compressed" : "camera_upward",
+            "/camera/starboard/image_raw/compressed" : "camera_starboard",
+            "/camera/stereo/left/image_color/compressed" : "camera_stereo_left",
+            "/camera/stereo/right/image_color/compressed" : "camera_stereo_right"
+        }
+
+    bag_tag = inbag.split("/")[-1].replace(".bag","")
+
+    mkdir_p("encoder")
+    mkdir_p("barometric_pressure")
+    mkdir_p("husky_cmd_vel")
+    mkdir_p("imu_data")
+    mkdir_p("imu_mag")
+    mkdir_p("imu_temperature")
+    mkdir_p("lidar_front_scan")
+    mkdir_p("lidar_top_scan")
+    mkdir_p("navsat_enu")
+    mkdir_p("navsat_fix")
+    mkdir_p("camera_port")
+    mkdir_p("camera_rear")
+    mkdir_p("camera_starboard")
+    mkdir_p("camera_upward")
+    mkdir_p("camera_stereo_left")
+    mkdir_p("camera_stereo_right")
+
+    t_origin = None
+    count = 0
+
+    print "opening %s..." % inbag
+    for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=topics):
+        # timestamp in nanoseconds to seconds
+        rel_timestamp = timestamp.secs + float(timestamp.nsecs) / 1e9
+        if t_origin == None:
+            t_origin = rel_timestamp
+        rel_timestamp -= t_origin
+        if count % 10000 == 0:
+            print "%s ... %s sec ... " % (inbag, rel_timestamp)
+        count += 1
+        cleaned_topic = topic[1:].replace("/","_")
+        msg_t = msg.__class__.__name__.split("__")[1]
+
+        if msg_t == "CompressedImage":
+            if "color" in topic:
+                cv2_img = compressed_img_to_cv2(msg, "color")
+                cv2.imwrite("%s/%s.jpg" % (camera_map[topic], str(timestamp)), cv2_img)
+            else:
+                cv2_img = compressed_img_to_cv2(msg, "grayscale")
+                cv2.imwrite("%s/%s.jpg" % (camera_map[topic], str(timestamp)), cv2_img)
+
+        elif msg_t == "Odometry":
+            if topic == "/husky/odom":
+                append_line("encoder/data.csv", "%s,%s,%s" % (str(timestamp),
+                    msg.twist.twist.linear.x,
+                    msg.twist.twist.angular.z))
+            elif topic == "/navsat/enu":
+                append_line("navsat_enu/data.csv", "%s,%s,%s,%s" % (str(timestamp),
+                    msg.pose.pose.position.x,
+                    msg.pose.pose.position.y,
+                    msg.pose.pose.position.z))
+
+        elif msg_t == "Imu":
+            append_line("imu_data/data.csv", ",".join([str(j) for j in [
+                str(timestamp), msg.orientation.x, msg.orientation.y, msg.orientation.z, msg.orientation.w]
+                + [str(i) for i in msg.orientation_covariance] + [
+                msg.angular_velocity.x, msg.angular_velocity.y, msg.angular_velocity.z]
+                + [str(i) for i in msg.angular_velocity_covariance] + [
+                msg.linear_acceleration.x, msg.linear_acceleration.y, msg.linear_acceleration.z]
+                + [str(i) for i in msg.linear_acceleration_covariance]]))
+
+        elif msg_t == "Twist":
+            append_line("husky_cmd_vel/data.csv", ",".join([str(j) for j in [
+                str(timestamp), msg.linear.x, msg.angular.z
+                ]]))
+
+        elif msg_t == "FluidPressure":
+            append_line("barometric_pressure/data.csv", ",".join([str(j) for j in [
+                str(timestamp), msg.fluid_pressure
+                ]]))
+
+        elif msg_t == "Vector3Stamped":
+            if topic == "/imu/mag":
+                append_line("imu_mag/data.csv", ",".join([
+                    str(timestamp), str(msg.vector.x), str(msg.vector.y), str(msg.vector.z)
+                    ]))
+
+        elif msg_t == "Float32":
+            if topic == "/imu/temperature":
+                append_line("imu_temperature/data.csv", ",".join([
+                    str(timestamp), str(msg.data)
+                    ]))
+
+        elif msg_t == "LaserScan":
+            if topic == "/lidar/front/scan":
+                append_line("lidar_front_scan/data.csv", ",".join([
+                    str(timestamp)] + [str(r) for r in msg.ranges] + [str(i) for i in msg.intensities]))
+            elif topic == "/lidar/top/scan":
+                append_line("lidar_top_scan/data.csv", ",".join([
+                    str(timestamp)] + [str(r) for r in msg.ranges]))
+
+
+        elif msg_t == "NavSatFix":
+            if topic == "/navsat/fix":
+                append_line("navsat_fix/data.csv", ",".join([str(j) for j in [
+                    str(timestamp), msg.status.status, msg.status.service,
+                    msg.latitude, msg.longitude, msg.altitude]
+                    + [str(i) for i in msg.position_covariance] + [msg.position_covariance_type
+                    ]]))
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='extracts publishable CSV files and JPG images from a bagfile')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    args = parser.parse_args()
+
+    try:
+        process_bag(args.i)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

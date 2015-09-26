@@ -1,0 +1,37 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+
+def fix_odometry_omega(inbag,outbag):
+    rospy.loginfo('   Processing input bagfile: %s', inbag)
+    rospy.loginfo('  Writing to output bagfile: %s', outbag)
+
+    outbag = rosbag.Bag(outbag,'w')
+
+    first_t = None
+    last_t = None
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if last_t == None: 
+            last_t = t
+            first_t = t
+        if t - last_t > rospy.Duration(60):
+            last_t = t
+            print "%s --- %s seconds in..." % (inbag, (t-first_t).to_sec())
+
+        if topic == "/encoder":
+            msg.twist.twist.angular.z *= 2
+        outbag.write(topic, msg, t)
+    rospy.loginfo('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='fixes the omega (turn rate) of the encoder topic by a factor of 2')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    args = parser.parse_args()
+
+    fix_odometry_omega(args.i,args.o)
