@@ -44,6 +44,8 @@
         $("#wetdata").hide()
         $("#duskdata").hide()
         $("#nightdata").hide()
+
+        $("#extras").hide()
     });
 </script>
 
@@ -1326,6 +1328,47 @@ with brightness of 3780 lumen, 5000 K color temperature and
     </div>
 
     </div> <!-- end rawdata div -->
+
+    <hr/>
+    <h3 onclick="$('#extras').slideToggle('fast');">Extras</h3>
+
+    <div id="extras">
+    
+      <p>
+        In addition to the trail runs described in the paper, we provide five extra recorded sessions
+        using the same robot configuration, but with the front laser scanner oriented in horizontal position
+        instead. One session records a section of the first trail described in the paper, while four other
+        sessions were recorded inside buildings on the SFU campus. This data is provided only in the form of
+        ROS bag files, and we cannot guarantee the same level of calibration quality as in the main dataset.
+      </p>
+
+    <div id="extrabags" style="width: 50%">
+      <table class="bordered-table">
+          <tr><th>Session</th><th>Data</th></tr>
+          <tr>
+              <td>Outdoor: Trans-Canada Trail</td>
+              <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-extras/trail_horizontal_laser.bag">trail_horizontal_laser.bag</a></td>
+          </tr>
+          <tr>
+              <td>Indoor: Applied Science Building</td>
+              <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-extras/indoor_sfu_bags/sfu_asb_2015-09-16-16-57-12.bag">sfu_asb_2015-09-16-16-57-12.bag</a></td>
+          </tr>
+          <tr>
+              <td>Indoor: TASC1 Floor 7</td>
+              <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-extras/indoor_sfu_bags/sfu_tasc1_2015-09-16-16-35-55.bag">sfu_tasc1_2015-09-16-16-35-55.bag</a></td>
+          </tr>
+          <tr>
+              <td>Indoor: TASC1 Floor 8</td>
+              <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-extras/indoor_sfu_bags/sfu_tasc1_2015-09-16-16-43-33.bag">sfu_tasc1_2015-09-16-16-43-33.bag</a></td>
+          </tr>
+          <tr>
+              <td>Indoor: TASC1 Floor 9</td>
+              <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-extras/indoor_sfu_bags/sfu_tasc1_2015-09-16-16-51-06.bag">sfu_tasc1_2015-09-16-16-51-06.bag</a></td>
+          </tr>
+      </table>
+    </div>
+
+    </div>
 
     <hr/>
     <h3 onclick="$('#citation').slideToggle('fast');">Citation</h3>
