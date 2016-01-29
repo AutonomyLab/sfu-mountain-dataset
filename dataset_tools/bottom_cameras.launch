@@ -1,0 +1,95 @@
+<launch>
+    <group ns="camera">
+        <node pkg="firefly_stereo" type="firefly_stereo_node" name="stereo" output="screen">
+            <param name="~fps" value="30"/>
+            <param name="~serial_left" value="14292590"/>
+            <param name="~serial_right" value="14292591"/>
+            <param name="~pixel_format" value="raw8"/>
+            <param name="~image_encoding" value="bayer_rggb8"/>
+            <param name="~mode" value="0"/>
+            <param name="~sync" value="false"/>
+            <param name="~save" value="false"/>
+            <param name="~flip" value="true"/>
+            <param name="~left_frame_id" value="camera_stereo_left"/>
+            <param name="~right_frame_id" value="camera_stereo_right"/>
+
+            <rosparam>
+                l_distortion_model: plumb_bob
+                lK: [370.013128, 0.0, 376.019643, 0.0, 370.591069, 243.559521, 0.0, 0.0, 1.0]
+                lD: [-0.266126, 0.053003, -0.001336, 0.000365, 0.0]
+                lR: [0.999999155, 0.00127084160, -0.000273096594, -0.00127243817, 0.999981621, -0.00592777542, 0.000265558311, 0.00592811791, 0.999982393]
+                lP: [222.16208507,    0.0,          366.27563953,  -87.71566366,      0.0,          222.16208507,  244.81510353,    0.0        ,          0.0,            0.0,            1.0,            0.0   ]
+
+                r_distortion_model: plumb_bob
+                rK: [363.517915, 0.0, 369.428623, 0.0, 363.845162, 246.840514, 0.0, 0.0, 1.0]
+                rD: [-0.25908, 0.051685, -0.001471, 0.000623, 0.0]
+                rR: [0.9998043,  -0.01614826, -0.01142801,        0.01621573,  0.99985149,  0.00583557,          0.01133207, -0.00601974,  0.99991767]
+                rP: [222.16208507,    0.0,          366.27563953,    0.0,        0.0,          222.16208507,  244.81510353,    0.0,       0.0,            0.0,            1.0,            0.0]
+            </rosparam>
+        </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="tf_left"
+        args="0.3625 0.0825 0.566 0 0 0 base_link camera_stereo_left 15"/>
+    <node pkg="tf" type="static_transform_publisher" name="tf_right"
+        args="0.3625 -0.0825 0.566 0 0 0 base_link camera_stereo_right 15"/>
+
+    <group ns="stereo">
+        <group ns="left">
+            <node pkg="image_proc" type="image_proc" name="left_debayer" output="screen"/>
+        </group>
+        <group ns="right">
+            <node pkg="image_proc" type="image_proc" name="right_debayer" output="screen"/>
+        </group>
+    </group>
+  
+      <node pkg="camera1394" type="camera1394_node" name="upward" output="screen">
+        <param name="~guid" value="00b09d0100d7c67e"/>
+        <param name="~reset_on_open" value="true"/>
+        <param name="~video_mode" value="640x480_mono8"/>
+        <param name="~frame_id" value="camera_upward"/>
+        <param name="~frame_rate" value="30"/>
+        <param name="~use_ros_time" value="true"/>
+        <remap from="camera" to="upward"/>
+      </node>
+        <node pkg="tf" type="static_transform_publisher" name="tf_upward"
+            args="0.0525 0 0.60 0 -1.5705 0 base_link camera_upward 15"/>
+
+      <node pkg="camera1394" type="camera1394_node" name="rear" output="screen">
+        <param name="~guid" value="00b09d0100d7266c"/>
+        <param name="~reset_on_open" value="true"/>
+        <param name="~video_mode" value="640x480_mono8"/>
+        <param name="~frame_id" value="camera_rear"/>
+        <param name="~frame_rate" value="30"/>
+        <param name="~use_ros_time" value="true"/>
+        <remap from="camera" to="rear"/>
+      </node>
+        <node pkg="tf" type="static_transform_publisher" name="tf_rear"
+            args="-0.325 0 0.249 3.14159 0 0 base_link camera_rear 15"/>
+
+      <node pkg="camera1394" type="camera1394_node" name="port" output="screen">
+        <param name="~guid" value="00b09d0100d7c67d"/>
+        <param name="~reset_on_open" value="true"/>
+        <param name="~video_mode" value="640x480_mono8"/>
+        <param name="~frame_id" value="camera_port"/>
+        <param name="~frame_rate" value="30"/>
+        <param name="~use_ros_time" value="true"/>
+        <remap from="camera" to="port"/>
+      </node>
+        <node pkg="tf" type="static_transform_publisher" name="tf_port"
+            args="0 0.1825 0.2465 1.5705 0 0 base_link camera_port 15"/>
+
+      <node pkg="camera1394" type="camera1394_node" name="starboard" output="screen">
+        <param name="~guid" value="00b09d0100d7c642"/>
+        <param name="~reset_on_open" value="true"/>
+        <param name="~video_mode" value="640x480_mono8"/>
+        <param name="~frame_id" value="camera_starboard"/>
+        <param name="~frame_rate" value="30"/>
+        <param name="~use_ros_time" value="true"/>
+        <remap from="camera" to="starboard"/>
+      </node>
+        <node pkg="tf" type="static_transform_publisher" name="tf_starboard"
+            args="0 -0.1825 0.2465 -1.5705 0 0 base_link camera_starboard 15"/>
+
+</group> <!-- camera -->
+
+</launch>

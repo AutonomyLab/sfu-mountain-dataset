@@ -26,7 +26,7 @@ def mkdir_p(d):
         os.makedirs(d)
 
 header_map = {
-        "encoder" : "field.header.stamp,field.twist.twist.linear.x,field.twist.twist.angular.z",
+        "husky_odom" : "field.header.stamp,field.twist.twist.linear.x,field.twist.twist.angular.z",
         "barometric_pressure" : "field.header.stamp,field.fluid_pressure",
         "husky_cmd_vel" : "field.header.stamp,field.linear.x,field.angular.z",
         "imu_data" : "field.header.stamp,field.orientation.x,field.orientation.y,field.orientation.z,field.orientation.w,field.orientation_covariance0,field.orientation_covariance1,field.orientation_covariance2,field.orientation_covariance3,field.orientation_covariance4,field.orientation_covariance5,field.orientation_covariance6,field.orientation_covariance7,field.orientation_covariance8,field.angular_velocity.x,field.angular_velocity.y,field.angular_velocity.z,field.angular_velocity_covariance0,field.angular_velocity_covariance1,field.angular_velocity_covariance2,field.angular_velocity_covariance3,field.angular_velocity_covariance4,field.angular_velocity_covariance5,field.angular_velocity_covariance6,field.angular_velocity_covariance7,field.angular_velocity_covariance8,field.linear_acceleration.x,field.linear_acceleration.y,field.linear_acceleration.z,field.linear_acceleration_covariance0,field.linear_acceleration_covariance1,field.linear_acceleration_covariance2,field.linear_acceleration_covariance3,field.linear_acceleration_covariance4,field.linear_acceleration_covariance5,field.linear_acceleration_covariance6,field.linear_acceleration_covariance7,field.linear_acceleration_covariance8",
@@ -63,14 +63,26 @@ def compressed_img_to_cv2(img, encoding):
 def process_bag(inbag):
     topics = ["/husky/odom",
             "/husky/cmd_vel",
+            
             "/lidar/front/scan",
             "/lidar/top/scan",
+            
             "/navsat/enu",
             "/navsat/fix",
+            
             "/imu/data",
             "/imu/mag",
             "/imu/temperature",
+            
             "/barometric_pressure",
+            
+            "/camera/port/camera_info",
+            "/camera/rear/camera_info",
+            "/camera/starboard/camera_info",
+            "/camera/upward/camera_info",
+            "/camera/stereo/left/camera_info",
+            "/camera/stereo/right/camera_info",
+
             "/camera/port/image_raw/compressed",
             "/camera/rear/image_raw/compressed",
             "/camera/upward/image_raw/compressed",
@@ -87,9 +99,18 @@ def process_bag(inbag):
             "/camera/stereo/right/image_color/compressed" : "camera_stereo_right"
         }
 
+    camera_info_map = {
+            "/camera/port/camera_info" : "camera_port",
+            "/camera/rear/camera_info" : "camera_rear",
+            "/camera/starboard/camera_info" : "camera_starboard",
+            "/camera/upward/camera_info" : "camera_upward",
+            "/camera/stereo/left/camera_info" : "camera_stereo_left",
+            "/camera/stereo/right/camera_info" : "camera_stereo_right"
+        }
+
     bag_tag = inbag.split("/")[-1].replace(".bag","")
 
-    mkdir_p("encoder")
+    mkdir_p("husky_odom")
     mkdir_p("barometric_pressure")
     mkdir_p("husky_cmd_vel")
     mkdir_p("imu_data")
@@ -99,15 +120,16 @@ def process_bag(inbag):
     mkdir_p("lidar_top_scan")
     mkdir_p("navsat_enu")
     mkdir_p("navsat_fix")
-    mkdir_p("camera_port")
-    mkdir_p("camera_rear")
-    mkdir_p("camera_starboard")
-    mkdir_p("camera_upward")
-    mkdir_p("camera_stereo_left")
-    mkdir_p("camera_stereo_right")
+
+    for s in ["camera_port", "camera_rear", "camera_starboard", "camera_upward", "camera_stereo_left", "camera_stereo_right"]:
+        mkdir_p(s+"/frames")
+        mkdir_p(s+"-3fps/frames")
+        mkdir_p(s+"-0.3fps/frames")
 
     t_origin = None
     count = 0
+
+    image_counts = dict()
 
     print "opening %s..." % inbag
     for topic, msg, timestamp in rosbag.Bag(inbag,'r').read_messages(topics=topics):
@@ -123,16 +145,26 @@ def process_bag(inbag):
         msg_t = msg.__class__.__name__.split("__")[1]
 
         if msg_t == "CompressedImage":
+            if not topic in image_counts:
+                image_counts[topic] = 0
+            else:
+                image_counts[topic] += 1
+
             if "color" in topic:
                 cv2_img = compressed_img_to_cv2(msg, "color")
-                cv2.imwrite("%s/%s.jpg" % (camera_map[topic], str(timestamp)), cv2_img)
             else:
                 cv2_img = compressed_img_to_cv2(msg, "grayscale")
-                cv2.imwrite("%s/%s.jpg" % (camera_map[topic], str(timestamp)), cv2_img)
+
+            cv2.imwrite("%s/frames/%s.jpg" % (camera_map[topic], str(timestamp)), cv2_img)
+
+            if image_counts[topic] % 10 == 0:
+                cv2.imwrite("%s-3fps/frames/%s.jpg" % (camera_map[topic], str(timestamp)), cv2_img)
+            if image_counts[topic] % 100 == 0:
+                cv2.imwrite("%s-0.3fps/frames/%s.jpg" % (camera_map[topic], str(timestamp)), cv2_img)
 
         elif msg_t == "Odometry":
             if topic == "/husky/odom":
-                append_line("encoder/data.csv", "%s,%s,%s" % (str(timestamp),
+                append_line("husky_odom/data.csv", "%s,%s,%s" % (str(timestamp),
                     msg.twist.twist.linear.x,
                     msg.twist.twist.angular.z))
             elif topic == "/navsat/enu":

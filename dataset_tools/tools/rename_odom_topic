@@ -1,0 +1,43 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+
+def rename_odom_topic(inbag,outbag):
+    rospy.loginfo('   Processing input bagfile: %s', inbag)
+    rospy.loginfo('  Writing to output bagfile: %s', outbag)
+
+    t_origin = None
+    count = 0
+
+    outbag = rosbag.Bag(outbag,'w')
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        # timestamp in nanoseconds to seconds
+        rel_timestamp = t.secs + float(t.nsecs) / 1e9
+        if t_origin == None:
+            t_origin = rel_timestamp
+        rel_timestamp -= t_origin
+        if count % 10000 == 0:
+            print "%s ... %s sec ... " % (inbag, rel_timestamp)
+        count += 1
+
+        if topic == "/encoder":
+            topic = "/husky/odom"       
+        outbag.write(topic, msg, t)
+    rospy.loginfo('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='renames /encoder to /husky/odom to match the topics in our newer bagfiles')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    args = parser.parse_args()
+
+    try:
+        rename_odom_topic(args.i,args.o)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

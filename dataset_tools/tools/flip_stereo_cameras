@@ -1,0 +1,52 @@
+#!/usr/bin/python
+
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+import time
+import cv2
+import numpy as np
+
+def flip_stereo_cameras(inbag,outbag,flip_topics):
+    print("Flipping topics: " + str(flip_topics))
+    print('   Processing input bagfile: %s' % inbag)
+    print('  Writing to output bagfile: %s' % outbag)
+
+    ts = time.time()
+    t_origin = None
+
+    outbag = rosbag.Bag(outbag,'w')
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if t_origin == None:
+            t_origin = t.to_sec()
+
+        if time.time() - ts > 5:
+            print (t.to_sec() - t_origin)
+            ts = time.time()
+
+        if topic in flip_topics:
+            img = np.fromstring(msg.data, np.uint8)
+            imgd = cv2.imdecode(img, cv2.CV_LOAD_IMAGE_COLOR)
+            imgr = np.rot90(imgd, 2)
+            success, imge = cv2.imencode(".jpg", imgr)
+            msg.data = imge.tostring()
+
+        outbag.write(topic, msg, t)
+    print('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='rotates camera images 180 degrees')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    args = parser.parse_args()
+
+    flip_topics = ["/camera/stereo/left/image_color/compressed", "/camera/stereo/right/image_color/compressed"]
+
+    try:
+        flip_stereo_cameras(args.i,args.o,flip_topics)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()

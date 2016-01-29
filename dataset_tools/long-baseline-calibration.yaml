@@ -1,0 +1,157 @@
+image_width: 640
+image_height: 480
+camera_topic: /camera/port/image_raw/compressed
+camera_info_topic: /camera/port/camera_info
+camera_matrix:
+  rows: 3
+  cols: 3
+  dt: d
+  data: [391.945521, 0.0, 312.385231, 0.0, 392.323973, 237.055134, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.297823, 0.073415, 0.000241, 0.001744, 0.0]
+rectification_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix: 
+  rows: 3
+  cols: 4
+  dt: d
+  data: [294.506897, 0.0, 310.860465, 0.0, 0.0, 340.981812, 235.745412, 0.0, 0.0, 0.0, 1.0, 0.0]
+---
+image_width: 640
+image_height: 480
+camera_topic: /camera/rear/image_raw/compressed
+camera_info_topic: /camera/rear/camera_info
+camera_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [364.57437, 0.0, 312.220798, 0.0, 365.109598, 240.989201, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients: 
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.282608, 0.066193, -0.002448, 0.001918, 0.0]
+rectification_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix: 
+  rows: 3
+  cols: 4
+  dt: d
+  data: [266.435486, 0.0, 311.820313, 0.0, 0.0, 312.110107, 238.695526, 0.0, 0.0, 0.0, 1.0, 0.0]
+---
+image_width: 640
+image_height: 480
+camera_name: upward
+camera_topic: /camera/upward/image_raw/compressed
+camera_info_topic: /camera/upward/camera_info
+camera_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [369.157112, 0.0, 320.534017, 0.0, 369.312316, 236.714441, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients: 
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.294832, 0.075288, -0.001018, 0.001253, 0.0]
+rectification_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix: 
+  rows: 3
+  cols: 4
+  dt: d
+  data: [271.53299, 0.0, 323.084006, 0.0, 0.0, 314.952911, 234.051642, 0.0, 0.0, 0.0, 1.0, 0.0]
+---
+image_width: 640
+image_height: 480
+camera_name: starboard
+camera_topic: /camera/starboard/image_raw/compressed
+camera_info_topic: /camera/starboard/camera_info
+camera_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [367.003109, 0.0, 308.429203, 0.0, 367.630866, 219.665808, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients: 
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.288511, 0.067405, -8.3e-05, 0.002205, 0.0]
+rectification_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+projection_matrix: 
+  rows: 3
+  cols: 4
+  dt: d
+  data: [265.814117, 0.0, 306.41333, 0.0, 0.0, 311.58316, 211.118469, 0.0, 0.0, 0.0, 1.0, 0.0]
+---
+image_width: 752
+image_height: 480
+camera_topic: /camera/stereo/left/image_color/compressed
+camera_info_topic: /camera/stereo/left/camera_info
+camera_matrix:
+  rows: 3
+  cols: 3
+  dt: d
+  data: [359.858698, 0.0, 390.030579, 0.0, 361.776006, 240.691735, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.255385, 0.046835, -0.000404, -0.001742, 0.0]
+rectification_matrix: 
+  rows: 3
+  cols: 3
+  dt: d
+  data: [0.999877, -0.000156, -0.015685, 0.000128, 0.999998, -0.001801, 0.015685, 0.001799, 0.999875]
+projection_matrix: 
+  rows: 3
+  cols: 4
+  dt: d
+  data: [332.770067,    0.0, 412.229229,  0.0, 0.0, 332.770067,  241.834515,    0.0,          0.0,            0.0,            1.0,            0.0   ]
+---
+image_width: 752
+image_height: 480
+camera_topic: /camera/stereo/right/image_color/compressed
+camera_info_topic: /camera/stereo/right/camera_info
+camera_matrix:
+  rows: 3
+  cols: 3
+  dt: d
+  data: [370.460855, 0.0, 356.060855, 0.0, 373.109151, 244.435112, 0.0, 0.0, 1.0]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  dt: d
+  data: [-0.256124, 0.048374, 0.000797, 0.003220, 0.0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  dt: d
+  data: [0.996068, 0.020259, -0.086248, -0.020104, 0.999794, 0.002671, 0.086285, -0.000926, 0.996270]
+projection_matrix:
+  rows: 3
+  cols: 4
+  dt: d
+  data: [332.770067, 0.000000, 412.229229, -130.327256, 0.000000, 332.770067, 241.834515, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]

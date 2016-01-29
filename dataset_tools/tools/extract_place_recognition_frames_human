@@ -74,12 +74,12 @@ def compressed_img_to_cv2(img, encoding):
 #---------------------------------------------------------------
 
 def get_anchor_images(inbag, separation, window):
-    if "_a.bag" in inbag:
+    if "a.bag" in inbag:
         part = "a"
     else:
         part = "b"
 
-    bag_tag = inbag.split("/")[-1].replace(".bag","")
+    bag_tag = inbag.split("/")[-1].replace(".bag","").replace("-","_")
 
     filename = "place_recognition_frames_human/%s_raw/%s_camera0_place00000_%s.jpg" % (part, part, bag_tag)
     print "checking whether %s exists" % filename
@@ -319,17 +319,18 @@ def display_test_image(msg, six_cameras, interval, bag_id, inbags, place_list, c
 
 def write_place_file(place_id, bag_id, inbags, img_msgs):
     part = None
-    if "_a.bag" in inbags[0]:
+    if "a.bag" in inbags[0]:
         part = "a"
-    elif "_b.bag" in inbags[0]:
+    elif "b.bag" in inbags[0]:
         part = "b"
 
     d = "place_recognition_frames_human"
     mkdir_p(d)
     mkdir_p("%s/%s_raw" % (d, part))
+    mkdir_p("%s/%s_timestamps" % (d, part))
     mkdir_p("%s/%s_combined" % (d, part))
 
-    bag_tag = inbags[bag_id].split("/")[-1].replace(".bag","")
+    bag_tag = inbags[bag_id].split("/")[-1].replace(".bag","").replace("-","_")
     bag_tag.replace("trail_", "")
 
     for camera_id,img in enumerate(img_msgs):
