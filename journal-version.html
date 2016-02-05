@@ -223,7 +223,7 @@ vertical plane normal to the x-axis of the robot, 8 metre range,
     sessions.
     </li>
     <em>or</em>
-    <li> 1 x <strong>TODO: WHICH GPS? PPP GPS receiver</strong> with approximately 5 metre accuracy at
+    <li> 1 x <strong>u-blox NEO-7P PPP GPS receiver</strong> with approximately 5 metre accuracy at
     95% confidence, 5 Hz. This device is present in <em>sept</em>, <em>nov</em>, and <em>jan</em>
     sessions.
     </li>
@@ -273,7 +273,7 @@ with brightness of 3780 lumen, 5000 K color temperature and
             <td>Stereo Left:</td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-stereo_left-a.tar">stereo-left-a (83 MB)</a></td>
             <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-stereo_left-b.tar">stereo-left-b (36 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/stereo_left-calibration-wide.yaml">stereo-left-calibration-wide.yaml</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/stereo_left-calibration-wide.yaml">stereo_left-calibration-wide.yaml</a></td>
         </tr>
         <tr>
           <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
@@ -330,13 +330,13 @@ with brightness of 3780 lumen, 5000 K color temperature and
 
     <div id="rawdata">
 
-    <p>You can download the dataset via HTTP by clicking the individual links below. 
+      <p>You can download the dataset via HTTP by clicking the individual links below. </p>
+      <!--
 	The files are also available as a torrent on 
 	<a href="http://academictorrents.com/details/e3d6b8d9e87cab68c7947e800e337e58fc8d8e59">AcademicTorrents</a>,
 	or by using this <a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu_mountain_dataset.torrent">torrent file</a>.
     </p>
-	
-
+    -->
 
     <p>The dataset in its purest form is available as ROS bag files recorded
     directly from the robot. These are the original recordings from which all
@@ -349,23 +349,38 @@ with brightness of 3780 lumen, 5000 K color temperature and
         <table class="bordered-table">
             <tr>
                 <td><em>dry</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dry-a.bag">dry-a.bag (26 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dry-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dry-b.bag">dry-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dry-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-a.bag">sfumd-dry-a.bag (26 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-a.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-b.bag">sfumd-dry-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-b.bag.md5sum">checksum</a>]</td>
             </tr>
             <tr>
                 <td><em>wet</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/wet-a.bag">wet-a.bag (28 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/wet-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/wet-b.bag">wet-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/wet-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-a.bag">sfumd-wet-a.bag (28 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-a.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-b.bag">sfumd-wet-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-b.bag.md5sum">checksum</a>]</td>
             </tr>
             <tr>
                 <td><em>dusk</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dusk-a.bag">dusk-a.bag (25 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dusk-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dusk-b.bag">dusk-b.bag (11 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/dusk-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-a.bag">sfumd-dusk-a.bag (25 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-a.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-b.bag">sfumd-dusk-b.bag (12 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-b.bag.md5sum">checksum</a>]</td>
             </tr>
             <tr>
                 <td><em>night</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/night-a.bag">night-a.bag (12 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/night-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/night-b.bag">night-b.bag (7 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu-mountain-torrent/bags/night-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-a.bag">sfumd-night-a.bag (12 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-a.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-b.bag">sfumd-night-b.bag (8 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-b.bag.md5sum">checksum</a>]</td>
+            </tr>
+            <tr>
+                <td><em>sept</em></td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-a.bag">sfumd-sept-a.bag (29 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-a.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-b.bag">sfumd-sept-b.bag (17 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-b.bag.md5sum">checksum</a>]</td>
+            </tr>
+            <tr>
+                <td><em>nov</em></td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-a.bag">sfumd-nov-a.bag (34 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-a.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-b.bag">sfumd-nov-b.bag (18 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-b.bag.md5sum">checksum</a>]</td>
+            </tr>
+            <tr>
+                <td><em>jan</em></td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-a.bag">sfumd-jan-a.bag (33 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-a.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-b.bag">sfumd-jan-b.bag (21 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-b.bag.md5sum">checksum</a>]</td>
             </tr>
         </table>
         <br/>
@@ -373,7 +388,7 @@ with brightness of 3780 lumen, 5000 K color temperature and
 
 
     <p>In addition to the ROS bag files, we provide non-camera sensor data in
-    CSV text files in gzipped .tgz format. Calibration parameters for each
+    CSV text files archived in .tar format. Calibration parameters for each
     sensor are included in <code>calibration.yaml</code> if applicable.</p>
     
     <p>JPEG images from the cameras are provided at full 30 Hz, and also at
