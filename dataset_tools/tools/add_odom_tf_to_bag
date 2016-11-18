@@ -1,0 +1,56 @@
+#!/usr/bin/python
+
+import roslib; roslib.load_manifest(PKG)
+import rospy
+import rosbag
+import os
+import sys
+import argparse
+from tf2_msgs.msg import TFMessage
+from geometry_msgs.msg import TransformStamped
+
+def fix_upward_tf(inbag,outbag,odom_topic):
+    rospy.loginfo('   Processing input bagfile: %s', inbag)
+    rospy.loginfo('  Writing to output bagfile: %s', outbag)
+
+    outbag = rosbag.Bag(outbag,'w')
+    for topic, msg, t in rosbag.Bag(inbag,'r').read_messages():
+        if topic == odom_topic:
+            transform = TransformStamped()
+            transform.header.seq = msg.header.seq
+            transform.header.stamp = msg.header.stamp
+
+            # TODO: should these be swapped? as in, should the child of odom be the parent of tf?
+            transform.header.frame_id = msg.header.frame_id
+            transform.child_frame_id = msg.child_frame_id
+
+            transform.transform.translation.x = msg.pose.pose.position.x
+            transform.transform.translation.y = msg.pose.pose.position.y
+            transform.transform.translation.z = msg.pose.pose.position.z
+
+            transform.transform.rotation.x = msg.pose.pose.orientation.x
+            transform.transform.rotation.y = msg.pose.pose.orientation.y
+            transform.transform.rotation.z = msg.pose.pose.orientation.z
+            transform.transform.rotation.w = msg.pose.pose.orientation.w
+
+            tfm = TFMessage()
+            tfm.transforms = [transform]
+            outbag.write("/tf", tfm, t)
+
+        # write every message out to the new bag
+        outbag.write(topic, msg, t)
+    rospy.loginfo('Closing output bagfile and exit...')
+    outbag.close();
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='creates TFMessages from an odometry topic')
+    parser.add_argument('-i', metavar='INPUT_BAGFILE', required=True, help='input bagfile')
+    parser.add_argument('-o', metavar='OUTPUT_BAGFILE', required=True, help='output bagfile')
+    parser.add_argument('-t', metavar='ODOM_TOPIC', required=True, help='odom topic')
+    args = parser.parse_args()
+
+    try:
+        fix_upward_tf(args.i,args.o,args.t)
+    except Exception, e:
+        import traceback
+        traceback.print_exc()
