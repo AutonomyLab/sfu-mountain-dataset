@@ -39,17 +39,21 @@
 
         $("#rosbags").hide()
 
-        $("#alldata").hide()
         $("#drydata").hide()
         $("#wetdata").hide()
         $("#duskdata").hide()
         $("#nightdata").hide()
+        $("#septdata").hide()
+        $("#novdata").hide()
+        $("#jandata").hide()
 
         $("#extras").hide()
     });
 </script>
 
 <script>
+
+/*
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -57,6 +61,7 @@
 
   ga('create', 'UA-63646706-1', 'auto');
   ga('send', 'pageview');
+*/
 
 </script>
 
@@ -102,36 +107,28 @@
     <br/>
     <hr/>
 
-    <p>The SFU Mountain Dataset consists of several hundred GB of sensor data
-    recorded from Burnaby Mountain, British Columbia, Canada. Each traversal 
-    covers 4km of woodland trails with a 300m altitude change. Recordings
-    include full video from 6 cameras, range data from 2 LIDAR sensors, GPS,
-    IMU and wheel encoders, plus calibration parameters for each sensor, and we
-    provide the data in the form of ROS bag files, JPEG image
-    files, and CSV text files.</p>
+    <p>
+    The SFU Mountain Dataset consists of several hundred GB of sensor data
+    recorded from Burnaby Mountain, British Columbia, Canada. Seven traversals
+    are provided, covering an entire year of changing environmental conditions
+    including sun, rain, snow, and midnight.  Each traversal covers 4km of
+    woodland trails with a 300m altitude change.  Recordings include full video
+    from 6 cameras, range data from 2 LIDAR sensors, GPS, IMU and wheel
+    encoders, plus calibration parameters for each sensor, and we provide the
+    data in the form of ROS bag files, JPEG image files, and CSV text files.
+    </p>
 
     <div style="margin-left: 0%; margin-right: 0%; width: 100%">
         <figure style="float: left; width: 30%; margin-right: 0%; margin-left: 3%; margin-bottom: 0.5em; text-align: center">
-            <a href="colored_pointcloud_white.png" target="_blank">
-            <img src="colored_pointcloud_white_thmb.png" alt="Laser scan of trail surface" style="width: 90%"/>
+            <a href="robot.jpg" target="_blank">
+            <img src="robot.jpg" alt="Robot - Side view" style="width: 90%"/>
             </a>
             <figcaption style="font-size: 12px">
-            Laser scan of trail surface, colored by projecting into the stereo
-            cameras and registered by unfiltered wheel odometry.
+            Side view of Clearpath Husky robot used to gather this dataset.
             </figcaption>
         </figure>
         
         <figure style="float: left; width: 30%; margin-right: 1%; margin-left: 2%; text-align: center; margin-bottom: 0.5em">
-            <a href="robot.jpg" target="_blank">
-            <img src="robot.jpg" alt="Clearpath Husky A200 used to gather this dataset" style="width: 90%"/>
-            </a>
-            <figcaption style="font-size: 12px">
-            Clearpath Husky robot used to gather this dataset, with origin and
-            axes of the robot's coordinate frame indicated.
-            </figcaption>
-        </figure>
-
-        <figure style="float: left; width: 30%; margin-right: 0%; margin-left: 0%; text-align: center; margin-bottom: 0.5em">
             <a href="map-labeled.png" target="_blank">
             <img src="map-labeled_thmb.png" alt="Map of trails included in this dataset" style="width: 90%"/>
             </a>
@@ -140,34 +137,65 @@
             locations of parts A and B indicated.
             </figcaption>
         </figure>
+
+        <figure style="float: left; width: 30%; margin-right: 0%; margin-left: 0%; text-align: center; margin-bottom: 0.5em">
+            <a href="robot2.jpg" target="_blank">
+            <img src="robot2.jpg" alt="Robot - Top view" style="width: 90%"/>
+            </a>
+            <figcaption style="font-size: 12px">
+            Top view of robot, with origin and orientation of coordinate axes shown.
+            </figcaption>
+        </figure>
+        <p style="clear: both;"></p>
+    </div>
+
+    <div style="margin-left: 0%; margin-right: 0%; width: 100%">
+        <figure style="float: left; width: 49%; margin-right: 0%; margin-left: 1%; margin-bottom: 0.5em; text-align: center">
+            <a href="robot_vr_summer_screenshot.png" target="_blank">
+            <img src="robot_vr_summer_screenshot.png" alt="Dataset visualization - Summer" style="width: 90%"/>
+            </a>
+            <figcaption style="font-size: 12px">
+            Snapshot of camera and laser data from <em>sept</em> session.
+            </figcaption>
+        </figure>
+
+        <figure style="float: left; width: 49%; margin-right: 0%; margin-left: 0%; text-align: center; margin-bottom: 0.5em">
+            <a href="robot_vr_snow_screenshot.png" target="_blank">
+            <img src="robot_vr_snow_screenshot.png" alt="Dataset visualization - Winter" style="width: 90%"/>
+            </a>
+            <figcaption style="font-size: 12px">
+            Snapshot of camera and laser data from <em>jan</em> session.
+            </figcaption>
+        </figure>
         <p style="clear: both;"></p>
     </div>
 
     <p>In addition to the raw data, we provide ground-truth timestamped place
     matches: frames from each camera at locations separated by approximately 10
-    meters, hand-matched between <em>dry</em>, <em>wet</em>, <em>dusk</em>, and
-    <em>night</em> traversals. Here are some example place matches for each
-    camera across all four sessions:</p>
+    meters, hand-matched between <em>dry</em>, <em>wet</em>, <em>dusk</em>, 
+    <em>night</em>, <em>sept</em>, <em>nov</em>, and <em>jan</em> traversals. 
+    Here are some example place matches for each
+    camera across all seven sessions:</p>
 
     <br/>
 
     <div style="width: 100%; text-align: center;">
         <a target="_blank"
-        href="place_119_a.jpg">
+        href="full_place_119_a.jpg">
         <img 
-        src="place_119_a.jpg"
+        src="full_place_119_a.jpg"
         alt="Place 119 a" style="width: 25%; margin: 0px 20px"/></a>
 
         <a target="_blank"
-        href="place_050_b.jpg">
+        href="full_place_050_b.jpg">
         <img 
-        src="place_050_b.jpg"
+        src="full_place_050_b.jpg"
         alt="Place 050 b" style="width: 25%; margin: 0px 20px"/></a>
 
         <a target="_blank"
-        href="place_119_b.jpg">
+        href="full_place_119_b.jpg">
         <img 
-        src="place_119_b.jpg"
+        src="full_place_119_b.jpg"
         alt="Place 119 b" style="width: 25%; margin: 0px 20px"/></a>
     </div>
     
@@ -183,7 +211,13 @@
             <li> 2 x <strong>PointGray Firefly color cameras</strong> facing forward
 in stereo configuration with approximately 90-degree field of view
 (FMVU-03M2C-CS), 752x480 pixels, 1/3'' Aptina MT9V022 CMOS, global
-shutter, 30 Hz</li>
+shutter, 30 Hz
+
+<p>- In <em>wet</em>, <em>dry</em>, <em>dusk</em>, and <em>night</em> sessions,
+the stereo cameras are set up with a wide baseline of 0.423m.</p>
+
+<p>- Sessions <em>sept</em>, <em>nov</em>, and <em>jan</em> have a 0.165m baseline.</p>
+            </li>
 
     <br/>
     <li> 4 x <strong>PointGray Firefly monochrome cameras</strong> facing port,
@@ -206,7 +240,14 @@ vertical plane normal to the x-axis of the robot, 8 metre range,
 
     <br/>
     <li> 1 x <strong>Garmin 18x GPS receiver</strong> with 15 metre accuracy at
-95% confidence, 5 Hz</li>
+    95% confidence, 5 Hz. This device is present in <em>wet</em>, <em>dry</em>, <em>dusk</em>, and <em>night</em>
+    sessions.
+    </li>
+    <em>or</em>
+    <li> 1 x <strong>u-blox NEO-7P PPP GPS receiver</strong> with approximately 5 metre accuracy at
+    95% confidence, 5 Hz. This device is present in <em>sept</em>, <em>nov</em>, and <em>jan</em>
+    sessions.
+    </li>
 
     <br/>
     <li> 1 x <strong>UM6 inertial measurement unit</strong> providing orientation with
@@ -224,7 +265,7 @@ at 30 Hz</li>
     <br/>
     <li> 4 x <strong>Titan 54 W off-road LED lights</strong> (ORBT9-54WD-FL)
 with brightness of 3780 lumen, 5000 K color temperature and
-60-degree beam angle, night sessions only</li>
+60-degree beam angle, <em>night</em> session only</li>
 
         </ul>
     </div>
@@ -237,23 +278,13 @@ with brightness of 3780 lumen, 5000 K color temperature and
 
     <p>For each trail section <em>a</em> and <em>b</em>, we provide
     hand-aligned place matches in bundles of timestamped frames from 1) all
-    cameras, 2) just the stereo cameras, and 3) just each individual
-    camera:</p>
+    cameras, and 2) just each individual camera:</p>
 
     <table class="bordered-table">
         <tr>
             <td>All:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-places-a.tar">all-a (458 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-places-b.tar">all-b (227 MB)</a></td>
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-
-        <tr>
-            <td>Stereo:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-stereo-a.tar">stereo-a (168 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-stereo-b.tar">stereo-b (72 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-all_cameras-a.tar">all-a</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-all_cameras-b.tar">all-b</a></td>
             <td>&nbsp;</td>
         </tr>
 
@@ -261,44 +292,52 @@ with brightness of 3780 lumen, 5000 K color temperature and
         
         <tr>
             <td>Stereo Left:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-stereo_left-a.tar">stereo-left-a (83 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-stereo_left-b.tar">stereo-left-b (36 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/stereo_left-calibration.yaml">stereo-left-calibration.yaml</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-stereo_left-a.tar">stereo-left-a</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-stereo_left-b.tar">stereo-left-b</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/stereo_left-calibration-wide.yaml">stereo_left-calibration-wide.yaml</a></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/stereo_left-calibration-short.yaml">stereo_left-calibration-short.yaml</a></td>
         </tr>
     
         <tr>
             <td>Stereo Right:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-stereo_right-a.tar">stereo-right-a (85 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-stereo_right-b.tar">stereo-right-b (36 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/stereo_right-calibration.yaml">stereo-right-calibration.yaml</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-stereo_right-a.tar">stereo-right-a</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-stereo_right-b.tar">stereo-right-b</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/stereo_right-calibration-wide.yaml">stereo_right-calibration-wide.yaml</a></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+          <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/stereo_right-calibration-short.yaml">stereo_right-calibration-short.yaml</a></td>
         </tr>
     
         <tr>
             <td>Port:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-port-a.tar">port-a (74 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-port-b.tar">port-b (46 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/port-calibration.yaml">port-calibration.yaml</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-port-a.tar">port-a</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-port-b.tar">port-b</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/port-calibration.yaml">port-calibration.yaml</a></td>
         </tr>
     
         <tr>
             <td>Starboard:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-starboard-a.tar">starboard-a (84 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-starboard-b.tar">starboard-b (44 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/starboard-calibration.yaml">starboard-calibration.yaml</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-starboard-a.tar">starboard-a</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-starboard-b.tar">starboard-b</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/starboard-calibration.yaml">starboard-calibration.yaml</a></td>
         </tr>
     
         <tr>
             <td>Rear:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-rear-a.tar">rear-a (70 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-rear-b.tar">rear-b (33 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/rear-calibration.yaml">rear-calibration.yaml</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-rear-a.tar">rear-a</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-rear-b.tar">rear-b</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/rear-calibration.yaml">rear-calibration.yaml</a></td>
         </tr>
     
         <tr>
             <td>Upward:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-upward-a.tar">upward-a (64 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/places-upward-b.tar">upward-b (34 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/upward-calibration.yaml">upward-calibration.yaml</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-upward-a.tar">upward-a</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/place-matches/places-upward-b.tar">upward-b</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/calibration/upward-calibration.yaml">upward-calibration.yaml</a></td>
         </tr>
     
     </table>
@@ -312,12 +351,13 @@ with brightness of 3780 lumen, 5000 K color temperature and
 
     <div id="rawdata">
 
-      <p>You can download the dataset via HTTP by clicking the individual links below.</p> 
+      <p>You can download the dataset via HTTP by clicking the individual links below. </p>
       <!--
 	The files are also available as a torrent on 
 	<a href="http://academictorrents.com/details/e3d6b8d9e87cab68c7947e800e337e58fc8d8e59">AcademicTorrents</a>,
-	or by using this <a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu_mountain_dataset.torrent">torrent file</a>.
-  -->
+	or by using this <a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/sfu_mountain_dataset.torrent">torrent file</a>.
+    </p>
+    -->
 
     <p>The dataset in its purest form is available as ROS bag files recorded
     directly from the robot. These are the original recordings from which all
@@ -330,395 +370,197 @@ with brightness of 3780 lumen, 5000 K color temperature and
         <table class="bordered-table">
             <tr>
                 <td><em>dry</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dry-a.bag">dry-a.bag (26 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dry-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dry-b.bag">dry-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dry-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-a.bag">sfumd-dry-a.bag (26 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-a.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-b.bag">sfumd-dry-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dry-b.md5sum">checksum</a>]</td>
             </tr>
             <tr>
                 <td><em>wet</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/wet-a.bag">wet-a.bag (28 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/wet-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/wet-b.bag">wet-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/wet-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-a.bag">sfumd-wet-a.bag (28 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-a.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-b.bag">sfumd-wet-b.bag (16 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-wet-b.md5sum">checksum</a>]</td>
             </tr>
             <tr>
                 <td><em>dusk</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dusk-a.bag">dusk-a.bag (25 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dusk-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dusk-b.bag">dusk-b.bag (11 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/dusk-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-a.bag">sfumd-dusk-a.bag (25 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-a.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-b.bag">sfumd-dusk-b.bag (12 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-dusk-b.md5sum">checksum</a>]</td>
             </tr>
             <tr>
                 <td><em>night</em></td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/night-a.bag">night-a.bag (12 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/night-a.bag.md5sum">checksum</a>]</td>
-                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/night-b.bag">night-b.bag (7 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/bags/night-b.bag.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-a.bag">sfumd-night-a.bag (12 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-a.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-b.bag">sfumd-night-b.bag (8 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-night-b.md5sum">checksum</a>]</td>
+            </tr>
+            <tr>
+                <td><em>sept</em></td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-a.bag">sfumd-sept-a.bag (29 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-a.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-b.bag">sfumd-sept-b.bag (17 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-sept-b.md5sum">checksum</a>]</td>
+            </tr>
+            <tr>
+                <td><em>nov</em></td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-a.bag">sfumd-nov-a.bag (34 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-a.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-b.bag">sfumd-nov-b.bag (18 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-nov-b.md5sum">checksum</a>]</td>
+            </tr>
+            <tr>
+                <td><em>jan</em></td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-a.bag">sfumd-jan-a.bag (33 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-a.md5sum">checksum</a>]</td>
+                <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-b.bag">sfumd-jan-b.bag (21 GB)</a> [<a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/bags/sfumd-jan-b.md5sum">checksum</a>]</td>
             </tr>
         </table>
         <br/>
     </div>
 
-
     <p>In addition to the ROS bag files, we provide non-camera sensor data in
-    CSV text files in gzipped .tgz format. Calibration parameters for each
+    CSV text files archived in .tar format. Calibration parameters for each
     sensor are included in <code>calibration.yaml</code> if applicable.</p>
     
     <p>JPEG images from the cameras are provided at full 30 Hz, and also at
     subsampled rates of 3 Hz and 0.3 Hz for convenience.</p>
-
-    <h4 onclick="$('#alldata').slideToggle('fast')">All Sessions</h4>
-    <br/><br/>
-    <div id="alldata">
-    <table class="bordered-table">
-        <tr>
-            <td>All Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-all-a.tar">cameras-all-a 30 Hz (~150 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-all-b.tar">cameras-all-b 30 Hz (~100 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-all-a-10th.tar">cameras-all-a 3 Hz (~15 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-all-b-10th.tar">cameras-all-b 3 Hz (~10 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-all-a-100th.tar">cameras-all-a 0.3 Hz (~1.5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-all-b-100th.tar">cameras-all-b 0.3 Hz (~1 GB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>All Non-Camera Sensors:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-all-a.tar">non-camera-sensors-all-a (~1200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-all-b.tar">non-camera-sensors-all-b (~800 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Stereo Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo-all-a.tar">stereo-all-a 30 Hz (~40 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo-all-b.tar">stereo-all-b 30 Hz (~20 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo-all-a-10th.tar">stereo-all-a 3 Hz (~4 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo-all-b-10th.tar">stereo-all-b 3 Hz (~2 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo-all-a-100th.tar">stereo-all-a 0.3 Hz (~400 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo-all-b-100th.tar">stereo-all-b 0.3 Hz (~200 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Stereo Left:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_left-all-a.tar">stereo_left-all-a 30 Hz (~20 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_left-all-b.tar">stereo_left-all-b 30 Hz (~10 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_left-all-a-10th.tar">stereo_left-all-a 3 Hz (~2 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_left-all-b-10th.tar">stereo_left-all-b 3 Hz (~1 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_left-all-a-100th.tar">stereo_left-all-a 0.3 Hz (~200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_left-all-b-100th.tar">stereo_left-all-b 0.3 Hz (~100 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Stereo Right:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_right-all-a.tar">stereo_right-all-a 30 Hz (~20 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_right-all-b.tar">stereo_right-all-b 30 Hz (~10 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_right-all-a-10th.tar">stereo_right-all-a 3 Hz (~2 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_right-all-b-10th.tar">stereo_right-all-b 3 Hz (~1 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_right-all-a-100th.tar">stereo_right-all-a 0.3 Hz (~200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_stereo_right-all-b-100th.tar">stereo_right-all-b 0.3 Hz (~100 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Port:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_port-all-a.tar">port-all-a 30 Hz (~20 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_port-all-b.tar">port-all-b 30 Hz (~10 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_port-all-a-10th.tar">port-all-a 3 Hz (~2 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_port-all-b-10th.tar">port-all-b 3 Hz (~1 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_port-all-a-100th.tar">port-all-a 0.3 Hz (~200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_port-all-b-100th.tar">port-all-b 0.3 Hz (~100 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Starboard:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_starboard-all-a.tar">starboard-all-a 30 Hz (~20 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_starboard-all-b.tar">starboard-all-b 30 Hz (~10 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_starboard-all-a-10th.tar">starboard-all-a 3 Hz (~2 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_starboard-all-b-10th.tar">starboard-all-b 3 Hz (~1 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_starboard-all-a-100th.tar">starboard-all-a 0.3 Hz (~200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_starboard-all-b-100th.tar">starboard-all-b 0.3 Hz (~100 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Upward:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_upward-all-a.tar">upward-all-a 30 Hz (~20 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_upward-all-b.tar">upward-all-b 30 Hz (~10 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_upward-all-a-10th.tar">upward-all-a 3 Hz (~2 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_upward-all-b-10th.tar">upward-all-b 3 Hz (~1 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_upward-all-a-100th.tar">upward-all-a 0.3 Hz (~200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_upward-all-b-100th.tar">upward-all-b 0.3 Hz (~100 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Rear:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_rear-all-a.tar">rear-all-a 30 Hz (~20 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_rear-all-b.tar">rear-all-b 30 Hz (~10 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_rear-all-a-10th.tar">rear-all-a 3 Hz (~2 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_rear-all-b-10th.tar">rear-all-b 3 Hz (~1 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_rear-all-a-100th.tar">rear-all-a 0.3 Hz (~200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/camera_rear-all-b-100th.tar">rear-all-b 0.3 Hz (~100 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Front Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/lidar_front_scan-all-a.tar">front_laser-all-a (~1200 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/lidar_front_scan-all-b.tar">front_laser-all-b (~800 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Top Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/lidar_top_scan-all-a.tar">top_laser-all-a (~160 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/lidar_top_scan-all-b.tar">top_laser-all-b (~80 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Wheel Odometry:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/encoder-all-a.tar">wheel_odometry-all-a (~3 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/encoder-all-b.tar">wheel_odometry-all-b (~2 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>IMU:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/imu_data-all-a.tar">imu-all-a (~240 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/imu_data-all-b.tar">imu-all-b (~160 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>GPS:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/navsat_fix-all-a.tar">gps_lat_long_alt-all-a (~3 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/navsat_fix-all-b.tar">gps_lat_long_alt-all-b (~1.5 MB)</a></td>
-        </tr>
-        <tr>
-            <td><!--GPS ENU line in table, blank cell --></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/navsat_enu-all-a.tar">gps_enu_meters-all-a (~4 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/navsat_enu-all-b.tar">gps_enu_meters-all-b (~3 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Barometric Pressure:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/barometric_pressure-all-a.tar">pressure-all-a (~8 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/barometric_pressure-all-b.tar">pressure-all-b (~4 MB)</a></td>
-        </tr>
-    </table>
-    <br/>
-    </div>
 
     <h4 onclick="$('#drydata').slideToggle('fast')">Dry</h4>
     <br/><br/>
     <div id="drydata">
     <table class="bordered-table">
         <tr>
-            <td>All Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dry-a.tar">cameras-dry-a 30 Hz (~40 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dry-b.tar">cameras-dry-b 30 Hz (~25 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dry-a-10th.tar">cameras-dry-a 3 Hz (~4 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dry-b-10th.tar">cameras-dry-b 3 Hz (~2.5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dry-a-100th.tar">cameras-dry-a 0.3 Hz (~400 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dry-b-100th.tar">cameras-dry-b 0.3 Hz (~250 MB)</a></td>
+            <td>All Sensors:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-all.tar">sfumd-dry-a-all</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-all.tar">sfumd-dry-b-all</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>All Non-Camera Sensors:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-dry-a.tgz">non-camera-sensors-dry-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-dry-b.tgz">non-camera-sensors-dry-b (~200 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Stereo Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dry-a.tar">stereo-dry-a 30 Hz (~10 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dry-b.tar">stereo-dry-b 30 Hz (~5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dry-a-10th.tar">stereo-dry-a 3 Hz (~1 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dry-b-10th.tar">stereo-dry-b 3 Hz (~500 MB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dry-a-100th.tar">stereo-dry-a 0.3 Hz (~100 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dry-b-100th.tar">stereo-dry-b 0.3 Hz (~50 MB)</a></td>
-        </tr>
+        <tr><td>Individual Sensors:</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Left:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dry-a.tar">stereo_left-dry-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dry-b.tar">stereo_left-dry-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_stereo_left.tar">sfumd-dry-a-stereo_left 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_stereo_left.tar">sfumd-dry-b-stereo_left 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dry-a-10th.tar">stereo_left-dry-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dry-b-10th.tar">stereo_left-dry-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_stereo_left-3fps.tar">sfumd-dry-a-stereo_left 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_stereo_left-3fps.tar">sfumd-dry-b-stereo_left 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dry-a-100th.tar">stereo_left-dry-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dry-b-100th.tar">stereo_left-dry-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_stereo_left-0.3fps.tar">sfumd-dry-a-stereo_left 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_stereo_left-0.3fps.tar">sfumd-dry-b-stereo_left 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Right:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dry-a.tar">stereo_right-dry-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dry-b.tar">stereo_right-dry-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_stereo_right.tar">sfumd-dry-a-stereo_right 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_stereo_right.tar">sfumd-dry-b-stereo_right 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dry-a-10th.tar">stereo_right-dry-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dry-b-10th.tar">stereo_right-dry-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_stereo_right-3fps.tar">sfumd-dry-a-stereo_right 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_stereo_right-3fps.tar">sfumd-dry-b-stereo_right 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dry-a-100th.tar">stereo_right-dry-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dry-b-100th.tar">stereo_right-dry-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_stereo_right-0.3fps.tar">sfumd-dry-a-stereo_right 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_stereo_right-0.3fps.tar">sfumd-dry-b-stereo_right 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Port:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dry-a.tar">port-dry-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dry-b.tar">port-dry-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_port.tar">sfumd-dry-a-port 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_port.tar">sfumd-dry-b-port 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dry-a-10th.tar">port-dry-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dry-b-10th.tar">port-dry-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_port-3fps.tar">sfumd-dry-a-port 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_port-3fps.tar">sfumd-dry-b-port 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dry-a-100th.tar">port-dry-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dry-b-100th.tar">port-dry-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_port-0.3fps.tar">sfumd-dry-a-port 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_port-0.3fps.tar">sfumd-dry-b-port 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Starboard:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dry-a.tar">starboard-dry-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dry-b.tar">starboard-dry-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_starboard.tar">sfumd-dry-a-starboard 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_starboard.tar">sfumd-dry-b-starboard 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dry-a-10th.tar">starboard-dry-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dry-b-10th.tar">starboard-dry-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_starboard-3fps.tar">sfumd-dry-a-starboard 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_starboard-3fps.tar">sfumd-dry-b-starboard 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dry-a-100th.tar">starboard-dry-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dry-b-100th.tar">starboard-dry-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_starboard-0.3fps.tar">sfumd-dry-a-starboard 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_starboard-0.3fps.tar">sfumd-dry-b-starboard 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Upward:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dry-a.tar">upward-dry-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dry-b.tar">upward-dry-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_upward.tar">sfumd-dry-a-upward 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_upward.tar">sfumd-dry-b-upward 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dry-a-10th.tar">upward-dry-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dry-b-10th.tar">upward-dry-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_upward-3fps.tar">sfumd-dry-a-upward 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_upward-3fps.tar">sfumd-dry-b-upward 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dry-a-100th.tar">upward-dry-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dry-b-100th.tar">upward-dry-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_upward-0.3fps.tar">sfumd-dry-a-upward 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_upward-0.3fps.tar">sfumd-dry-b-upward 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Rear:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dry-a.tar">rear-dry-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dry-b.tar">rear-dry-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_rear.tar">sfumd-dry-a-rear 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_rear.tar">sfumd-dry-b-rear 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dry-a-10th.tar">rear-dry-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dry-b-10th.tar">rear-dry-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_rear-3fps.tar">sfumd-dry-a-rear 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_rear-3fps.tar">sfumd-dry-b-rear 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dry-a-100th.tar">rear-dry-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dry-b-100th.tar">rear-dry-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-camera_rear-0.3fps.tar">sfumd-dry-a-rear 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-camera_rear-0.3fps.tar">sfumd-dry-b-rear 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Front Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-dry-a.tgz">front_laser-dry-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-dry-b.tgz">front_laser-dry-b (~200 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-lidar_front_scan.tar">sfumd-dry-a-front_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-lidar_front_scan.tar">sfumd-dry-b-front_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Top Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-dry-a.tgz">top_laser-dry-a (~10 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-dry-b.tgz">top_laser-dry-b (~5 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-lidar_top_scan.tar">sfumd-dry-a-top_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-lidar_top_scan.tar">sfumd-dry-b-top_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Wheel Odometry:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-dry-a.tgz">wheel_odometry-dry-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-dry-b.tgz">wheel_odometry-dry-b (~150 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-husky_odom.tar">sfumd-dry-a-wheel_odometry</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-husky_odom.tar">sfumd-dry-b-wheel_odometry</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>IMU:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-dry-a.tgz">imu-dry-a (~15 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-dry-b.tgz">imu-dry-b (~10 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-imu_data.tar">sfumd-dry-a-imu</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-imu_data.tar">sfumd-dry-b-imu</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>GPS:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-dry-a.tgz">gps_lat_long_alt-dry-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-dry-b.tgz">gps_lat_long_alt-dry-b (~100 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-navsat_fix.tar">sfumd-dry-a-navsat_lat_long_alt</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-navsat_fix.tar">sfumd-dry-b-navsat_lat_long_alt</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-dry-a.tgz">gps_enu_meters-dry-a (~300 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-dry-b.tgz">gps_enu_meters-dry-b (~200 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-navsat_enu.tar">sfumd-dry-a-navsat_enu_meters</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-navsat_enu.tar">sfumd-dry-a-navsat_enu_meters</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Barometric Pressure:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-dry-a.tgz">pressure-dry-a (~500 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-dry-b.tgz">pressure-dry-b (~300 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-a-barometric_pressure.tar">sfumd-dry-a-barometric_pressure</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dry-b-barometric_pressure.tar">sfumd-dry-b-barometric_pressure</a></td>
         </tr>
     </table>
     <br/>
@@ -729,178 +571,148 @@ with brightness of 3780 lumen, 5000 K color temperature and
     <div id="wetdata">
     <table class="bordered-table">
         <tr>
-            <td>All Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-wet-a.tar">cameras-wet-a 30 Hz (~40 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-wet-b.tar">cameras-wet-b 30 Hz (~25 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-wet-a-10th.tar">cameras-wet-a 3 Hz (~4 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-wet-b-10th.tar">cameras-wet-b 3 Hz (~2.5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-wet-a-100th.tar">cameras-wet-a 0.3 Hz (~400 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-wet-b-100th.tar">cameras-wet-b 0.3 Hz (~250 MB)</a></td>
+            <td>All Sensors:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-all.tar">sfumd-wet-a-all</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-all.tar">sfumd-wet-b-all</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>All Non-Camera Sensors:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-wet-a.tgz">non-camera-sensors-wet-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-wet-b.tgz">non-camera-sensors-wet-b (~200 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Stereo Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-wet-a.tar">stereo-wet-a 30 Hz (~10 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-wet-b.tar">stereo-wet-b 30 Hz (~5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-wet-a-10th.tar">stereo-wet-a 3 Hz (~1 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-wet-b-10th.tar">stereo-wet-b 3 Hz (~500 MB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-wet-a-100th.tar">stereo-wet-a 0.3 Hz (~100 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-wet-b-100th.tar">stereo-wet-b 0.3 Hz (~50 MB)</a></td>
-        </tr>
+        <tr><td>Individual Sensors:</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Left:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-wet-a.tar">stereo_left-wet-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-wet-b.tar">stereo_left-wet-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_stereo_left.tar">sfumd-wet-a-stereo_left 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_stereo_left.tar">sfumd-wet-b-stereo_left 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-wet-a-10th.tar">stereo_left-wet-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-wet-b-10th.tar">stereo_left-wet-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_stereo_left-3fps.tar">sfumd-wet-a-stereo_left 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_stereo_left-3fps.tar">sfumd-wet-b-stereo_left 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-wet-a-100th.tar">stereo_left-wet-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-wet-b-100th.tar">stereo_left-wet-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_stereo_left-0.3fps.tar">sfumd-wet-a-stereo_left 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_stereo_left-0.3fps.tar">sfumd-wet-b-stereo_left 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Right:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-wet-a.tar">stereo_right-wet-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-wet-b.tar">stereo_right-wet-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_stereo_right.tar">sfumd-wet-a-stereo_right 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_stereo_right.tar">sfumd-wet-b-stereo_right 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-wet-a-10th.tar">stereo_right-wet-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-wet-b-10th.tar">stereo_right-wet-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_stereo_right-3fps.tar">sfumd-wet-a-stereo_right 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_stereo_right-3fps.tar">sfumd-wet-b-stereo_right 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-wet-a-100th.tar">stereo_right-wet-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-wet-b-100th.tar">stereo_right-wet-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_stereo_right-0.3fps.tar">sfumd-wet-a-stereo_right 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_stereo_right-0.3fps.tar">sfumd-wet-b-stereo_right 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Port:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-wet-a.tar">port-wet-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-wet-b.tar">port-wet-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_port.tar">sfumd-wet-a-port 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_port.tar">sfumd-wet-b-port 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-wet-a-10th.tar">port-wet-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-wet-b-10th.tar">port-wet-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_port-3fps.tar">sfumd-wet-a-port 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_port-3fps.tar">sfumd-wet-b-port 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-wet-a-100th.tar">port-wet-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-wet-b-100th.tar">port-wet-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_port-0.3fps.tar">sfumd-wet-a-port 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_port-0.3fps.tar">sfumd-wet-b-port 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Starboard:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-wet-a.tar">starboard-wet-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-wet-b.tar">starboard-wet-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_starboard.tar">sfumd-wet-a-starboard 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_starboard.tar">sfumd-wet-b-starboard 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-wet-a-10th.tar">starboard-wet-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-wet-b-10th.tar">starboard-wet-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_starboard-3fps.tar">sfumd-wet-a-starboard 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_starboard-3fps.tar">sfumd-wet-b-starboard 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-wet-a-100th.tar">starboard-wet-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-wet-b-100th.tar">starboard-wet-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_starboard-0.3fps.tar">sfumd-wet-a-starboard 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_starboard-0.3fps.tar">sfumd-wet-b-starboard 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Upward:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-wet-a.tar">upward-wet-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-wet-b.tar">upward-wet-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_upward.tar">sfumd-wet-a-upward 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_upward.tar">sfumd-wet-b-upward 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-wet-a-10th.tar">upward-wet-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-wet-b-10th.tar">upward-wet-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_upward-3fps.tar">sfumd-wet-a-upward 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_upward-3fps.tar">sfumd-wet-b-upward 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-wet-a-100th.tar">upward-wet-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-wet-b-100th.tar">upward-wet-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_upward-0.3fps.tar">sfumd-wet-a-upward 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_upward-0.3fps.tar">sfumd-wet-b-upward 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Rear:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-wet-a.tar">rear-wet-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-wet-b.tar">rear-wet-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_rear.tar">sfumd-wet-a-rear 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_rear.tar">sfumd-wet-b-rear 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-wet-a-10th.tar">rear-wet-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-wet-b-10th.tar">rear-wet-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_rear-3fps.tar">sfumd-wet-a-rear 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_rear-3fps.tar">sfumd-wet-b-rear 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-wet-a-100th.tar">rear-wet-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-wet-b-100th.tar">rear-wet-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-camera_rear-0.3fps.tar">sfumd-wet-a-rear 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-camera_rear-0.3fps.tar">sfumd-wet-b-rear 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Front Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-wet-a.tgz">front_laser-wet-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-wet-b.tgz">front_laser-wet-b (~200 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-lidar_front_scan.tar">sfumd-wet-a-front_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-lidar_front_scan.tar">sfumd-wet-b-front_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Top Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-wet-a.tgz">top_laser-wet-a (~10 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-wet-b.tgz">top_laser-wet-b (~5 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-lidar_top_scan.tar">sfumd-wet-a-top_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-lidar_top_scan.tar">sfumd-wet-b-top_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Wheel Odometry:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-wet-a.tgz">wheel_odometry-wet-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-wet-b.tgz">wheel_odometry-wet-b (~150 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-husky_odom.tar">sfumd-wet-a-wheel_odometry</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-husky_odom.tar">sfumd-wet-b-wheel_odometry</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>IMU:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-wet-a.tgz">imu-wet-a (~15 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-wet-b.tgz">imu-wet-b (~10 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-imu_data.tar">sfumd-wet-a-imu</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-imu_data.tar">sfumd-wet-b-imu</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>GPS:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-wet-a.tgz">gps_lat_long_alt-wet-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-wet-b.tgz">gps_lat_long_alt-wet-b (~100 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-navsat_fix.tar">sfumd-wet-a-navsat_lat_long_alt</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-navsat_fix.tar">sfumd-wet-b-navsat_lat_long_alt</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-wet-a.tgz">gps_enu_meters-wet-a (~300 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-wet-b.tgz">gps_enu_meters-wet-b (~200 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-navsat_enu.tar">sfumd-wet-a-navsat_enu_meters</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-navsat_enu.tar">sfumd-wet-a-navsat_enu_meters</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Barometric Pressure:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-wet-a.tgz">pressure-wet-a (~500 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-wet-b.tgz">pressure-wet-b (~300 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-a-barometric_pressure.tar">sfumd-wet-a-barometric_pressure</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-wet-b-barometric_pressure.tar">sfumd-wet-b-barometric_pressure</a></td>
         </tr>
     </table>
     <br/>
@@ -911,361 +723,760 @@ with brightness of 3780 lumen, 5000 K color temperature and
     <div id="duskdata">
     <table class="bordered-table">
         <tr>
-            <td>All Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dusk-a.tar">cameras-dusk-a 30 Hz (~40 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dusk-b.tar">cameras-dusk-b 30 Hz (~25 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dusk-a-10th.tar">cameras-dusk-a 3 Hz (~4 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dusk-b-10th.tar">cameras-dusk-b 3 Hz (~2.5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dusk-a-100th.tar">cameras-dusk-a 0.3 Hz (~400 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-dusk-b-100th.tar">cameras-dusk-b 0.3 Hz (~250 MB)</a></td>
+            <td>All Sensors:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-all.tar">sfumd-dusk-a-all</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-all.tar">sfumd-dusk-b-all</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>All Non-Camera Sensors:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-dusk-a.tgz">non-camera-sensors-dusk-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-dusk-b.tgz">non-camera-sensors-dusk-b (~200 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Stereo Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dusk-a.tar">stereo-dusk-a 30 Hz (~10 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dusk-b.tar">stereo-dusk-b 30 Hz (~5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dusk-a-10th.tar">stereo-dusk-a 3 Hz (~1 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dusk-b-10th.tar">stereo-dusk-b 3 Hz (~500 MB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dusk-a-100th.tar">stereo-dusk-a 0.3 Hz (~100 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-dusk-b-100th.tar">stereo-dusk-b 0.3 Hz (~50 MB)</a></td>
-        </tr>
+        <tr><td>Individual Sensors:</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Left:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dusk-a.tar">stereo_left-dusk-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dusk-b.tar">stereo_left-dusk-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_stereo_left.tar">sfumd-dusk-a-stereo_left 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_stereo_left.tar">sfumd-dusk-b-stereo_left 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dusk-a-10th.tar">stereo_left-dusk-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dusk-b-10th.tar">stereo_left-dusk-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_stereo_left-3fps.tar">sfumd-dusk-a-stereo_left 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_stereo_left-3fps.tar">sfumd-dusk-b-stereo_left 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dusk-a-100th.tar">stereo_left-dusk-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-dusk-b-100th.tar">stereo_left-dusk-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_stereo_left-0.3fps.tar">sfumd-dusk-a-stereo_left 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_stereo_left-0.3fps.tar">sfumd-dusk-b-stereo_left 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Right:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dusk-a.tar">stereo_right-dusk-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dusk-b.tar">stereo_right-dusk-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_stereo_right.tar">sfumd-dusk-a-stereo_right 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_stereo_right.tar">sfumd-dusk-b-stereo_right 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dusk-a-10th.tar">stereo_right-dusk-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dusk-b-10th.tar">stereo_right-dusk-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_stereo_right-3fps.tar">sfumd-dusk-a-stereo_right 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_stereo_right-3fps.tar">sfumd-dusk-b-stereo_right 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dusk-a-100th.tar">stereo_right-dusk-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-dusk-b-100th.tar">stereo_right-dusk-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_stereo_right-0.3fps.tar">sfumd-dusk-a-stereo_right 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_stereo_right-0.3fps.tar">sfumd-dusk-b-stereo_right 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Port:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dusk-a.tar">port-dusk-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dusk-b.tar">port-dusk-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_port.tar">sfumd-dusk-a-port 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_port.tar">sfumd-dusk-b-port 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dusk-a-10th.tar">port-dusk-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dusk-b-10th.tar">port-dusk-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_port-3fps.tar">sfumd-dusk-a-port 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_port-3fps.tar">sfumd-dusk-b-port 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dusk-a-100th.tar">port-dusk-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-dusk-b-100th.tar">port-dusk-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_port-0.3fps.tar">sfumd-dusk-a-port 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_port-0.3fps.tar">sfumd-dusk-b-port 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Starboard:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dusk-a.tar">starboard-dusk-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dusk-b.tar">starboard-dusk-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_starboard.tar">sfumd-dusk-a-starboard 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_starboard.tar">sfumd-dusk-b-starboard 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dusk-a-10th.tar">starboard-dusk-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dusk-b-10th.tar">starboard-dusk-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_starboard-3fps.tar">sfumd-dusk-a-starboard 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_starboard-3fps.tar">sfumd-dusk-b-starboard 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dusk-a-100th.tar">starboard-dusk-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-dusk-b-100th.tar">starboard-dusk-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_starboard-0.3fps.tar">sfumd-dusk-a-starboard 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_starboard-0.3fps.tar">sfumd-dusk-b-starboard 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Upward:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dusk-a.tar">upward-dusk-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dusk-b.tar">upward-dusk-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_upward.tar">sfumd-dusk-a-upward 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_upward.tar">sfumd-dusk-b-upward 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dusk-a-10th.tar">upward-dusk-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dusk-b-10th.tar">upward-dusk-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_upward-3fps.tar">sfumd-dusk-a-upward 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_upward-3fps.tar">sfumd-dusk-b-upward 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dusk-a-100th.tar">upward-dusk-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-dusk-b-100th.tar">upward-dusk-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_upward-0.3fps.tar">sfumd-dusk-a-upward 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_upward-0.3fps.tar">sfumd-dusk-b-upward 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Rear:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dusk-a.tar">rear-dusk-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dusk-b.tar">rear-dusk-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_rear.tar">sfumd-dusk-a-rear 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_rear.tar">sfumd-dusk-b-rear 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dusk-a-10th.tar">rear-dusk-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dusk-b-10th.tar">rear-dusk-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_rear-3fps.tar">sfumd-dusk-a-rear 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_rear-3fps.tar">sfumd-dusk-b-rear 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dusk-a-100th.tar">rear-dusk-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-dusk-b-100th.tar">rear-dusk-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-camera_rear-0.3fps.tar">sfumd-dusk-a-rear 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-camera_rear-0.3fps.tar">sfumd-dusk-b-rear 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Front Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-dusk-a.tgz">front_laser-dusk-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-dusk-b.tgz">front_laser-dusk-b (~200 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-lidar_front_scan.tar">sfumd-dusk-a-front_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-lidar_front_scan.tar">sfumd-dusk-b-front_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Top Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-dusk-a.tgz">top_laser-dusk-a (~10 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-dusk-b.tgz">top_laser-dusk-b (~5 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-lidar_top_scan.tar">sfumd-dusk-a-top_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-lidar_top_scan.tar">sfumd-dusk-b-top_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Wheel Odometry:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-dusk-a.tgz">wheel_odometry-dusk-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-dusk-b.tgz">wheel_odometry-dusk-b (~150 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-husky_odom.tar">sfumd-dusk-a-wheel_odometry</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-husky_odom.tar">sfumd-dusk-b-wheel_odometry</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>IMU:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-dusk-a.tgz">imu-dusk-a (~15 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-dusk-b.tgz">imu-dusk-b (~10 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-imu_data.tar">sfumd-dusk-a-imu</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-imu_data.tar">sfumd-dusk-b-imu</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>GPS:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-dusk-a.tgz">gps_lat_long_alt-dusk-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-dusk-b.tgz">gps_lat_long_alt-dusk-b (~100 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-navsat_fix.tar">sfumd-dusk-a-navsat_lat_long_alt</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-navsat_fix.tar">sfumd-dusk-b-navsat_lat_long_alt</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-dusk-a.tgz">gps_enu_meters-dusk-a (~300 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-dusk-b.tgz">gps_enu_meters-dusk-b (~200 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-navsat_enu.tar">sfumd-dusk-a-navsat_enu_meters</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-navsat_enu.tar">sfumd-dusk-a-navsat_enu_meters</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Barometric Pressure:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-dusk-a.tgz">pressure-dusk-a (~500 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-dusk-b.tgz">pressure-dusk-b (~300 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-a-barometric_pressure.tar">sfumd-dusk-a-barometric_pressure</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-dusk-b-barometric_pressure.tar">sfumd-dusk-b-barometric_pressure</a></td>
         </tr>
     </table>
     <br/>
     </div>
 
     <h4 onclick="$('#nightdata').slideToggle('fast')">Night</h4>
-    <br/>
+    <br/><br/>
     <div id="nightdata">
     <br/>
     <table class="bordered-table">
         <tr>
-            <td>All Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-night-a.tar">cameras-night-a 30 Hz (~40 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-night-b.tar">cameras-night-b 30 Hz (~25 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-night-a-10th.tar">cameras-night-a 3 Hz (~4 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-night-b-10th.tar">cameras-night-b 3 Hz (~2.5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-night-a-100th.tar">cameras-night-a 0.3 Hz (~400 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/all-cameras-night-b-100th.tar">cameras-night-b 0.3 Hz (~250 MB)</a></td>
+            <td>All Sensors:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-all.tar">sfumd-night-a-all</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-all.tar">sfumd-night-b-all</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>All Non-Camera Sensors:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-night-a.tgz">non-camera-sensors-night-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/non-camera-sensors-night-b.tgz">non-camera-sensors-night-b (~200 MB)</a></td>
-        </tr>
-        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-            <td>Stereo Cameras:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-night-a.tar">stereo-night-a 30 Hz (~10 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-night-b.tar">stereo-night-b 30 Hz (~5 GB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-night-a-10th.tar">stereo-night-a 3 Hz (~1 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-night-b-10th.tar">stereo-night-b 3 Hz (~500 MB)</a></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-night-a-100th.tar">stereo-night-a 0.3 Hz (~100 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo-night-b-100th.tar">stereo-night-b 0.3 Hz (~50 MB)</a></td>
-        </tr>
+        <tr><td>Individual Sensors:</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Left:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-night-a.tar">stereo_left-night-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-night-b.tar">stereo_left-night-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_stereo_left.tar">sfumd-night-a-stereo_left 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_stereo_left.tar">sfumd-night-b-stereo_left 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-night-a-10th.tar">stereo_left-night-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-night-b-10th.tar">stereo_left-night-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_stereo_left-3fps.tar">sfumd-night-a-stereo_left 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_stereo_left-3fps.tar">sfumd-night-b-stereo_left 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-night-a-100th.tar">stereo_left-night-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_left-night-b-100th.tar">stereo_left-night-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_stereo_left-0.3fps.tar">sfumd-night-a-stereo_left 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_stereo_left-0.3fps.tar">sfumd-night-b-stereo_left 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Stereo Right:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-night-a.tar">stereo_right-night-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-night-b.tar">stereo_right-night-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_stereo_right.tar">sfumd-night-a-stereo_right 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_stereo_right.tar">sfumd-night-b-stereo_right 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-night-a-10th.tar">stereo_right-night-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-night-b-10th.tar">stereo_right-night-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_stereo_right-3fps.tar">sfumd-night-a-stereo_right 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_stereo_right-3fps.tar">sfumd-night-b-stereo_right 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-night-a-100th.tar">stereo_right-night-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_stereo_right-night-b-100th.tar">stereo_right-night-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_stereo_right-0.3fps.tar">sfumd-night-a-stereo_right 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_stereo_right-0.3fps.tar">sfumd-night-b-stereo_right 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Port:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-night-a.tar">port-night-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-night-b.tar">port-night-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_port.tar">sfumd-night-a-port 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_port.tar">sfumd-night-b-port 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-night-a-10th.tar">port-night-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-night-b-10th.tar">port-night-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_port-3fps.tar">sfumd-night-a-port 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_port-3fps.tar">sfumd-night-b-port 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-night-a-100th.tar">port-night-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_port-night-b-100th.tar">port-night-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_port-0.3fps.tar">sfumd-night-a-port 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_port-0.3fps.tar">sfumd-night-b-port 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Starboard:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-night-a.tar">starboard-night-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-night-b.tar">starboard-night-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_starboard.tar">sfumd-night-a-starboard 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_starboard.tar">sfumd-night-b-starboard 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-night-a-10th.tar">starboard-night-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-night-b-10th.tar">starboard-night-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_starboard-3fps.tar">sfumd-night-a-starboard 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_starboard-3fps.tar">sfumd-night-b-starboard 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-night-a-100th.tar">starboard-night-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_starboard-night-b-100th.tar">starboard-night-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_starboard-0.3fps.tar">sfumd-night-a-starboard 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_starboard-0.3fps.tar">sfumd-night-b-starboard 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Upward:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-night-a.tar">upward-night-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-night-b.tar">upward-night-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_upward.tar">sfumd-night-a-upward 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_upward.tar">sfumd-night-b-upward 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-night-a-10th.tar">upward-night-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-night-b-10th.tar">upward-night-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_upward-3fps.tar">sfumd-night-a-upward 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_upward-3fps.tar">sfumd-night-b-upward 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-night-a-100th.tar">upward-night-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_upward-night-b-100th.tar">upward-night-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_upward-0.3fps.tar">sfumd-night-a-upward 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_upward-0.3fps.tar">sfumd-night-b-upward 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Rear:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-night-a.tar">rear-night-a 30 Hz (~5 GB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-night-b.tar">rear-night-b 30 Hz (~2.5 GB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_rear.tar">sfumd-night-a-rear 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_rear.tar">sfumd-night-b-rear 30 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-night-a-10th.tar">rear-night-a 3 Hz (~500 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-night-b-10th.tar">rear-night-b 3 Hz (~250 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_rear-3fps.tar">sfumd-night-a-rear 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_rear-3fps.tar">sfumd-night-b-rear 3 Hz</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-night-a-100th.tar">rear-night-a 0.3 Hz (~50 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/camera_rear-night-b-100th.tar">rear-night-b 0.3 Hz (~25 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-camera_rear-0.3fps.tar">sfumd-night-a-rear 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-camera_rear-0.3fps.tar">sfumd-night-b-rear 0.3 Hz</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Front Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-night-a.tgz">front_laser-night-a (~300 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_front_scan-night-b.tgz">front_laser-night-b (~200 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-lidar_front_scan.tar">sfumd-night-a-front_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-lidar_front_scan.tar">sfumd-night-b-front_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Top Laser:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-night-a.tgz">top_laser-night-a (~10 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/lidar_top_scan-night-b.tgz">top_laser-night-b (~5 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-lidar_top_scan.tar">sfumd-night-a-top_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-lidar_top_scan.tar">sfumd-night-b-top_laser</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Wheel Odometry:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-night-a.tgz">wheel_odometry-night-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/encoder-night-b.tgz">wheel_odometry-night-b (~150 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-husky_odom.tar">sfumd-night-a-wheel_odometry</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-husky_odom.tar">sfumd-night-b-wheel_odometry</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>IMU:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-night-a.tgz">imu-night-a (~15 MB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/imu_data-night-b.tgz">imu-night-b (~10 MB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-imu_data.tar">sfumd-night-a-imu</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-imu_data.tar">sfumd-night-b-imu</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>GPS:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-night-a.tgz">gps_lat_long_alt-night-a (~200 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_fix-night-b.tgz">gps_lat_long_alt-night-b (~100 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-navsat_fix.tar">sfumd-night-a-navsat_lat_long_alt</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-navsat_fix.tar">sfumd-night-b-navsat_lat_long_alt</a></td>
         </tr>
         <tr>
             <td></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-night-a.tgz">gps_enu_meters-night-a (~300 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/navsat_enu-night-b.tgz">gps_enu_meters-night-b (~200 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-navsat_enu.tar">sfumd-night-a-navsat_enu_meters</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-navsat_enu.tar">sfumd-night-a-navsat_enu_meters</a></td>
         </tr>
         <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
         <tr>
             <td>Barometric Pressure:</td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-night-a.tgz">pressure-night-a (~500 KB)</a></td>
-            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-workshop-version/sfu-mountain-torrent/barometric_pressure-night-b.tgz">pressure-night-b (~300 KB)</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-a-barometric_pressure.tar">sfumd-night-a-barometric_pressure</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-night-b-barometric_pressure.tar">sfumd-night-b-barometric_pressure</a></td>
+        </tr>
+    </table>
+    <br/>
+    </div>
+
+    <h4 onclick="$('#septdata').slideToggle('fast')">Sept</h4>
+    <br/><br/>
+    <div id="septdata">
+    <br/>
+    <table class="bordered-table">
+        <tr>
+            <td>All Sensors:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-all.tar">sfumd-sept-a-all</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-all.tar">sfumd-sept-b-all</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Individual Sensors:</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Stereo Left:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_stereo_left.tar">sfumd-sept-a-stereo_left 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_stereo_left.tar">sfumd-sept-b-stereo_left 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_stereo_left-3fps.tar">sfumd-sept-a-stereo_left 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_stereo_left-3fps.tar">sfumd-sept-b-stereo_left 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_stereo_left-0.3fps.tar">sfumd-sept-a-stereo_left 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_stereo_left-0.3fps.tar">sfumd-sept-b-stereo_left 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Stereo Right:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_stereo_right.tar">sfumd-sept-a-stereo_right 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_stereo_right.tar">sfumd-sept-b-stereo_right 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_stereo_right-3fps.tar">sfumd-sept-a-stereo_right 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_stereo_right-3fps.tar">sfumd-sept-b-stereo_right 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_stereo_right-0.3fps.tar">sfumd-sept-a-stereo_right 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_stereo_right-0.3fps.tar">sfumd-sept-b-stereo_right 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Port:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_port.tar">sfumd-sept-a-port 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_port.tar">sfumd-sept-b-port 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_port-3fps.tar">sfumd-sept-a-port 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_port-3fps.tar">sfumd-sept-b-port 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_port-0.3fps.tar">sfumd-sept-a-port 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_port-0.3fps.tar">sfumd-sept-b-port 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Starboard:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_starboard.tar">sfumd-sept-a-starboard 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_starboard.tar">sfumd-sept-b-starboard 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_starboard-3fps.tar">sfumd-sept-a-starboard 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_starboard-3fps.tar">sfumd-sept-b-starboard 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_starboard-0.3fps.tar">sfumd-sept-a-starboard 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_starboard-0.3fps.tar">sfumd-sept-b-starboard 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Upward:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_upward.tar">sfumd-sept-a-upward 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_upward.tar">sfumd-sept-b-upward 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_upward-3fps.tar">sfumd-sept-a-upward 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_upward-3fps.tar">sfumd-sept-b-upward 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_upward-0.3fps.tar">sfumd-sept-a-upward 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_upward-0.3fps.tar">sfumd-sept-b-upward 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Rear:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_rear.tar">sfumd-sept-a-rear 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_rear.tar">sfumd-sept-b-rear 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_rear-3fps.tar">sfumd-sept-a-rear 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_rear-3fps.tar">sfumd-sept-b-rear 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-camera_rear-0.3fps.tar">sfumd-sept-a-rear 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-camera_rear-0.3fps.tar">sfumd-sept-b-rear 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Front Laser:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-lidar_front_scan.tar">sfumd-sept-a-front_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-lidar_front_scan.tar">sfumd-sept-b-front_laser</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Top Laser:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-lidar_top_scan.tar">sfumd-sept-a-top_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-lidar_top_scan.tar">sfumd-sept-b-top_laser</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Wheel Odometry:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-husky_odom.tar">sfumd-sept-a-wheel_odometry</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-husky_odom.tar">sfumd-sept-b-wheel_odometry</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>IMU:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-imu_data.tar">sfumd-sept-a-imu</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-imu_data.tar">sfumd-sept-b-imu</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>GPS:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-navsat_fix.tar">sfumd-sept-a-navsat_lat_long_alt</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-navsat_fix.tar">sfumd-sept-b-navsat_lat_long_alt</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-navsat_enu.tar">sfumd-sept-a-navsat_enu_meters</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-navsat_enu.tar">sfumd-sept-a-navsat_enu_meters</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Barometric Pressure:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-a-barometric_pressure.tar">sfumd-sept-a-barometric_pressure</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-sept-b-barometric_pressure.tar">sfumd-sept-b-barometric_pressure</a></td>
+        </tr>
+    </table>
+    <br/>
+    </div>
+
+    <h4 onclick="$('#novdata').slideToggle('fast')">Nov</h4>
+    <br/><br/>
+    <div id="novdata">
+    <br/>
+    <table class="bordered-table">
+        <tr>
+            <td>All Sensors:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-all.tar">sfumd-nov-a-all</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-all.tar">sfumd-nov-b-all</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Individual Sensors:</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Stereo Left:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_stereo_left.tar">sfumd-nov-a-stereo_left 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_stereo_left.tar">sfumd-nov-b-stereo_left 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_stereo_left-3fps.tar">sfumd-nov-a-stereo_left 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_stereo_left-3fps.tar">sfumd-nov-b-stereo_left 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_stereo_left-0.3fps.tar">sfumd-nov-a-stereo_left 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_stereo_left-0.3fps.tar">sfumd-nov-b-stereo_left 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Stereo Right:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_stereo_right.tar">sfumd-nov-a-stereo_right 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_stereo_right.tar">sfumd-nov-b-stereo_right 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_stereo_right-3fps.tar">sfumd-nov-a-stereo_right 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_stereo_right-3fps.tar">sfumd-nov-b-stereo_right 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_stereo_right-0.3fps.tar">sfumd-nov-a-stereo_right 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_stereo_right-0.3fps.tar">sfumd-nov-b-stereo_right 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Port:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_port.tar">sfumd-nov-a-port 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_port.tar">sfumd-nov-b-port 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_port-3fps.tar">sfumd-nov-a-port 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_port-3fps.tar">sfumd-nov-b-port 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_port-0.3fps.tar">sfumd-nov-a-port 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_port-0.3fps.tar">sfumd-nov-b-port 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Starboard:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_starboard.tar">sfumd-nov-a-starboard 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_starboard.tar">sfumd-nov-b-starboard 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_starboard-3fps.tar">sfumd-nov-a-starboard 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_starboard-3fps.tar">sfumd-nov-b-starboard 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_starboard-0.3fps.tar">sfumd-nov-a-starboard 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_starboard-0.3fps.tar">sfumd-nov-b-starboard 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Upward:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_upward.tar">sfumd-nov-a-upward 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_upward.tar">sfumd-nov-b-upward 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_upward-3fps.tar">sfumd-nov-a-upward 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_upward-3fps.tar">sfumd-nov-b-upward 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_upward-0.3fps.tar">sfumd-nov-a-upward 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_upward-0.3fps.tar">sfumd-nov-b-upward 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Rear:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_rear.tar">sfumd-nov-a-rear 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_rear.tar">sfumd-nov-b-rear 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_rear-3fps.tar">sfumd-nov-a-rear 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_rear-3fps.tar">sfumd-nov-b-rear 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-camera_rear-0.3fps.tar">sfumd-nov-a-rear 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-camera_rear-0.3fps.tar">sfumd-nov-b-rear 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Front Laser:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-lidar_front_scan.tar">sfumd-nov-a-front_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-lidar_front_scan.tar">sfumd-nov-b-front_laser</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Top Laser:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-lidar_top_scan.tar">sfumd-nov-a-top_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-lidar_top_scan.tar">sfumd-nov-b-top_laser</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Wheel Odometry:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-husky_odom.tar">sfumd-nov-a-wheel_odometry</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-husky_odom.tar">sfumd-nov-b-wheel_odometry</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>IMU:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-imu_data.tar">sfumd-nov-a-imu</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-imu_data.tar">sfumd-nov-b-imu</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>GPS:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-navsat_fix.tar">sfumd-nov-a-navsat_lat_long_alt</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-navsat_fix.tar">sfumd-nov-b-navsat_lat_long_alt</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-navsat_enu.tar">sfumd-nov-a-navsat_enu_meters</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-navsat_enu.tar">sfumd-nov-a-navsat_enu_meters</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Barometric Pressure:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-a-barometric_pressure.tar">sfumd-nov-a-barometric_pressure</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-nov-b-barometric_pressure.tar">sfumd-nov-b-barometric_pressure</a></td>
+        </tr>
+    </table>
+    <br/>
+    </div>
+    
+    <h4 onclick="$('#jandata').slideToggle('fast')">Jan</h4>
+    <br/>
+    <div id="jandata">
+    <br/>
+    <table class="bordered-table">
+        <tr>
+            <td>All Sensors:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-all.tar">sfumd-jan-a-all</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-all.tar">sfumd-jan-b-all</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Individual Sensors:</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Stereo Left:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_stereo_left.tar">sfumd-jan-a-stereo_left 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_stereo_left.tar">sfumd-jan-b-stereo_left 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_stereo_left-3fps.tar">sfumd-jan-a-stereo_left 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_stereo_left-3fps.tar">sfumd-jan-b-stereo_left 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_stereo_left-0.3fps.tar">sfumd-jan-a-stereo_left 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_stereo_left-0.3fps.tar">sfumd-jan-b-stereo_left 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Stereo Right:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_stereo_right.tar">sfumd-jan-a-stereo_right 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_stereo_right.tar">sfumd-jan-b-stereo_right 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_stereo_right-3fps.tar">sfumd-jan-a-stereo_right 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_stereo_right-3fps.tar">sfumd-jan-b-stereo_right 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_stereo_right-0.3fps.tar">sfumd-jan-a-stereo_right 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_stereo_right-0.3fps.tar">sfumd-jan-b-stereo_right 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Port:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_port.tar">sfumd-jan-a-port 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_port.tar">sfumd-jan-b-port 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_port-3fps.tar">sfumd-jan-a-port 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_port-3fps.tar">sfumd-jan-b-port 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_port-0.3fps.tar">sfumd-jan-a-port 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_port-0.3fps.tar">sfumd-jan-b-port 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Starboard:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_starboard.tar">sfumd-jan-a-starboard 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_starboard.tar">sfumd-jan-b-starboard 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_starboard-3fps.tar">sfumd-jan-a-starboard 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_starboard-3fps.tar">sfumd-jan-b-starboard 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_starboard-0.3fps.tar">sfumd-jan-a-starboard 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_starboard-0.3fps.tar">sfumd-jan-b-starboard 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Upward:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_upward.tar">sfumd-jan-a-upward 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_upward.tar">sfumd-jan-b-upward 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_upward-3fps.tar">sfumd-jan-a-upward 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_upward-3fps.tar">sfumd-jan-b-upward 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_upward-0.3fps.tar">sfumd-jan-a-upward 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_upward-0.3fps.tar">sfumd-jan-b-upward 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Rear:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_rear.tar">sfumd-jan-a-rear 30 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_rear.tar">sfumd-jan-b-rear 30 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_rear-3fps.tar">sfumd-jan-a-rear 3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_rear-3fps.tar">sfumd-jan-b-rear 3 Hz</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-camera_rear-0.3fps.tar">sfumd-jan-a-rear 0.3 Hz</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-camera_rear-0.3fps.tar">sfumd-jan-b-rear 0.3 Hz</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Front Laser:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-lidar_front_scan.tar">sfumd-jan-a-front_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-lidar_front_scan.tar">sfumd-jan-b-front_laser</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Top Laser:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-lidar_top_scan.tar">sfumd-jan-a-top_laser</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-lidar_top_scan.tar">sfumd-jan-b-top_laser</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Wheel Odometry:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-husky_odom.tar">sfumd-jan-a-wheel_odometry</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-husky_odom.tar">sfumd-jan-b-wheel_odometry</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>IMU:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-imu_data.tar">sfumd-jan-a-imu</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-imu_data.tar">sfumd-jan-b-imu</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>GPS:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-navsat_fix.tar">sfumd-jan-a-navsat_lat_long_alt</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-navsat_fix.tar">sfumd-jan-b-navsat_lat_long_alt</a></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-navsat_enu.tar">sfumd-jan-a-navsat_enu_meters</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-navsat_enu.tar">sfumd-jan-a-navsat_enu_meters</a></td>
+        </tr>
+        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr>
+            <td>Barometric Pressure:</td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-a-barometric_pressure.tar">sfumd-jan-a-barometric_pressure</a></td>
+            <td><a href="http://autolab.cmpt.sfu.ca/files/datasets/sfu-mountain-journal-version/zip/sfumd-jan-b-barometric_pressure.tar">sfumd-jan-b-barometric_pressure</a></td>
         </tr>
     </table>
     <br/>
@@ -1394,6 +1605,12 @@ with brightness of 3780 lumen, 5000 K color temperature and
         <li>}</li>
     </code>
     </ul>
+
+    <p>
+    Please note: the current data is an updated version of the dataset, with
+    three new sessions that were not included in the original paper. The new
+    recording sessions are labeled <i>Sept</i>, <i>Nov</i>, and <i>Jan</i>.
+    </p>
 
     </div>
 
